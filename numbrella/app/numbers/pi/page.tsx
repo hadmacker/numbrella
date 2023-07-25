@@ -1,26 +1,7 @@
 import React from "react";
+import { PrettyChar } from '../../prettyChar'
 
-class PrettyNumber {
-  id?: number;
-  prettyStyle?: string;
-
-  constructor(id: number, prettyStyle: string) {
-    this.id = id;
-    this.prettyStyle = prettyStyle;
-  }
-}
-
-let numbers: Array<PrettyNumber> = [];
-numbers.push(new PrettyNumber(0,"text-gray-500"));
-numbers.push(new PrettyNumber(1,"text-pink-500"));
-numbers.push(new PrettyNumber(2,"text-amber-500"));
-numbers.push(new PrettyNumber(3,"text-lime-500"));
-numbers.push(new PrettyNumber(4,"text-emerald-500"));
-numbers.push(new PrettyNumber(5,"text-blue-400"));
-numbers.push(new PrettyNumber(6,"text-indigo-600"));
-numbers.push(new PrettyNumber(7,"text-fuchsia-500"));
-numbers.push(new PrettyNumber(8,"text-rose-500"));
-numbers.push(new PrettyNumber(9,"text-cyan-400"));
+const numbers = PrettyChar.allCharacters();
 
 export default function Page() {
   let a = 0;
@@ -51,7 +32,7 @@ export default function Page() {
       {divElements}
     </div>
     <h3 className="text-l tracking-wide font-mono">
-      While an unrelated bit of trivia, "<a href="https://en.wikipedia.org/wiki/Pi_Day" target="_blank">Pi Day</a>" is celebrated on March 14 (3.14) annually.
+      While an unrelated bit of trivia, &quot;<a href="https://en.wikipedia.org/wiki/Pi_Day" target="_blank">Pi Day</a>&quot; is celebrated on March 14 (3.14) annually.
       <br></br>
       Notably, <a href="https://en.wikipedia.org/wiki/Albert_Einstein" target="_blank">Albert Einstein</a> was born March 14, 1879.
     </h3>
