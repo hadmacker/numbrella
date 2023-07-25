@@ -1,0 +1,31 @@
+import './globals.css'
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
+
+export const metadata: Metadata = {
+  title: 'Numbrella',
+  description: 'So you like numbers, eh?',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <div>
+          <a 
+          className="flex place-items-center gap-1 p-8 lg:pointer-events-auto lg:p-0 font-mono text-2xl font-bold"
+          href="/">Home</a>
+        </div>
+        <div>
+          {children}
+        </div>
+      </body>
+    </html>
+  )
+}
