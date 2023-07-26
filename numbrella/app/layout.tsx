@@ -17,9 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div>
+        <div className='my-5'>
           <a 
-          className="flex place-items-center gap-1 p-8 lg:pointer-events-auto lg:p-0 font-mono text-2xl font-bold"
+          className="flex place-items-center gap-1 p-8 lg:pointer-events-auto lg:p-0 font-mono text-3xl font-bold"
           href="/">Home</a>
         </div>
         <div>

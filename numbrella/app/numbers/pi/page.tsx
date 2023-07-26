@@ -4,9 +4,6 @@ import { PrettyChar } from '../../prettyChar'
 const numbers = PrettyChar.allCharacters();
 
 export default function Page() {
-  let a = 0;
-  let b = 1;
-  let n = 50;
   const divElements: React.ReactElement[] = [];
   const piValue = "3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679";
   console.log(piValue);

@@ -40,7 +40,7 @@ function useQueryString(key: string, defaultValue: string) {
 export default function Page() {
   let a = 0;
   let b = 1;
-  let n = parseInt(useQueryString("first", "25"), 10);
+  let n = parseInt(useQueryString("first", "75"), 10);
   const divElements: React.ReactElement[] = [];
   let bw = useQueryString("bw", "unset");
 

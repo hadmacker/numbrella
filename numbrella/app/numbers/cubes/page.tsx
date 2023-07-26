@@ -39,7 +39,7 @@ function useQueryString(key: string, defaultValue: string) {
 
 export default function Page() {
   const bw = useQueryString("bw", "unset");
-  const pqs = useQueryString("i", "0");
+  const iqs = useQueryString("i", "0");
   const router = useRouter();
 
   try {
@@ -53,29 +53,29 @@ export default function Page() {
     // if(bw == "true") {
     //   nextHrefClassNames = "hidden";
     // }
-    let power = parseInt(pqs, 10);
-    if(power < 0) {
-      power = 0;
+    let base = parseInt(iqs, 10);
+    if(base < 0) {
+      base = 0;
     }
-    const a = Math.pow(2, power);
+    const a = Math.pow(base, 3);
     let product = a;
     
-    let allowPrior = (power >= 1);
+    let allowPrior = (base >= 1);
     let priorClassNames = "";
     if(!allowPrior) {
       priorClassNames = "hidden";
     }
 
     const resetHref = "?";
-    const priorHref = `?i=${power-1}&bw=${bw}`;
+    const priorHref = `?i=${base-1}&bw=${bw}`;
 
     divElements.push(
           <div>
-            {Formula(a, power, product, bw)}
+            {Formula(a, base, product, bw)}
           </div>
         );
     
-    const nextHref = `?i=${power+1}&bw=false`;
+    const nextHref = `?i=${base+1}&bw=false`;
 
     return (
     <>
@@ -91,23 +91,29 @@ export default function Page() {
     </>
     )
   } catch(e) {
-    router.push("/numbers/powersoftwo")
+    router.push("/numbers/cubes")
   }
 }
 
-function Formula(value1: number, power: number, product: number, bw: boolean) {
-  const showLastSpans = power != 0;
+function Formula(value1: number, base: number, product: number, bw: boolean) {
+  const showLastSpans = base != 0;
 
   return (
     <>
-      <div className="text-center m-5 tracking-wide font-mono font-black">
-        <span className="normal-nums text-5xl">{formatted(2, bw)}</span>
-        <span className="ordinal text-xl align-top">{formatted(power, bw)}</span>
+      <p className="text-center m-5 tracking-wide font-mono font-black">
+        <span className="normal-nums text-5xl">{formatted(base, bw)}</span>
+        <span className="ordinal text-l align-top">{formatted(3, bw)}</span>
+        <span className="text-5xl text-black-600/100 mx-8">=</span>
+        <span className="text-5xl normal-nums">{formatted(base, bw)}</span>
+        <span className="text-5xl text-black-600/100 mx-2">x</span>
+        <span className="text-5xl normal-nums">{formatted(base, bw)}</span>
+        <span className="text-5xl text-black-600/100 mx-2">x</span>
+        <span className="text-5xl normal-nums">{formatted(base, bw)}</span>
         <span className="text-5xl text-black-600/100 mx-8">=</span>
         <span className="text-5xl">
           {formatted(value1, bw)}
         </span>
-      </div>
+      </p>
     </>
     )
 }
