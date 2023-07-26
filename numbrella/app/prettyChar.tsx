@@ -8,19 +8,32 @@ export class PrettyChar {
     }
 
     public static allCharacters() {
-        let numbers: Array<PrettyChar> = [];
-        numbers.push(new PrettyChar(",","text-gray-400 m-0"));
-        numbers.push(new PrettyChar("0","text-gray-500"));
-        numbers.push(new PrettyChar("1","text-pink-500"));
-        numbers.push(new PrettyChar("2","text-amber-500"));
-        numbers.push(new PrettyChar("3","text-lime-500"));
-        numbers.push(new PrettyChar("4","text-emerald-500"));
-        numbers.push(new PrettyChar("5","text-blue-400"));
-        numbers.push(new PrettyChar("6","text-indigo-600"));
-        numbers.push(new PrettyChar("7","text-fuchsia-500"));
-        numbers.push(new PrettyChar("8","text-rose-500"));
-        numbers.push(new PrettyChar("9","text-cyan-400"));
+        let pretty: Array<PrettyChar> = [];
+        pretty.push(new PrettyChar(",","text-gray-400 m-0"));
+        pretty.push(new PrettyChar("0","text-gray-500"));
+        pretty.push(new PrettyChar("1","text-pink-500"));
+        pretty.push(new PrettyChar("2","text-amber-500"));
+        pretty.push(new PrettyChar("3","text-lime-500"));
+        pretty.push(new PrettyChar("4","text-emerald-500"));
+        pretty.push(new PrettyChar("5","text-blue-400"));
+        pretty.push(new PrettyChar("6","text-indigo-600"));
+        pretty.push(new PrettyChar("7","text-fuchsia-500"));
+        pretty.push(new PrettyChar("8","text-rose-500"));
+        pretty.push(new PrettyChar("9","text-cyan-400"));
 
-        return numbers;
+        pretty.push(new PrettyChar("January", "text-green-300"));
+        pretty.push(new PrettyChar("February", "text-green-400"));
+        pretty.push(new PrettyChar("March", "text-pink-500"));
+        pretty.push(new PrettyChar("April", "text-amber-500"));
+        pretty.push(new PrettyChar("May", "text-lime-500"));
+        pretty.push(new PrettyChar("June", "text-emerald-500"));
+        pretty.push(new PrettyChar("July", "text-blue-400"));
+        pretty.push(new PrettyChar("August", "text-indigo-600"));
+        pretty.push(new PrettyChar("September", "text-fuchsia-500"));
+        pretty.push(new PrettyChar("October", "text-rose-500"));
+        pretty.push(new PrettyChar("November", "text-cyan-400"));
+        pretty.push(new PrettyChar("December", "text-yellow-200"));
+
+        return pretty;
     }
 }

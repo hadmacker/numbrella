@@ -95,6 +95,23 @@ export default function Page() {
   }
 }
 
+function expansion(value1: number, power: number, bw: boolean) {
+  const divElements: React.ReactElement[] = [];
+    divElements.push(<span>{formatted(1, bw)}</span>);
+    
+    for(var i = 0; i < power; i++) {
+      divElements.push(<span>x{formatted(value1, bw)}</span>);
+    }
+
+    return (
+    <>
+      <div>
+        {divElements}
+      </div>
+    </>
+    )
+}
+
 function Formula(value1: number, power: number, product: number, bw: boolean) {
   const showLastSpans = power != 0;
 
@@ -103,7 +120,17 @@ function Formula(value1: number, power: number, product: number, bw: boolean) {
       <div className="text-center m-5 tracking-wide font-mono font-black">
         <span className="normal-nums text-5xl">{formatted(2, bw)}</span>
         <span className="ordinal text-xl align-top">{formatted(power, bw)}</span>
+      </div>
+      <div className="text-center m-5 tracking-wide font-mono font-black">
         <span className="text-5xl text-black-600/100 mx-8">=</span>
+      </div>
+      <div className="text-center m-5 tracking-wide font-mono font-black break-all">
+        <span className="text-5xl">{expansion(2, power, bw)}</span>
+      </div>
+      <div className="text-center m-5 tracking-wide font-mono font-black">
+        <span className="text-5xl text-black-600/100 mx-8">=</span>
+      </div>
+      <div className="text-center m-5 tracking-wide font-mono font-black">
         <span className="text-5xl">
           {formatted(value1, bw)}
         </span>
