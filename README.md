@@ -70,48 +70,68 @@
 * Geometry
 * Trigonometry
 * Names of large polygons: https://www.mathsisfun.com/geometry/polygons.html
-* Names of large numbers: https://simple.wikipedia.org/wiki/Names_of_large_numbers
 * Giroux Studio Large Numbers series: https://www.youtube.com/watch?v=vq2BxAJZ4Tc&list=PLUZ0A4xAf7nkaYHtnqVDbHnrXzVAOxYYC
 * list of mathematical shapes: https://en.wikipedia.org/wiki/List_of_mathematical_shapes
   * List of 2D Geometric shapes: https://en.wikipedia.org/wiki/List_of_two-dimensional_geometric_shapes
   * List of polygons (2D), polyhedra (3D), and polytopes: https://en.wikipedia.org/wiki/List_of_polygons,_polyhedra_and_polytopes
   * List of uniform polyhedra: https://en.wikipedia.org/wiki/List_of_uniform_polyhedra
 
-## Numeric Short Scale
+## Names of Large Numbers (using American Short Scale)
 
+Source: [Names of large numbers](https://simple.wikipedia.org/wiki/Names_of_large_numbers)
 
-
-Thousand:             10^3 (1,000)
-Million:              10^6 (1,000,000)
-Billion:              10^9 (1,000,000,000)
-Trillion:             10^12 (1,000,000,000,000)
-Quadrillion:          10^15 (1,000,000,000,000,000)
-Quintillion:          10^18 (1,000,000,000,000,000,000)
-Sextillion:           10^21 (1,000,000,000,000,000,000,000)
-Septillion:           10^24 (1,000,000,000,000,000,000,000,000)
-Octillion:            10^27 (1,000,000,000,000,000,000,000,000,000)
-Nonillion:            10^30 (1,000,000,000,000,000,000,000,000,000,000)
-Decillion:            10^33 (1,000,000,000,000,000,000,000,000,000,000,000)
-Undecillion:          10^36 (1,000,000,000,000,000,000,000,000,000,000,000,000)
-Duodecillion:         10^39 (1,000,000,000,000,000,000,000,000,000,000,000,000,000)
-Tredecillion:         10^42 (1,000,000,000,000,000,000,000,000,000,000,000,000,000,000)
-Quattuordecillion:    10^45  ...
-Quindecillion:        10^48  ...
-Sexdecillion:         10^51  ...
-Septendecillion:      10^54  ...
-Octodecillion:        10^57  ...
-Novemdecillion:       10^60  ...
-Vigintillion:         10^63  ...
-Unvigintillion:       10^66  ...
-Duovigintillion:      10^69  ...
-Trevigintillion:      10^72  ...
-Quattuorvigintillion: 10^75  ...
-Quinvigintillion:     10^78  ...
-Sexvigintillion:      10^81  ...
-Septenvigintillion:   10^84  ...
-Octovigintillion:     10^87  ...
-Novemvigintillion:    10^90  ...
-Trigintillion:        10^93  ...
-Untrigintillion:      10^96  ...
-Duotrigintillion:     10^99  ...
-Trestrigintillion:    10^102 ...
+* One: 10^0  
+* Ten: 10^1  
+* Hundred : 10^2  
+* Thousand: 10^3  
+* Million: 10^6  
+* Billion: 10^9  
+* Trillion: 10^12  
+* Quadrillion: 10^15  
+* Quintillion: 10^18  
+* Sextillion: 10^21  
+* Septillion: 10^24  
+* Octillion: 10^27  
+* Nonillion: 10^30  
+* Decillion: 10^33  
+* Undecillion: 10^36  
+* Duodecillion: 10^39  
+* Tredecillion: 10^42  
+* Quattuordecillion: 10^45  
+* Quindecillion: 10^48  
+* Sexdecillion: 10^51  
+* Septendecillion: 10^54  
+* Octodecillion: 10^57  
+* Novemdecillion: 10^60  
+* Vigintillion: 10^63  
+* Unvigintillion: 10^66  
+* Duovigintillion: 10^69  
+* Trevigintillion: 10^72  
+* Quattuorvigintillion: 10^75  
+* Quinvigintillion: 10^78  
+* Sexvigintillion: 10^81  
+* Septenvigintillion: 10^84  
+* Octovigintillion: 10^87  
+* Novemvigintillion: 10^90  
+* Trigintillion: 10^93  
+* Untrigintillion: 10^96  
+* Duotrigintillion: 10^99  
+* Googol: 10^100  
+* Trestrigintillion: 10^102  
+* Quarttourtrigintillion: 10^105  
+* Quinquatrigintillion: 10^108  
+* Sestrigintillion: 10^111  
+* Septemtrigintillion: 10^114  
+* Octotrigintillion: 10^117  
+* Novemtrigintillion: 10^120  
+* Quadragintillion: 10^123  
+* Unquadragintillion: 10^153  
+* Duoquadragintillion: 10^303  
+* Tresquadragintillion: 10^3003  
+* Quattuorquadragintillion: 10^3000003  
+* Quinquaquadragintillion: 10^10^9  
+* Sesquadragintillion: 10^10^12  
+* Septemquadragintillion: 10^10^33  
+* Octoquadragintillion: 10^10^100  
+* Novemquadragintillion: 10^10^303  
+* Quinquagintillion: 10^10^3003  
