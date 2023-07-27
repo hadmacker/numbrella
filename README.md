@@ -121,6 +121,10 @@ Screenshots can be found at the [end of this file](#screenshots).
 
 ![Pi to 100 decimals](images/ss_pi.png)
 
+## Names of Large Numbers
+
+![Names of Large Numbers](images/ss_shortscale.png)
+
 ## Words: Months of the Year
 
 ![Months of the year](images/ss_months.png)
