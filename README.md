@@ -114,6 +114,8 @@ Above commands have also been created as PowreShell scripts:
 
 ## Fibonacci list continues to the first 75 iterations of the sequence
 
+:point_up: Touch to scroll and zoom the viewport to view larger numbers.
+
 ![Fibonacci list continues to the first 75 iterations of the sequence](images/ss_fib_cont.png)
 
 ## Cube Numbers
