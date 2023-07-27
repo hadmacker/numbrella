@@ -34,11 +34,18 @@ Screenshots can be found at the [end of this file](#screenshots).
 * $> `npm install next@latest react@latest react-dom@latest`
 * $> `npm install create-next-app@latest --save`
 * $> `npx create-next-app@latest`
-* $> `npm install decimal.js`
 
 ## To Run Locally
 
 * `npn run dev`
+* To run prod:
+  * `npm run build`
+  * `npm run start`
+
+Above commands have also been created as PowreShell scripts:
+
+* `.\run-dev.ps1`
+* `.\run-prod.ps1`
 
 # Technical Reference
 
