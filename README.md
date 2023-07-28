@@ -1,6 +1,6 @@
-# Numbrella
+# Numbrillig
 
-Numbrella is a web-based app for use with tablets and smartphones allowing children to explore interesting numbers, patterns, sequences, and mathematics beyond their age ([Hypernumeracy](https://literallyausome.com.au/autism/hyperlexia-and-hypernumeracy/#:~:text=Hypernumeracy%20is%20known%20as%20'hyperlexia,like%20hyperlexia%20does%20with%20letters.)).
+Numbrillig is a web-based app for use with tablets and smartphones allowing children to explore interesting numbers, patterns, sequences, and mathematics beyond their age ([Hypernumeracy](https://literallyausome.com.au/autism/hyperlexia-and-hypernumeracy/#:~:text=Hypernumeracy%20is%20known%20as%20'hyperlexia,like%20hyperlexia%20does%20with%20letters.)).
 
 Screenshots can be found at the [end of this file](#screenshots).
 
@@ -144,7 +144,7 @@ az account show --output table
 [azcli: Create Resource Group](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-create)
 
 ```
-az group create -l canadacentral -n "rgnumbrella"
+az group create -l canadacentral -n "rgNumbrillig"
 ```
 
 # Ideas:
