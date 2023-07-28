@@ -37,10 +37,26 @@ Screenshots can be found at the [end of this file](#screenshots).
 
 ## To Run Locally
 
-* `npn run dev`
-* To run prod:
-  * `npm run build`
-  * `npm run start`
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+To run prod:
+
+* `npm run build`
+* `npm run start`
 
 Above commands have also been created as PowreShell scripts:
 
@@ -79,6 +95,44 @@ Above commands have also been created as PowreShell scripts:
 * [Iterators & Generators](https://www.typescriptlang.org/docs/handbook/iterators-and-generators.html)
 * [Modules](https://www.geeksforgeeks.org/how-to-declare-a-module-in-typescript/)
 * [Dictionary Type](https://www.carlrippon.com/typescript-dictionary/)
+
+
+# Deployment
+
+* [Deploy static-rendered Next.js websites on Azure Static Web Apps](https://learn.microsoft.com/en-us/azure/static-web-apps/deploy-nextjs-static-export?tabs=azure-pipelines)
+* See also: [Provisioning Azure Resources](#provisioning-azure-resources)
+
+# Provisioning Azure Resources
+
+## One-Time Environment Setup (Manual Steps)
+
+Scripts below assume that developer is deploying to DEV environment. If deploying to other environments, all references to the resource group will change.
+
+[azcli: Get Started with Azure CLI](https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli#how-to-sign-into-the-azure-cli)
+
+### Step 1: login to az cli
+
+```
+az login
+```
+
+### Step 2: Set active subscription
+
+[azcli: Managing multiple subscriptions with AZ CLI](https://docs.microsoft.com/en-us/cli/azure/manage-azure-subscriptions-azure-cli)
+
+Lists all subscriptions and sets a specific one. Useful if user has access to multiple subscriptions (i.e., Corporate, personal, MDN, etc.)
+```
+az account show --output table
+az account subscription list --output table
+az account set --subscription "<subscriptionid>"
+az account show --output table
+```
+
+[azcli: Create Resource Group](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-create)
+
+```
+az group create -l canadacentral -n "rgnumbrella"
+```
 
 # Ideas:
 
