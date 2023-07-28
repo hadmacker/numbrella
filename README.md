@@ -113,6 +113,7 @@ Above commands have also been created as PowreShell scripts:
   * See following link for further details.
     * [Github: Azure Static Web Apps, The size of the function content was too large.](https://github.com/Azure/static-web-apps/issues/1034)
 * See also: [Provisioning Azure Resources](#provisioning-azure-resources)
+* [Custom Domains](https://learn.microsoft.com/en-us/azure/static-web-apps/custom-domain)
 
 # Provisioning Azure Resources
 
