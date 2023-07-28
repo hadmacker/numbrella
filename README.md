@@ -99,6 +99,13 @@ Above commands have also been created as PowreShell scripts:
 
 # Deployment
 
+* [Deploy Next.js Hybrid website to Azure Static Web Apps](https://learn.microsoft.com/en-us/azure/static-web-apps/deploy-nextjs-hybrid#enable-standalone-feature)
+  * In `next.config.js` enable `standalone` feature:
+  ```javascript
+  module.exports ={
+      output:"standalone",
+  }
+  ```
 * [Deploy static-rendered Next.js websites on Azure Static Web Apps](https://learn.microsoft.com/en-us/azure/static-web-apps/deploy-nextjs-static-export?tabs=azure-pipelines)
 * :warning: Deploying to Azure Static Sites may result in error: `The size of the function content was too large. The limit for this Static Web App is 104857600 bytes`
   * package.json modified to force removal of cache during build.
