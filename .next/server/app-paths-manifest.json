@@ -4,11 +4,11 @@
   "/colors/page": "app/colors/page.js",
   "/numbers/fib-all/page": "app/numbers/fib-all/page.js",
   "/numbers/googol/page": "app/numbers/googol/page.js",
-  "/numbers/fib/page": "app/numbers/fib/page.js",
+  "/numbers/pi/page": "app/numbers/pi/page.js",
+  "/numbers/shortscale/page": "app/numbers/shortscale/page.js",
   "/numbers/cubes/page": "app/numbers/cubes/page.js",
   "/numbers/powersoftwo/page": "app/numbers/powersoftwo/page.js",
-  "/numbers/pi/page": "app/numbers/pi/page.js",
+  "/numbers/fib/page": "app/numbers/fib/page.js",
   "/words/days/page": "app/words/days/page.js",
-  "/numbers/shortscale/page": "app/numbers/shortscale/page.js",
   "/words/months/page": "app/words/months/page.js"
 }

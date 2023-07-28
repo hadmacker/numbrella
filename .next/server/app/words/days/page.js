@@ -156,7 +156,7 @@ module.exports = require("url");
 
 /***/ }),
 
-/***/ 7313:
+/***/ 1012:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -192,7 +192,7 @@ __webpack_require__.r(__webpack_exports__);
         'days',
         {
         children: ['__PAGE__', {}, {
-          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 398)), "C:\\code\\hadmacker\\numbrella\\numbrella\\app\\words\\days\\page.tsx"],
+          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 398)), "C:\\code\\hadmacker\\numbrella\\app\\words\\days\\page.tsx"],
           
         }]
       },
@@ -215,7 +215,7 @@ __webpack_require__.r(__webpack_exports__);
       ]
       },
         {
-          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 1921)), "C:\\code\\hadmacker\\numbrella\\numbrella\\app\\layout.tsx"],
+          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 1921)), "C:\\code\\hadmacker\\numbrella\\app\\layout.tsx"],
           metadata: {
     icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7481))).default(props))],
     apple: [],
@@ -226,7 +226,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       ]
       }.children;
-    const pages = ["C:\\code\\hadmacker\\numbrella\\numbrella\\app\\words\\days\\page.tsx"];
+    const pages = ["C:\\code\\hadmacker\\numbrella\\app\\words\\days\\page.tsx"];
 
     
 
@@ -251,7 +251,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 7422:
+/***/ 5734:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 8196))
@@ -349,7 +349,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1363);
 
-const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\code\hadmacker\numbrella\numbrella\app\words\days\page.tsx`)
+const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\code\hadmacker\numbrella\app\words\days\page.tsx`)
 
 // Accessing the __esModule property and exporting $$typeof are required here.
 // The __esModule getter forces the proxy target to create the default export
@@ -378,7 +378,7 @@ module.exports = __webpack_require__(696)
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [697,205,118,63], () => (__webpack_exec__(7313)));
+var __webpack_exports__ = __webpack_require__.X(0, [697,205,684,11], () => (__webpack_exec__(1012)));
 module.exports = __webpack_exports__;
 
 })();

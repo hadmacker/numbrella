@@ -1,4 +1,4 @@
-// File: C:\code\hadmacker\numbrella\numbrella\app\numbers\googol\page.tsx
+// File: C:\code\hadmacker\numbrella\app\numbers\googol\page.tsx
 import * as entry from '../../../../../app/numbers/googol/page.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

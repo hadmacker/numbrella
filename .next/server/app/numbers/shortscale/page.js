@@ -138,7 +138,7 @@ module.exports = require("url");
 
 /***/ }),
 
-/***/ 169:
+/***/ 589:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -173,7 +173,7 @@ __webpack_require__.r(__webpack_exports__);
         'shortscale',
         {
         children: ['__PAGE__', {}, {
-          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 5694)), "C:\\code\\hadmacker\\numbrella\\numbrella\\app\\numbers\\shortscale\\page.tsx"],
+          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 5694)), "C:\\code\\hadmacker\\numbrella\\app\\numbers\\shortscale\\page.tsx"],
           
         }]
       },
@@ -196,7 +196,7 @@ __webpack_require__.r(__webpack_exports__);
       ]
       },
         {
-          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 1921)), "C:\\code\\hadmacker\\numbrella\\numbrella\\app\\layout.tsx"],
+          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 1921)), "C:\\code\\hadmacker\\numbrella\\app\\layout.tsx"],
           metadata: {
     icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7481))).default(props))],
     apple: [],
@@ -207,7 +207,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       ]
       }.children;
-    const pages = ["C:\\code\\hadmacker\\numbrella\\numbrella\\app\\numbers\\shortscale\\page.tsx"];
+    const pages = ["C:\\code\\hadmacker\\numbrella\\app\\numbers\\shortscale\\page.tsx"];
 
     
 
@@ -400,7 +400,7 @@ function Formula(key, value, bw) {
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [697,205,118,90], () => (__webpack_exec__(169)));
+var __webpack_exports__ = __webpack_require__.X(0, [697,205,684,106], () => (__webpack_exec__(589)));
 module.exports = __webpack_exports__;
 
 })();

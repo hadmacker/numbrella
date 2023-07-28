@@ -1,4 +1,4 @@
-// File: C:\code\hadmacker\numbrella\numbrella\app\numbers\pi\page.tsx
+// File: C:\code\hadmacker\numbrella\app\numbers\pi\page.tsx
 import * as entry from '../../../../../app/numbers/pi/page.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

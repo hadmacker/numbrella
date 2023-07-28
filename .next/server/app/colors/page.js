@@ -156,7 +156,7 @@ module.exports = require("url");
 
 /***/ }),
 
-/***/ 2623:
+/***/ 4240:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -189,7 +189,7 @@ __webpack_require__.r(__webpack_exports__);
         'colors',
         {
         children: ['__PAGE__', {}, {
-          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 3449)), "C:\\code\\hadmacker\\numbrella\\numbrella\\app\\colors\\page.tsx"],
+          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 3449)), "C:\\code\\hadmacker\\numbrella\\app\\colors\\page.tsx"],
           
         }]
       },
@@ -206,7 +206,7 @@ __webpack_require__.r(__webpack_exports__);
       ]
       },
         {
-          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 1921)), "C:\\code\\hadmacker\\numbrella\\numbrella\\app\\layout.tsx"],
+          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 1921)), "C:\\code\\hadmacker\\numbrella\\app\\layout.tsx"],
           metadata: {
     icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7481))).default(props))],
     apple: [],
@@ -217,7 +217,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       ]
       }.children;
-    const pages = ["C:\\code\\hadmacker\\numbrella\\numbrella\\app\\colors\\page.tsx"];
+    const pages = ["C:\\code\\hadmacker\\numbrella\\app\\colors\\page.tsx"];
 
     
 
@@ -239,6 +239,17 @@ __webpack_require__.r(__webpack_exports__);
       },
     })
   
+
+/***/ }),
+
+/***/ 6507:
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 1232, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 2987, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 831, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 6926, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 4282, 23))
 
 /***/ }),
 
@@ -446,7 +457,7 @@ function Page() {
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [697,205,118], () => (__webpack_exec__(2623)));
+var __webpack_exports__ = __webpack_require__.X(0, [697,205,684], () => (__webpack_exec__(4240)));
 module.exports = __webpack_exports__;
 
 })();
