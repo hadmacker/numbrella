@@ -100,7 +100,7 @@ function Formula(value1: number, base: number, product: number, bw: boolean) {
 
   return (
     <>
-      <p className="text-center m-5 tracking-wide font-mono font-black">
+      <p className="text-center m-5 tracking-wide font-mono font-black align-top">
         <span className="normal-nums text-5xl">{formatted(base, bw)}</span>
         <span className="ordinal text-l align-top">{formatted(3, bw)}</span>
         <span className="text-5xl text-black-600/100 mx-8">=</span>
