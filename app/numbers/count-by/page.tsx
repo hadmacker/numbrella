@@ -6,12 +6,6 @@ import { NumberFormatter } from '../../numberFormatter'
 
 const pretty = PrettyChar.allCharacters();
 
-export async function getServerSideProps() {
-  return { props: {} }; // Return an empty object to disable SSR for this page
-}
-
-//function formatted(value: number, bw: boolean): React.ReactElement[] {}
-
 function formatted(value: number, bw: boolean): React.ReactElement[] {
   const digitsArray = NumberFormatter.formatNumberWithBreaks(value.toString()).split("");
 
@@ -49,8 +43,7 @@ export default function Page() {
       setRandomNumbers(sortedNumbers);
       setGenerated(true);
     }
-  
-  });
+  }, [generated]);
   
   randomNumbers.map((num) => 
     {
