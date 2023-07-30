@@ -1,7 +1,6 @@
 'use client'
 
-import React from "react";
-import {useRouter, useSearchParams} from 'next/navigation'
+import React, { useState } from "react";
 import { PrettyChar } from '../../prettyChar'
 import { NumberFormatter } from '../../numberFormatter'
 
@@ -12,9 +11,10 @@ function formatted(number: number, bw: boolean): React.ReactElement[] {
 
   // Create an array of <div> elements to hold each digit
   const divElements: React.ReactElement[] = digitsArray.map((digit, index) => {
-    const prettyStyle = (bw.toString() == "true")
-      ? numbers.filter(n=> n.id == "0")[0].prettyStyle
-      : numbers.filter(n=> n.id == digit)[0].prettyStyle;
+    const prettyStyle = ((bw.toString() == "true")
+      ? numbers.find(n=> n.id == "0")?.prettyStyle
+      : numbers.find(n=> n.id == digit)?.prettyStyle) 
+      ?? "text-gray-400";
     const combinedClasses = `${prettyStyle}`;
     return (
       <span className={combinedClasses} key={index}>
@@ -26,73 +26,34 @@ function formatted(number: number, bw: boolean): React.ReactElement[] {
   return divElements;
 }
 
-function useQueryString(key: string, defaultValue: string) {
-  const searchParams = useSearchParams()
-  const value = searchParams.get(key);
-
-  if (value === undefined || value === null) {
-    return defaultValue;
-  }
-
-  return Array.isArray(value) ? value[0] : value;
-}
-
 export default function Page() {
-  const bw = useQueryString("bw", "unset");
-  const pqs = useQueryString("i", "0");
-  const router = useRouter();
+  const bw = false;
+  const [power, setPower] = useState<number>(0);
+  const [value, setValue] = useState<number>(1);
+  
 
-  try {
-    const divElements: React.ReactElement[] = [];
-
-    let nextHrefClassNames = "";
-    let nextHrefNcClassNames = "hidden";
-    // if(bw == "false") {
-    //   nextHrefNcClassNames = "hidden";
-    // }
-    // if(bw == "true") {
-    //   nextHrefClassNames = "hidden";
-    // }
-    let power = parseInt(pqs, 10);
-    if(power < 0) {
-      power = 0;
-    }
-    const a = Math.pow(2, power);
-    let product = a;
-    
-    let allowPrior = (power >= 1);
-    let priorClassNames = "";
-    if(!allowPrior) {
-      priorClassNames = "hidden";
-    }
-
-    const resetHref = "?";
-    const priorHref = `?i=${power-1}&bw=${bw}`;
-
-    divElements.push(
-          <div>
-            {Formula(a, power, product, bw)}
-          </div>
-        );
-    
-    const nextHref = `?i=${power+1}&bw=false`;
-
-    return (
+  return (
     <>
-      <div className="text-center">
-        <a href={nextHref} className={nextHrefClassNames}>
-          {divElements}
-        </a>
-      </div>
-      <div className="m-8"></div>
+      <h1 className="p-5 text-center tracking-wide font-mono text-5xl md:text-8xl font-black">
+        <button className="p-5 tracking-wide font-mono text-4xl md:text-5xl font-black"
+            onClick={() => {
+              const newPower = power + 1;
+              const newValue = Math.pow(2, newPower);
+              setValue(newValue);
+              setPower(newPower)
+          }}>{Formula(value, power, bw)}</button>
+      </h1>
       <div>
-        <div><a href={resetHref}><span className="mx-5 p-4 text-3xl font-black">Reset</span></a></div>
+        <button
+          className="py-4"
+          onClick={() => {
+            setPower(0);
+            setValue(1);
+          }}
+          >Reset</button>
       </div>
     </>
-    )
-  } catch(e) {
-    router.push("/numbers/powersoftwo")
-  }
+    );
 }
 
 function expansion(value1: number, power: number, bw: boolean) {
@@ -112,9 +73,7 @@ function expansion(value1: number, power: number, bw: boolean) {
     )
 }
 
-function Formula(value1: number, power: number, product: number, bw: boolean) {
-  const showLastSpans = power != 0;
-
+function Formula(value1: number, power: number, bw: boolean) {
   return (
     <>
       <div className="text-center m-5 tracking-wide font-mono font-black">

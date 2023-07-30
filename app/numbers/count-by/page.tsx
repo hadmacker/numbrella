@@ -66,7 +66,7 @@ export default function Page() {
       {elements}
       <li key="custom">
       <button 
-        className="py-4"
+        className="py-4 hidden"
         onClick={() => {
         const val = prompt("Custom Number");
         try {
@@ -82,9 +82,9 @@ export default function Page() {
         Different Number
       </button>
       </li>
-      <li>
+      <li key="reset">
         <a
-          className="py-4"
+          className="py-5"
           href="/numbers/count-by"
           >Reset</a>
       </li>

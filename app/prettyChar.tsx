@@ -7,6 +7,12 @@ export class PrettyChar {
         this.prettyStyle = prettyStyle;
     }
 
+    public static getPretty(language: PrettyChar[], value: string, bw: boolean) {
+        const words = (bw.toString() == "true")
+            ? language.filter(n=> n.id == "0")
+            : language.filter(n=> n.id == value);
+    }
+
     public static allCharacters() {
         let pretty: Array<PrettyChar> = [];
         pretty.push(new PrettyChar(",","text-gray-300 m-0"));
