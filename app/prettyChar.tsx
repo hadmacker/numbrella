@@ -9,8 +9,8 @@ export class PrettyChar {
 
     public static allCharacters() {
         let pretty: Array<PrettyChar> = [];
-        pretty.push(new PrettyChar(",","text-gray-400 m-0"));
-        pretty.push(new PrettyChar("0","text-gray-500"));
+        pretty.push(new PrettyChar(",","text-gray-300 m-0"));
+        pretty.push(new PrettyChar("0","text-gray-400"));
         pretty.push(new PrettyChar("1","text-pink-500"));
         pretty.push(new PrettyChar("2","text-amber-500"));
         pretty.push(new PrettyChar("3","text-lime-500"));

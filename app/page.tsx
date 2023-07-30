@@ -13,6 +13,7 @@ export default function Home() {
             <li key="n1.1.2.5" className='mx 3 my-8'><a href="numbers/cubes"><span className="mx-2 p-4 text-3xl font-black">Cube numbers</span></a></li>
             <li key="n1.1.2.6" className='mx 3 my-8'><a href="numbers/googol"><span className="mx-2 p-4 text-3xl font-black">Googol</span></a></li>
             <li key="n1.1.2.7" className='mx 3 my-8'><a href="numbers/shortscale"><span className="mx-2 p-4 text-3xl font-black">Names of Large Numbers</span></a></li>
+            <li key="n1.1.2.8" className='mx 3 my-8'><a href="numbers/even-odd"><span className="mx-2 p-4 text-3xl font-black">Evens and Odds</span></a></li>
           </ul>
         </div>
         <div key="w1">
