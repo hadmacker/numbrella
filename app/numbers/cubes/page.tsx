@@ -32,8 +32,8 @@ export default function Page() {
 
   return (
     <>
-      <h1 className="p-5 text-center tracking-wide font-mono font-black">
-        <button className="p-5 tracking-wide font-mono md:font-black"
+      <h1 className="text-center tracking-wide font-mono text-4xl lg:text-7xl font-black">
+        <button className=""
             onClick={() => {
               const newMultiplier = multiplier + 1;
               const newValue = Math.pow(multiplier, 3);
@@ -57,25 +57,25 @@ export default function Page() {
 function Formula(value1: number, base: number, bw: boolean) {
   return (
     <>
-      <div className="text-center m-5 tracking-wide font-mono font-black">
-        <span className="normal-nums text-5xl">{formatted(base, bw)}</span>
+      <div className="m-1 lg:m-5">
+        <span className="normal-nums ">{formatted(base, bw)}</span>
         <span className="ordinal text-xl align-top">{formatted(3, bw)}</span>
       </div>
-      <div className="text-center m-5 tracking-wide font-mono font-black">
-        <span className="text-5xl text-black-600/100 mx-8">=</span>
+      <div className="m-1 lg:m-5">
+        <span className=" text-black-600/100 mx-8">=</span>
       </div>
-      <div className="text-center m-5 tracking-wide font-mono font-black break-all">
-        <span className="text-5xl normal-nums">{formatted(base, bw)}</span>
-        <span className="text-5xl text-black-600/100 mx-2">x</span>
-        <span className="text-5xl normal-nums">{formatted(base, bw)}</span>
-        <span className="text-5xl text-black-600/100 mx-2">x</span>
-        <span className="text-5xl normal-nums">{formatted(base, bw)}</span>
+      <div className="m-1 lg:m-5 break-all">
+        <span className=" normal-nums">{formatted(base, bw)}</span>
+        <span className=" text-black-600/100 mx-2">x</span>
+        <span className=" normal-nums">{formatted(base, bw)}</span>
+        <span className=" text-black-600/100 mx-2">x</span>
+        <span className=" normal-nums">{formatted(base, bw)}</span>
       </div>
-      <div className="text-center m-5 tracking-wide font-mono font-black">
-        <span className="text-5xl text-black-600/100 mx-8">=</span>
+      <div className="m-1 lg:m-5">
+        <span className=" text-black-600/100 mx-8">=</span>
       </div>
-      <div className="text-center m-5 tracking-wide font-mono font-black">
-        <span className="text-5xl">
+      <div className="m-1 lg:m-5">
+        <span className="">
           {formatted(value1, bw)}
         </span>
       </div>
