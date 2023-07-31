@@ -31,12 +31,15 @@ export default function Page() {
   const [generated, setGenerated] = useState(false);
   const [number, setNumber] = useState(0);
   const elements: React.ReactElement[] = [];
+  const minRand = 2;
+  const maxRand = 98;
+  const maxRandNumberSet = 3;
 
   useEffect( () => {
     if(!generated) {
       const numbersSet = new Set<number>();
-      while (numbersSet.size < 5) {
-        const randomNumber = Math.floor(Math.random() * 100) + 1;
+      while (numbersSet.size < maxRandNumberSet) {
+        const randomNumber = Math.floor(Math.random() * maxRand) + minRand;
         numbersSet.add(randomNumber);
       }
       const sortedNumbers = Array.from(numbersSet).sort((a, b) => a - b);
@@ -44,18 +47,35 @@ export default function Page() {
       setGenerated(true);
     }
   }, [generated]);
-  
-  randomNumbers.map((num) => 
-    {
-      elements.push(
-        <li key={num}>
+
+  elements.push(
+    <li>
+      <button className="p-5 tracking-wide font-mono text-4xl md:text-5xl font-black"
+        onClick={() => {
+        setNumber(number+1);
+      }}>{formatted(1, false)}</button>
+    </li>
+  );
+
+  for(let i = 0; i < randomNumbers.length; i++) {
+    elements.push(
+      <li key={i}>
         <button className="p-5 tracking-wide font-mono text-4xl md:text-5xl font-black"
           onClick={() => {
-          setNumber(number+num);
-        }}>{formatted(num, false)}</button>
-        </li>
-      );
-    });
+          setNumber(number+randomNumbers[i]);
+        }}>{formatted(randomNumbers[i], false)}</button>
+      </li>
+    );
+  }
+
+  elements.push(
+    <li>
+      <button className="p-5 tracking-wide font-mono text-4xl md:text-5xl font-black"
+        onClick={() => {
+        setNumber(number+100);
+      }}>{formatted(100, false)}</button>
+    </li>
+  );
 
   return (
   <>
@@ -82,13 +102,28 @@ export default function Page() {
         Different Number
       </button>
       </li>
-      <li key="reset">
-        <a
-          className="py-5"
-          href="/numbers/count-by"
-          >Reset</a>
-      </li>
       </ul>
+    </div>
+    <div className="flex justify-between">
+      <div>
+        <button className="p-5 tracking-wide font-mono text-3xl md:text-3xl font-black"
+          onClick={() => {
+            const numbersSet = new Set<number>();
+            while (numbersSet.size < maxRandNumberSet) {
+              const randomNumber = Math.floor(Math.random() * maxRand) + minRand;
+              numbersSet.add(randomNumber);
+            }
+            const sortedNumbers = Array.from(numbersSet).sort((a, b) => a - b);
+            setRandomNumbers(sortedNumbers);
+            setGenerated(true);
+        }}>New Numbers</button>
+      </div>
+      <div>
+        <button className="p-5 tracking-wide font-mono text-3xl md:text-3xl font-black"
+          onClick={() => {
+            setNumber(0);
+        }}>Clear</button>
+      </div>
     </div>
   </>
   )
