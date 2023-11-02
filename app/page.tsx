@@ -15,6 +15,7 @@ export default function Home() {
             <li key="n1.1.2.7" className='mx-3 my-4 md:mx-:3 md:my-8'><a href="numbers/shortscale"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Names of Large Numbers</span></a></li>
             <li key="n1.1.2.8" className='mx-3 my-4 md:mx-:3 md:my-8'><a href="numbers/even-odd"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Evens and Odds</span></a></li>
             <li key="n1.1.2.9" className='mx-3 my-4 md:mx-:3 md:my-8'><a href="numbers/count-by"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Count By</span></a></li>
+            <li key="n1.1.2.9" className='mx-3 my-4 md:mx-:3 md:my-8'><a href="numbers/slider"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Number Sliders</span></a></li>
           </ul>
         </div>
         <div key="w1">
