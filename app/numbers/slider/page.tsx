@@ -54,7 +54,7 @@ export default function Page() {
     <h2 className="text-center tracking-wide font-mono text-3xl lg:text-3xl font-black">Number Sliders</h2>
     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
       <input 
-        style={{ margin: '0 50px', width: '300px' }}
+        style={{ margin: '0 50px', width: '300px', height: '70px' }}
         type="range" 
         min="0" 
         max="1000" 
@@ -62,7 +62,7 @@ export default function Page() {
         onChange={handleSliderChange1} 
       />
       <input 
-        style={{ margin: '0 50px', width: '300px' }}
+        style={{ margin: '0 50px', width: '300px', height: '70px' }}
         type="range" 
         min="0" 
         max="1000" 
@@ -70,7 +70,7 @@ export default function Page() {
         onChange={handleSliderChange2} 
       />
       <input 
-        style={{ margin: '0 50px', width: '300px' }}
+        style={{ margin: '0 50px', width: '300px', height: '70px' }}
         type="range" 
         min="0" 
         max="1000" 
