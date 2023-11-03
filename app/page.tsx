@@ -15,7 +15,7 @@ export default function Home() {
             <li key="n1.1.2.7" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/shortscale"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Names of Large Numbers</span></a></li>
             <li key="n1.1.2.8" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/even-odd"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Evens and Odds</span></a></li>
             <li key="n1.1.2.9" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/count-by"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Count By</span></a></li>
-            <li key="n1.1.2.9" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/slider"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Number Sliders</span></a></li>
+            <li key="n1.1.2.10" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/slider"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Number Sliders</span></a></li>
           </ul>
         </div>
         <div key="w1">
@@ -23,6 +23,7 @@ export default function Home() {
           <ul key="w1.1" className='block'>
             <li key="w1.1.2.1" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="words/months"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Months of the Year</span></a></li>
             <li key="w1.1.2.2" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="words/days"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Days of the Week</span></a></li>
+            <li key="w1.1.2.2" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="words/sight"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Sight Words</span></a></li>
           </ul>
         </div>
       </main>
