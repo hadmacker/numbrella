@@ -20,8 +20,6 @@ const gradeMathFacts = {
 
 function formatted(number: number, bw: boolean): React.ReactElement[] {
   const digitsArray = NumberFormatter.formatNumberWithBreaks(number.toString()).split("");
-
-  // Create an array of <div> elements to hold each digit
   const divElements: React.ReactElement[] = digitsArray.map((digit, index) => {
     const prettyStyle = (bw.toString() == "true")
       ? numbers.filter(n=> n.id == "0")[0].prettyStyle
@@ -38,8 +36,6 @@ function formatted(number: number, bw: boolean): React.ReactElement[] {
 }
 
 export default function Page() {
-    // const [value1, setValue1] = useState(0);
-    // const [value2, setValue2] = useState(0);
     const [grade, setGrade] = useState("pre-k");
     const facts = gradeMathFacts[grade as keyof typeof gradeMathFacts] || [];
 
@@ -87,7 +83,7 @@ export default function Page() {
           break;
         case "divide": 
           setSymbol("÷");
-          // TODO: Divide needs more thought into it. We don't want to do decimals yet.
+          // TODO: Divide needs a better understanding of desired math outcomes. I don't want to do decimals or remainders until this is better understood.
           break;
       }
 
@@ -97,7 +93,6 @@ export default function Page() {
       setDisplayNextFactButton(false);
       setSelectedOption(null);
       
-      //const incorrectAnswers = Array.from({ length: 3 }, () => Math.floor(Math.random() * (operation.maxNumber)));
       let incorrectAnswers = new Set<number>();
       while (incorrectAnswers.size < 3) {
         const newNumber = Math.floor(Math.random() * (operation.maxNumber));
