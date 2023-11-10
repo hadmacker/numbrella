@@ -14,7 +14,7 @@ const gradeMathFacts = {
   "first-grade": [{operation: "add", maxNumber: 30}, {operation: "subtract", maxNumber: 20}],
   "second-grade": [{operation: "add", maxNumber: 50}, {operation: "subtract", maxNumber: 30}],
   "third-grade": [{operation: "add", maxNumber: 100}, {operation: "subtract", maxNumber: 50}],
-  "advanced": [{operation: "add", maxNumber: 1000}, {operation: "subtract", maxNumber: 100}]
+  "advanced": [{operation: "add", maxNumber: 1000}, {operation: "subtract", maxNumber: 100}, {operation: "multiply", maxNumber: 10}]
 };
 
 function formatted(number: number, bw: boolean): React.ReactElement[] {
@@ -48,6 +48,7 @@ export default function Page() {
     const [options, setOptions] = useState<number[]>([]);
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
     const [displayNextFactButton, setDisplayNextFactButton] = useState(false);
+    const [symbol, setSymbol] = useState("+");
 
     useEffect(() => {
       nextFact();
@@ -56,22 +57,55 @@ export default function Page() {
     const nextFact = () => {
       const operations = gradeMathFacts[grade as keyof typeof gradeMathFacts];
       const operation = operations[Math.floor(Math.random() * operations.length)];
-      const innerValue1 = Math.floor(Math.random() * (operation.maxNumber));
-      const innerValue2 = Math.floor(Math.random() * (operation.maxNumber));
-      const innerAnswer = innerValue1 + innerValue2;
+      let innerValue1 = Math.floor(Math.random() * (operation.maxNumber));
+      let innerValue2 = Math.floor(Math.random() * (operation.maxNumber));
+
+      let innerAnswer = 0;
+      switch(operation.operation) {
+        case "add":
+          setSymbol("+");
+          innerAnswer = innerValue1 + innerValue2;
+          break;
+        case "subtract":
+          setSymbol("-");
+          if(innerValue1 < innerValue2) {
+            const innerValue1Snapshot = innerValue1;
+            innerValue1 = innerValue2;
+            innerValue2 = innerValue1Snapshot;
+          }
+          innerAnswer = innerValue1 - innerValue2;
+          break;
+        case "multiply":
+          setSymbol("x");
+          if(innerValue1 < innerValue2) {
+            const innerValue1Snapshot = innerValue1;
+            innerValue1 = innerValue2;
+            innerValue2 = innerValue1Snapshot;
+          }
+          innerAnswer = innerValue1 * innerValue2;
+          break;
+        case "divide": 
+          setSymbol("÷");
+          // TODO: Divide needs more thought into it. We don't want to do decimals yet.
+          break;
+      }
       setValue1(innerValue1);
       setValue2(innerValue2);
-      setAnswer(innerValue1 + innerValue2);
+      setAnswer(innerAnswer);
       setDisplayNextFactButton(false);
       setSelectedOption(null);
       
-      const incorrectAnswers = Array.from({ length: 3 }, () => Math.floor(Math.random() * (operation.maxNumber)));
-      const newOptions = [...incorrectAnswers];
-      if(newOptions.find((option) => option === innerAnswer)) {
-        newOptions.splice(Math.floor(Math.random() * 4), 0, Math.floor(Math.random() * (operation.maxNumber)));
-      } else {
-        newOptions.splice(Math.floor(Math.random() * 4), 0, innerAnswer);
+      //const incorrectAnswers = Array.from({ length: 3 }, () => Math.floor(Math.random() * (operation.maxNumber)));
+      let incorrectAnswers = new Set<number>();
+      while (incorrectAnswers.size < 3) {
+        const newNumber = Math.floor(Math.random() * (operation.maxNumber));
+        if(incorrectAnswers.has(newNumber) || newNumber === innerAnswer) {
+          continue; // don't add current answer or duplicates
+        }
+        incorrectAnswers.add(newNumber);
       }
+      const newOptions = Array.from(incorrectAnswers);
+      newOptions.splice(Math.floor(Math.random() * 4), 0, innerAnswer);
       setOptions(newOptions);
     };
 
@@ -90,7 +124,15 @@ export default function Page() {
       } else {
         // Incorrect answer
         toast.info('Oops, try again!');
-        setOptions(options.filter(option => option !== selectedAnswer));
+        let newOptions = options.filter(option => option !== selectedAnswer);
+        setOptions(newOptions);
+        if (newOptions.length === 1) {
+          setSelectedOption(newOptions[0]);
+          if (newOptions[0] === correctAnswer) {
+            toast.success('Correct!');
+            setDisplayNextFactButton(true);
+          }
+        }
       }
     };
   
@@ -127,7 +169,7 @@ export default function Page() {
       </div>
       <div className="m-5">
         <div className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black">{formatted(value1, false)}</div>
-        <div className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black text-black-600/100">+</div>
+        <div className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black text-black-600/100">{symbol}</div>
         <div className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black">{formatted(value2, false)}</div>
         <div className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black text-black-600/100">=</div>
         <div className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black">?</div>
