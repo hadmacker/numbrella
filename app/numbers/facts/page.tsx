@@ -8,13 +8,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const numbers = PrettyChar.allCharacters();
 
+// Math facts roughly based on outcomes from: https://www.edu.gov.mb.ca/k12/cur/math/framework_k-8/index.html
 const gradeMathFacts = {
   "pre-k": [{operation: "add", maxNumber: 5}],
-  "kindergarten": [{operation: "add", maxNumber: 10}, {operation: "subtract", maxNumber: 10}],
-  "first-grade": [{operation: "add", maxNumber: 30}, {operation: "subtract", maxNumber: 20}],
-  "second-grade": [{operation: "add", maxNumber: 50}, {operation: "subtract", maxNumber: 30}],
-  "third-grade": [{operation: "add", maxNumber: 100}, {operation: "subtract", maxNumber: 50}],
-  "advanced": [{operation: "add", maxNumber: 1000}, {operation: "subtract", maxNumber: 100}, {operation: "multiply", maxNumber: 10}]
+  "kindergarten": [{operation: "add", maxNumber: 5}, {operation: "subtract", maxNumber: 5}],
+  "first-grade": [{operation: "add", maxNumber: 50}, {operation: "subtract", maxNumber: 50}],
+  "second-grade": [{operation: "add", maxNumber: 50}, {operation: "subtract", maxNumber: 50, allowNegative: true}],
+  "third-grade": [{operation: "add", maxNumber: 500}, {operation: "subtract", maxNumber: 500, allowNegative: true}, {operation: "multiply", maxNumber: 5}],
+  "advanced": [{operation: "add", maxNumber: 1000}, {operation: "subtract", maxNumber: 500}, {operation: "multiply", maxNumber: 10}]
 };
 
 function formatted(number: number, bw: boolean): React.ReactElement[] {
@@ -68,7 +69,7 @@ export default function Page() {
           break;
         case "subtract":
           setSymbol("-");
-          if(innerValue1 < innerValue2) {
+          if(innerValue1 < innerValue2 && !('allowNegative' in operation && operation.allowNegative)) {
             const innerValue1Snapshot = innerValue1;
             innerValue1 = innerValue2;
             innerValue2 = innerValue1Snapshot;
@@ -89,6 +90,7 @@ export default function Page() {
           // TODO: Divide needs more thought into it. We don't want to do decimals yet.
           break;
       }
+
       setValue1(innerValue1);
       setValue2(innerValue2);
       setAnswer(innerAnswer);
