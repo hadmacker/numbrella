@@ -16,6 +16,11 @@ export class PrettyChar {
     public static allCharacters() {
         let pretty: Array<PrettyChar> = [];
         pretty.push(new PrettyChar("-","text-gray-300 m-0"));
+        pretty.push(new PrettyChar("+","text-gray-300 m-0"));
+        pretty.push(new PrettyChar("x","text-gray-300 m-0"));
+        pretty.push(new PrettyChar("*","text-gray-300 m-0"));
+        pretty.push(new PrettyChar("^","text-gray-300 m-0"));
+        pretty.push(new PrettyChar("÷","text-gray-300 m-0"));
         pretty.push(new PrettyChar(",","text-gray-300 m-0"));
         pretty.push(new PrettyChar("0","text-gray-400"));
         pretty.push(new PrettyChar("1","text-pink-500"));
