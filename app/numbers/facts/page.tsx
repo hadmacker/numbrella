@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { PrettyChar } from '../../prettyChar'
 import { NumberFormatter } from '../../numberFormatter'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const numbers = PrettyChar.allCharacters();
 
@@ -45,6 +47,7 @@ export default function Page() {
     const [correctAnswer, setAnswer] = useState(value1 + value2);
     const [options, setOptions] = useState<number[]>([]);
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
+    const [displayNextFactButton, setDisplayNextFactButton] = useState(false);
 
     useEffect(() => {
       nextFact();
@@ -59,6 +62,8 @@ export default function Page() {
       setValue1(innerValue1);
       setValue2(innerValue2);
       setAnswer(innerValue1 + innerValue2);
+      setDisplayNextFactButton(false);
+      setSelectedOption(null);
       
       const incorrectAnswers = Array.from({ length: 3 }, () => Math.floor(Math.random() * (operation.maxNumber)));
       const newOptions = [...incorrectAnswers];
@@ -77,6 +82,16 @@ export default function Page() {
 
     const checkAnswer = (selectedAnswer: number) => {
       setSelectedOption(selectedAnswer);
+      if (selectedAnswer === correctAnswer) {
+        // Correct answer
+        toast.success('Correct!');
+        setDisplayNextFactButton(true);
+        setOptions(options.filter(option => option === selectedAnswer));
+      } else {
+        // Incorrect answer
+        toast.info('Oops, try again!');
+        setOptions(options.filter(option => option !== selectedAnswer));
+      }
     };
   
     return (
@@ -109,35 +124,49 @@ export default function Page() {
             onChange={(e) => setValue2(Number(e.target.value))}
           />
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px'}} className="m-8">
-          <button style={{ padding: '10px', backgroundColor: '#555', border: '1px solid #ccc', borderRadius: '5px' }} onClick={() => nextFact()}>Next Fact</button>
-        </div>
       </div>
       <div className="m-5">
         <div className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black">{formatted(value1, false)}</div>
         <div className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black text-black-600/100">+</div>
         <div className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black">{formatted(value2, false)}</div>
         <div className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black text-black-600/100">=</div>
-        <div className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black">{formatted(correctAnswer, false)}</div>
+        <div className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black">?</div>
       </div>
-      <div>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '20px'}} className="m-8">
         {options.map((option, index) => (
           <button 
             key={index}
             onClick={() => checkAnswer(option)} 
+            className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black"
             style={{ 
               padding: '10px', 
-              backgroundColor: selectedOption === option ? (option === correctAnswer ? '#373' : '#733') : '#555', 
+              backgroundColor: selectedOption === option ? (option === correctAnswer ? '#373' : '#733') : '#222', 
               border: '1px solid #ccc', 
               borderRadius: '50px', 
-              width: '50px', 
-              margin: '10px' 
+              minWidth: '100px', 
+              margin: '10px',
+              textShadow: '2px 2px 4px #000000'
           }}
           >
-            {option}
+            {formatted(option, false)}
           </button>
         ))}
       </div>
+      <div style={{ display: displayNextFactButton ? 'flex' : 'none', justifyContent: 'center', gap: '20px'}} className="m-8">
+          <button 
+            style={{ 
+              padding: '10px', 
+              backgroundColor: '#225', 
+              border: '1px solid #ccc', 
+              borderRadius: '50px', 
+              paddingInline: '40px',
+              margin: '10px' 
+          }}
+            className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black"
+            onClick={() => nextFact()}>
+            Next Fact</button>
+        </div>
+      <ToastContainer hideProgressBar={true} />
     </>
     );
 }
