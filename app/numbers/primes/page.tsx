@@ -44,7 +44,7 @@ export default function Page() {
     const [elapsed, setElapsed] = useState<number>(0);
     const primeStyle = "text-rose-500 mx-5";
     const compositeStyle = "text-cyan-400 mx-5";
-    const maxValue = 1000000000;
+    const maxValue = 1000000000000;
 
     const isPrime = (num: number) => {
       for(let i = 2, sqrt = Math.sqrt(num); i <= sqrt; i++)
@@ -106,8 +106,16 @@ export default function Page() {
     <h2 className="text-center tracking-wide font-mono text-3xl lg:text-3xl font-black">Prime or Composite</h2>
     <br/>
     <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <button
+       style={{ padding: '10px', backgroundColor: '#333', border: '1px solid #ccc', borderRadius: '5px' }}
+        onClick={() => {
+          compute(value1 - 1);
+        }}
+      >
+        Back
+      </button>
       <input 
-        style={{ margin: '0 50px', width: '300px', height: '70px' }}
+        style={{ margin: '0 50px', width: '180px', height: '70px' }}
         type="number" 
         min="1" 
         max={maxValue}
@@ -130,6 +138,18 @@ export default function Page() {
         }}
       >
         Next
+      </button>
+      <button
+       style={{ padding: '10px', backgroundColor: '#333', border: '1px solid #ccc', borderRadius: '5px', marginLeft: '50px' }}
+        onClick={() => {
+          let nextPrime = value1 + 1;
+          while (!isPrime(nextPrime)) {
+            nextPrime++;
+          }
+          compute(nextPrime);
+        }}
+      >
+        Next Prime
       </button>
     </div>
     {compositeness && (
