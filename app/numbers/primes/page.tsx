@@ -144,8 +144,8 @@ export default function Page() {
           </span>
         </h2>
         {factors.map((factor, index) => (
-          <h2>
-            <p key={index}>{formatted(factor, false)} x {formatted(value1 / factor, false)} = {formatted(value1, false)}</p>
+          <h2 key={index}>
+            <p>{formatted(factor, false)} x {formatted(value1 / factor, false)} = {formatted(value1, false)}</p>
           </h2>
         ))}
       </div>
