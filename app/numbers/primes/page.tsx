@@ -14,9 +14,14 @@ function formatted(number: number, bw: boolean): React.ReactElement[] {
 
   // Create an array of <div> elements to hold each digit
   const divElements: React.ReactElement[] = digitsArray.map((digit, index) => {
-    const prettyStyle = (bw.toString() == "true")
-      ? numbers.filter(n=> n.id == "0")[0].prettyStyle
-      : numbers.filter(n=> n.id == digit)[0].prettyStyle;
+    const defaultStyle = "";
+    let prettyStyle = "";
+    if (digit === ".") {
+      prettyStyle = defaultStyle; // replace with your default style for "."
+    } else {
+      const numberStyle = numbers.filter(n => n.id === digit);
+      prettyStyle = numberStyle.length > 0 ? numberStyle[0].prettyStyle ?? defaultStyle : defaultStyle; // replace with your default style
+    }
     const combinedClasses = `${prettyStyle}`;
     return (
       <span className={combinedClasses} key={index}>
@@ -60,6 +65,41 @@ export default function Page() {
       return factors.length > 0 ? factors : null;
     }
 
+    const compute = (input: number) => {
+      const start = performance.now();
+      let num = input;
+      if(num > maxValue) {
+        num = maxValue;
+      }
+      setValue1(num);
+      let factors = getFactors(num);
+
+      if(num === 1) {
+        setCompositeness("not Prime or Composite");
+        setDefinition(oneDefinition);
+        setFactors([1]);
+        const end = performance.now();
+        setElapsed(end - start);
+        console.log(`${num} factored in: ${elapsed.toFixed(2)} ms`);
+        return;
+      }
+
+      if (factors) {
+        factors = [1, ...factors, num].sort((a, b) => a - b);
+        setCompositeness("Composite");
+        setDefinition(compositeDefinition);
+        setFactors(factors);
+      } else {
+        factors = [1, num].sort((a, b) => a - b);
+        setCompositeness("Prime");
+        setDefinition(primeDefinition);
+        setFactors(factors);
+      }
+      const end = performance.now();
+      setElapsed(end - start);
+      console.log(`${num} factored in: ${elapsed.toFixed(2)} ms`);
+    }
+
     return (
         <>
       <div style={{ border: '1px solid black', backgroundColor: '#222222', padding: '10px', margin: '10px' }}>
@@ -73,50 +113,24 @@ export default function Page() {
         max={maxValue}
         value={value1}
         onChange={(e) => {
-          const start = performance.now();
           if (!e.target.value) {
             setValue1(0);
             setCompositeness("");
             setDefinition("");
             setFactors([]);
-            const end = performance.now();
-            setElapsed(end - start);
-            console.log(`Time elapsed: ${elapsed.toFixed(2)} ms`);
             return;
           }
-          let num = parseInt(e.target.value);
-          if(num > maxValue) {
-            num = maxValue;
-          }
-          setValue1(num);
-          let factors = getFactors(num);
-
-          if(num === 1) {
-            setCompositeness("not Prime or Composite");
-            setDefinition(oneDefinition);
-            setFactors([1]);
-            const end = performance.now();
-            setElapsed(end - start);
-            console.log(`${num} factored in: ${elapsed.toFixed(2)} ms`);
-            return;
-          }
-
-          if (factors) {
-            factors = [1, ...factors, num].sort((a, b) => a - b);
-            setCompositeness("Composite");
-            setDefinition(compositeDefinition);
-            setFactors(factors);
-          } else {
-            factors = [1, num].sort((a, b) => a - b);
-            setCompositeness("Prime");
-            setDefinition(primeDefinition);
-            setFactors(factors);
-          }
-          const end = performance.now();
-          setElapsed(end - start);
-          console.log(`${num} factored in: ${elapsed.toFixed(2)} ms`);
+          compute(e.target.valueAsNumber);
         }}
       />
+      <button
+       style={{ padding: '10px', backgroundColor: '#333', border: '1px solid #ccc', borderRadius: '5px' }}
+        onClick={() => {
+          compute(value1 + 1);
+        }}
+      >
+        Next
+      </button>
     </div>
     {compositeness && (
     <h2 className="text-center tracking-wide font-mono text-3xl lg:text-3xl font-black">
