@@ -103,11 +103,11 @@ export default function Page() {
     return (
         <>
       <div style={{ border: '1px solid black', backgroundColor: '#222222', padding: '10px', margin: '10px' }}>
-    <h2 className="text-center tracking-wide font-mono text-3xl lg:text-3xl font-black">Prime or Composite</h2>
+    <h2 className="text-center tracking-wide font-mono text-1xl lg:text-3xl font-black">Prime or Composite</h2>
     <br/>
     <div style={{ display: 'flex', justifyContent: 'center' }}>
     <button
-       style={{ padding: '10px', backgroundColor: '#333', border: '1px solid #ccc', borderRadius: '5px' }}
+       style={{ margin: '0 20px', backgroundColor: '#333', border: '1px solid #ccc', borderRadius: '5px', width: '100%', maxWidth: '300px', marginBottom: '10px' }}
         onClick={() => {
           compute(value1 - 1);
         }}
@@ -115,7 +115,7 @@ export default function Page() {
         Back
       </button>
       <input 
-        style={{ margin: '0 50px', width: '180px', height: '70px' }}
+        style={{ margin: '0 20px', width: '100%', maxWidth: '300px', height: '70px' }}
         type="number" 
         min="1" 
         max={maxValue}
@@ -132,7 +132,7 @@ export default function Page() {
         }}
       />
       <button
-       style={{ padding: '10px', backgroundColor: '#333', border: '1px solid #ccc', borderRadius: '5px' }}
+       style={{ margin: '0 20px', backgroundColor: '#333', border: '1px solid #ccc', borderRadius: '5px', width: '100%', maxWidth: '300px', marginBottom: '10px' }}
         onClick={() => {
           compute(value1 + 1);
         }}
@@ -140,7 +140,7 @@ export default function Page() {
         Next
       </button>
       <button
-       style={{ padding: '10px', backgroundColor: '#333', border: '1px solid #ccc', borderRadius: '5px', marginLeft: '50px' }}
+       style={{ margin: '0 20px', backgroundColor: '#333', border: '1px solid #ccc', borderRadius: '5px', width: '100%', maxWidth: '300px', marginBottom: '10px' }}
         onClick={() => {
           let nextPrime = value1 + 1;
           while (!isPrime(nextPrime)) {
@@ -167,7 +167,7 @@ export default function Page() {
     </h2>
     )}
     </div>
-    <div className="text-center tracking-wide font-mono text-xl lg:text-2xl font-black">
+    <div className="text-center tracking-wide font-mono text-xl lg:text-2xl font-black"  style={{margin: "0 20px"}}>
     <h2>{definition}</h2><br/>
     {factors.length > 0 && (
       <div>
