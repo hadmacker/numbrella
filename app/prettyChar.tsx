@@ -54,6 +54,14 @@ export class PrettyChar {
         pretty.push(new PrettyChar("Saturday", "text-emerald-500"));
         pretty.push(new PrettyChar("Sunday", "text-blue-400"));
 
+        pretty.push(new PrettyChar("I", "text-yellow-200"));
+        pretty.push(new PrettyChar("V", "text-green-600"));
+        pretty.push(new PrettyChar("X", "text-pink-500"));
+        pretty.push(new PrettyChar("L", "text-amber-500"));
+        pretty.push(new PrettyChar("C", "text-indigo-600"));
+        pretty.push(new PrettyChar("D", "text-emerald-400"));
+        pretty.push(new PrettyChar("M", "text-blue-400"));
+
         return pretty;
     }
 }
