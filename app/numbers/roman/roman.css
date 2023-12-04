@@ -1,0 +1,17 @@
+.integerColumn {
+    margin-right: 10px;
+  }
+  
+  .romanColumn {
+    margin-left: 10px;
+  }
+  
+  @media (min-width: 768px) {
+    .integerColumn {
+      margin-right: 20px;
+    }
+  
+    .romanColumn {
+      margin-left: 20px;
+    }
+  }
