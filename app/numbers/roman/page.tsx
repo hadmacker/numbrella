@@ -105,11 +105,7 @@ export default function Page() {
           <div className="text-center tracking-wide font-mono text-l lg:text-1xl">
             <p>Imagine you have a box of blocks.</p>
             <p>Some blocks have the letter &quot;{formattedRoman("I", false)}&quot; on them, some have &quot;{formattedRoman("V", false)}&quot;, some have &quot;{formattedRoman("X", false)}&quot;, some have &quot;{formattedRoman("L", false)}&quot;, some have &quot;{formattedRoman("C", false)}&quot;, some have &quot;{formattedRoman("D", false)}&quot;, and some have &quot;{formattedRoman("M", false)}&quot;.</p>
-            <p>Some blocks have the letter &quot;{formattedRoman("I", false)}&quot; on them, some have &quot;{formattedRoman("V", false)}&quot;, some have &quot;{formattedRoman("X", false)}&quot;, some have &quot;{formattedRoman("L", false)}&quot;, some have &quot;{formattedRoman("C", false)}&quot;, some have &quot;{formattedRoman("D", false)}&quot;, and some have &quot;{formattedRoman("M", false)}&quot;.</p>
             <p>Each letter is a special code that stands for a number.</p>
-            <p>&quot;{formattedRoman("I", false)}&quot; is {formatted(1, false)}, &quot;{formattedRoman("V", false)}&quot; is {formatted(5, false)}, &quot;{formattedRoman("X", false)}&quot; is {formatted(10, false)}, &quot;{formattedRoman("L", false)}&quot; is {formatted(50, false)}, &quot;{formattedRoman("C", false)}&quot; is {formatted(100, false)}, &quot;{formattedRoman("D", false)}&quot; is {formatted(500, false)}, and &quot;{formattedRoman("M", false)}&quot; is {formatted(1000, false)}.</p>
-            <p>Now, if you want to show the number {formatted(2, false)}, you just need to put two &quot;{formattedRoman("I", false)}&quot; blocks together like &quot;{formattedRoman("II", false)}&quot;.</p>
-            <p>If you want to show {formatted(6, false)}, you can put a &quot;{formattedRoman("V", false)}&quot; block and an &quot;{formattedRoman("I", false)}&quot; block together like &quot;{formattedRoman("VI", false)}&quot;.</p>
             <p>&quot;{formattedRoman("I", false)}&quot; is {formatted(1, false)}, &quot;{formattedRoman("V", false)}&quot; is {formatted(5, false)}, &quot;{formattedRoman("X", false)}&quot; is {formatted(10, false)}, &quot;{formattedRoman("L", false)}&quot; is {formatted(50, false)}, &quot;{formattedRoman("C", false)}&quot; is {formatted(100, false)}, &quot;{formattedRoman("D", false)}&quot; is {formatted(500, false)}, and &quot;{formattedRoman("M", false)}&quot; is {formatted(1000, false)}.</p>
             <p>Now, if you want to show the number {formatted(2, false)}, you just need to put two &quot;{formattedRoman("I", false)}&quot; blocks together like &quot;{formattedRoman("II", false)}&quot;.</p>
             <p>If you want to show {formatted(6, false)}, you can put a &quot;{formattedRoman("V", false)}&quot; block and an &quot;{formattedRoman("I", false)}&quot; block together like &quot;{formattedRoman("VI", false)}&quot;.</p>
@@ -117,8 +113,7 @@ export default function Page() {
             <p>You could use four &quot;{formattedRoman("I", false)}&quot; blocks like &quot;{formattedRoman("IIII", false)}&quot;, but there&apos;s a special rule.</p>
             <p>If you put a smaller number in front of a bigger number, it means you subtract the smaller one.</p>
             <p>So, for {formatted(4, false)}, you put an &quot;{formattedRoman("I", false)}&quot; in front of a &quot;{formattedRoman("V", false)}&quot; to make &quot;{formattedRoman("IV", false)}&quot;.</p>
-            <p>Traditionally, roman numerals only go up to {formatted(3999, false)} because there is no symbol for {formatted(5000, false)} although there are some extensions to the system allowing larger numbers not yet covered here.</p>
-
+            <p>Traditionally, Roman numerals only go up to {formatted(3999, false)} because there is no symbol for {formatted(5000, false)} although there are some extensions to the system allowing larger numbers not yet covered here.</p>
             <p>And that&apos;s how you can make any number with your blocks!</p>
           </div>
           <br/>
