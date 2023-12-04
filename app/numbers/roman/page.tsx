@@ -104,17 +104,17 @@ export default function Page() {
           <h2 className="text-center tracking-wide font-mono text-1xl lg:text-3xl font-black">Roman Numerals</h2>
           <div className="text-center tracking-wide font-mono text-l lg:text-1xl">
             <p>Imagine you have a box of blocks.</p>
-            <p>Some blocks have the letter "{formattedRoman("I", false)}" on them, some have "{formattedRoman("V", false)}", some have "{formattedRoman("X", false)}", some have "{formattedRoman("L", false)}", some have "{formattedRoman("C", false)}", some have "{formattedRoman("D", false)}", and some have "{formattedRoman("M", false)}".</p>
+            <p>Some blocks have the letter &quot;{formattedRoman("I", false)}&quot; on them, some have &quot;{formattedRoman("V", false)}&quot;, some have &quot;{formattedRoman("X", false)}&quot;, some have &quot;{formattedRoman("L", false)}&quot;, some have &quot;{formattedRoman("C", false)}&quot;, some have &quot;{formattedRoman("D", false)}&quot;, and some have &quot;{formattedRoman("M", false)}&quot;.</p>
             <p>Each letter is a special code that stands for a number.</p>
-            <p>"{formattedRoman("I", false)}" is {formatted(1, false)}, "{formattedRoman("V", false)}" is {formatted(5, false)}, "{formattedRoman("X", false)}" is {formatted(10, false)}, "{formattedRoman("L", false)}" is {formatted(50, false)}, "{formattedRoman("C", false)}" is {formatted(100, false)}, "{formattedRoman("D", false)}" is {formatted(500, false)}, and "{formattedRoman("M", false)}" is {formatted(1000, false)}.</p>
-            <p>Now, if you want to show the number {formatted(2, false)}, you just need to put two "{formattedRoman("I", false)}" blocks together like "{formattedRoman("II", false)}".</p>
-            <p>If you want to show {formatted(6, false)}, you can put a "{formattedRoman("V", false)}" block and an "{formattedRoman("I", false)}" block together like "{formattedRoman("VI", false)}".</p>
+            <p>&quot;{formattedRoman("I", false)}&quot; is {formatted(1, false)}, &quot;{formattedRoman("V", false)}&quot; is {formatted(5, false)}, &quot;{formattedRoman("X", false)}&quot; is {formatted(10, false)}, &quot;{formattedRoman("L", false)}&quot; is {formatted(50, false)}, &quot;{formattedRoman("C", false)}&quot; is {formatted(100, false)}, &quot;{formattedRoman("D", false)}&quot; is {formatted(500, false)}, and &quot;{formattedRoman("M", false)}&quot; is {formatted(1000, false)}.</p>
+            <p>Now, if you want to show the number {formatted(2, false)}, you just need to put two &quot;{formattedRoman("I", false)}&quot; blocks together like &quot;{formattedRoman("II", false)}&quot;.</p>
+            <p>If you want to show {formatted(6, false)}, you can put a &quot;{formattedRoman("V", false)}&quot; block and an &quot;{formattedRoman("I", false)}&quot; block together like &quot;{formattedRoman("VI", false)}&quot;.</p>
             <p>But what if you want to show {formatted(4, false)}?</p>
-            <p>You could use four "{formattedRoman("I", false)}" blocks like "{formattedRoman("IIII", false)}", but there's a special rule.</p>
+            <p>You could use four &quot;{formattedRoman("I", false)}&quot; blocks like &quot;{formattedRoman("IIII", false)}&quot;, but there&apos;s a special rule.</p>
             <p>If you put a smaller number in front of a bigger number, it means you subtract the smaller one.</p>
-            <p>So, for {formatted(4, false)}, you put an "{formattedRoman("I", false)}" in front of a "{formattedRoman("V", false)}" to make "{formattedRoman("IV", false)}".</p>
+            <p>So, for {formatted(4, false)}, you put an &quot;{formattedRoman("I", false)}&quot; in front of a &quot;{formattedRoman("V", false)}&quot; to make &quot;{formattedRoman("IV", false)}&quot;.</p>
 
-            <p>And that's how you can make any number with your blocks!</p>
+            <p>And that&apos;s how you can make any number with your blocks!</p>
           </div>
           <br/>
           {romanNumeralsList}
