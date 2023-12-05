@@ -64,14 +64,12 @@ function formatted(number: number, bw: boolean): React.ReactElement[] {
 function integerToRoman(num: number) {
   const romanNumerals: { [key: string]: number } = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1 };
   let roman = '';
-
   for (let key in romanNumerals) {
     while (num >= romanNumerals[key]) {
       roman += key;
       num -= romanNumerals[key];
     }
   }
-
   return roman;
 }
 
@@ -91,13 +89,13 @@ export default function Page() {
     useEffect(() => {
       function handleScroll() {
         if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight - 800) return;
-        setCount(count => count + 1000);
+        setCount(count => count + 1000 <= 3999 ? count + 1000 : 3999);
       }
   
       window.addEventListener('scroll', handleScroll);
       return () => window.removeEventListener('scroll', handleScroll);
     }, []);
-  
+
     return (
       <>
         <div style={{ border: '1px solid black', backgroundColor: '#222222', padding: '10px', margin: '10px' }}>
@@ -113,11 +111,20 @@ export default function Page() {
             <p>You could use four &quot;{formattedRoman("I", false)}&quot; blocks like &quot;{formattedRoman("IIII", false)}&quot;, but there&apos;s a special rule.</p>
             <p>If you put a smaller number in front of a bigger number, it means you subtract the smaller one.</p>
             <p>So, for {formatted(4, false)}, you put an &quot;{formattedRoman("I", false)}&quot; in front of a &quot;{formattedRoman("V", false)}&quot; to make &quot;{formattedRoman("IV", false)}&quot;.</p>
+            <p>Traditionally, the largest number you can write in Roman numerals is {formatted(3999, false)} which is {formattedRoman("MMMCMXCIX", false)}.</p>
+            <p style={{display: 'none'}}>You can represent numbers larger than this in Roman numerals using an <span className="overline">overline</span> (known as the vinculum or virgula).</p>
 
             <p>And that&apos;s how you can make any number with your blocks!</p>
           </div>
           <br/>
           {romanNumeralsList}
+          {count >= 3999 && (
+          <div className="text-center tracking-wide font-mono text-l lg:text-1xl">
+            <br/>
+            <p>Traditionally, the largest number you can write in Roman numerals is {formatted(3999, false)} which is {formattedRoman("MMMCMXCIX", false)}.</p>
+            <p>You can represent numbers larger than this in Roman numerals using an <span className="overline">overline</span> (known as the <span className="overline">vinculum</span> or <span className="overline">virgula</span>) to multiply the symbol by {formatted(1000, false)} although this is not applied here.</p>
+          </div>
+          )}
         </div>
       </>
     );
