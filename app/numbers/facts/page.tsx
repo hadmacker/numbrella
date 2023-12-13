@@ -49,7 +49,7 @@ export default function Page() {
 
     useEffect(() => {
       nextFact();
-    }, []);
+    });
 
     const nextFact = () => {
       const operations = gradeMathFacts[grade as keyof typeof gradeMathFacts];
