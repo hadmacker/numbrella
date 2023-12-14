@@ -1,5 +1,9 @@
 name: Azure Static Web Apps CI/CD
 
+strategy:
+  matrix:
+    node-version: ['18.x']
+
 on:
   push:
     branches:
@@ -30,6 +34,7 @@ jobs:
           app_location: "/" # App source code path
           api_location: "" # Api source code path - optional
           output_location: "" # Built app content directory - optional
+          node-version: ${{ matrix.node-version }}
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
