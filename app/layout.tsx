@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Numbrillig',
-  description: 'So you like numbers, eh?',
+  description: 'Finding an escape in numbers and words.',
 }
 
 export default function RootLayout({

@@ -70,7 +70,7 @@ export default function Page() {
   // Generate a new pair when the component mounts
   useEffect(() => {
     generateNewPair();
-  });
+  }, []);
 
   const classes = [
     "text-green-300",
