@@ -32,6 +32,12 @@ export default function Home() {
             <li key="w1.1.2.4" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="words/opposites"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Opposites</span></a></li>
           </ul>
         </div>
+        <div key="a1">
+          <span className="mx-3 md:mx-2 md:p-1 text-2xl md:text-3xl font-black text-gray-500">Activities</span>
+          <ul key="a1.1" className='block'>
+            <li key="a1.1.2.1" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="activities/shapes"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Shape Slider</span></a></li>
+          </ul>
+        </div>
         </div>
         <div style={{marginLeft: '50px'}}
         className="place-items-center gap-1 pl-2 lg:pointer-events-auto font-mono text-xs font-bold text-gray-500"
