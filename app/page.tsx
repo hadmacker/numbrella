@@ -20,6 +20,7 @@ export default function Home() {
             <li key="n1.1.2.11" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/facts"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Math Facts</span></a></li>
             <li key="n1.1.2.12" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/primes"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Prime or Composite</span></a></li>
             <li key="n1.1.2.13" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/roman"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Roman Numerals</span></a></li>
+            <li key="n1.1.2.14" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/bin2dec"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Binary Numbers</span></a></li>
           </ul>
         </div>
         <div key="w1">
