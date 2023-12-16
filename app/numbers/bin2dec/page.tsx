@@ -8,7 +8,7 @@ const numbers = PrettyChar.allCharacters();
 
 let bitFormats: Array<PrettyChar> = [];
 bitFormats.push(new PrettyChar("0","text-gray-500"));
-bitFormats.push(new PrettyChar("1","text-white-800"));
+bitFormats.push(new PrettyChar("1","text-pink-500"));
 
 function formatted(number: number, bw: boolean): React.ReactElement[] {
   if (number === null || number === undefined) {
