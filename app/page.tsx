@@ -35,7 +35,8 @@ export default function Home() {
         <div key="a1">
           <span className="mx-3 md:mx-2 md:p-1 text-2xl md:text-3xl font-black text-gray-500">Activities</span>
           <ul key="a1.1" className='block'>
-            <li key="a1.1.2.1" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="activities/shapes"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Shape Slider</span></a></li>
+            <li key="a1.1.2.1" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="activities/shapes"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Polygons</span></a></li>
+            <li key="a1.1.2.2" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="activities/maze"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Maze Maker</span></a></li>
           </ul>
         </div>
         </div>
