@@ -22,6 +22,8 @@ Screenshots can be found at the [end of this file](#screenshots).
     * Check the following install options in addition to any default options already selected for install:
       * Add 'Open here' context menus to Explorer
       * Add 'Run with PowerShell 7' context menu for PowerShell files
+* **NVM-Windows**
+  * [Install Node.JS on Windows](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows)
 * **Node.js**
   * [Node LTS 18.17.0](https://nodejs.org/dist/v18.17.0/) [Windows x64 Installer](https://nodejs.org/dist/v18.17.0/node-v18.17.0-x64.msi)
   * Check the install option for Additional Node Tools.
