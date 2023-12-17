@@ -15,7 +15,7 @@ const DrawingCanvas: React.FC = () => {
 
     const setCanvasSize = () => {
       canvas.width = window.innerWidth * 0.95;
-      canvas.height = window.innerHeight * 0.8;
+      canvas.height = window.innerHeight * 0.7;
       const context = canvas.getContext('2d');
       if (!context) return;
       context.fillStyle = 'white'; // Set canvas background color to white
