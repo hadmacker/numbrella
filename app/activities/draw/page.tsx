@@ -52,20 +52,30 @@ const DrawingCanvas: React.FC = () => {
     }
   }, [color]);
 
-  const startDrawing = (event: { touches?: any; clientX?: any; clientY?: any; }) => {
-    const { clientX, clientY } = event.touches ? event.touches[0] : event;
-    if (contextRef.current) {
+  type Event = React.MouseEvent<HTMLCanvasElement, MouseEvent> | React.TouchEvent<HTMLCanvasElement>;
+
+  const startDrawing = (event: Event ) => {
+    const isTouchEvent = 'touches' in event;
+    const { clientX, clientY } = isTouchEvent ? event.touches[0] : event;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    if(contextRef.current) {
       contextRef.current.beginPath();
-      contextRef.current.moveTo(clientX, clientY);
+      contextRef.current.moveTo(clientX - rect.left, clientY - rect.top);
     }
     setIsDrawing(true);
   };
 
-  const draw = (event: { touches?: any; clientX?: any; clientY?: any; }) => {
+  const draw = (event: Event ) => {
     if (!isDrawing) return;
-    const { clientX, clientY } = event.touches ? event.touches[0] : event;
-    if (contextRef.current) {
-      contextRef.current.lineTo(clientX, clientY);
+    const isTouchEvent = 'touches' in event;
+    const { clientX, clientY } = isTouchEvent ? event.touches[0] : event;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    if(contextRef.current){
+      contextRef.current.lineTo(clientX - rect.left, clientY - rect.top);
       contextRef.current.stroke();
     }
   };
@@ -120,7 +130,7 @@ const DrawingCanvas: React.FC = () => {
         onTouchStart={startDrawing}
         onTouchMove={draw}
         onTouchEnd={endDrawing}
-        style={{ border: '1px solid black' }}
+        style={{ border: '1px solid black', touchAction: 'none' }}
       />
       <button 
       style={{ padding: '10px', backgroundColor: '#555', border: '1px solid #ccc', borderRadius: '5px' }} 
