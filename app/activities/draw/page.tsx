@@ -52,28 +52,29 @@ const DrawingCanvas: React.FC = () => {
     }
   }, [color]);
 
-  const startDrawing = ({ nativeEvent }: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!contextRef.current) return;
-
-    const { offsetX, offsetY } = nativeEvent;
-    contextRef.current.beginPath();
-    contextRef.current.moveTo(offsetX, offsetY);
+  const startDrawing = (event: { touches?: any; clientX?: any; clientY?: any; }) => {
+    const { clientX, clientY } = event.touches ? event.touches[0] : event;
+    if (contextRef.current) {
+      contextRef.current.beginPath();
+      contextRef.current.moveTo(clientX, clientY);
+    }
     setIsDrawing(true);
   };
 
-  const draw = ({ nativeEvent }: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!contextRef.current || !isDrawing) return;
-
-    const { offsetX, offsetY } = nativeEvent;
-    contextRef.current.lineTo(offsetX, offsetY);
-    contextRef.current.stroke();
+  const draw = (event: { touches?: any; clientX?: any; clientY?: any; }) => {
+    if (!isDrawing) return;
+    const { clientX, clientY } = event.touches ? event.touches[0] : event;
+    if (contextRef.current) {
+      contextRef.current.lineTo(clientX, clientY);
+      contextRef.current.stroke();
+    }
   };
 
   const endDrawing = () => {
-    setIsDrawing(false);
     if (contextRef.current) {
       contextRef.current.closePath();
     }
+    setIsDrawing(false);
   };
 
   const exportImage = () => {
@@ -89,19 +90,36 @@ const DrawingCanvas: React.FC = () => {
     link.click();
   };
 
+  const clearCanvas = () => {
+    const canvas = canvasRef.current;
+    const context = contextRef.current;
+    if (!canvas || !context) return;
+
+    context.fillStyle = 'white'; // Set fill color to white
+    context.fillRect(0, 0, canvas.width, canvas.height);
+  };
+
   return (
     <div>
-      <label>Select Color: </label>
-      <input
-        type="color"
-        value={color}
-        onChange={(e) => setColor(e.target.value)}
-      />
+      <div style={{ 
+        border: '1px solid black', 
+        backgroundColor: '#222222'}}>
+          <label>Select Color: </label>
+          <input
+            style={{border: '1px solid white'}}
+            type="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+          />
+      </div>
       <canvas
         ref={canvasRef}
         onMouseDown={startDrawing}
         onMouseMove={draw}
         onMouseUp={endDrawing}
+        onTouchStart={startDrawing}
+        onTouchMove={draw}
+        onTouchEnd={endDrawing}
         style={{ border: '1px solid black' }}
       />
       <button 
@@ -111,7 +129,7 @@ const DrawingCanvas: React.FC = () => {
       <button 
       style={{ padding: '10px', backgroundColor: '#555', border: '1px solid #ccc', borderRadius: '5px' }} 
       className="m-1"
-      onClick={exportImage}>Clear</button>
+      onClick={clearCanvas}>Clear</button>
     </div>
   );
 };
