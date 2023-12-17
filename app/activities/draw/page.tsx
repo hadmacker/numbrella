@@ -104,7 +104,14 @@ const DrawingCanvas: React.FC = () => {
         onMouseUp={endDrawing}
         style={{ border: '1px solid black' }}
       />
-      <button onClick={exportImage}>Export as Image</button>
+      <button 
+      style={{ padding: '10px', backgroundColor: '#555', border: '1px solid #ccc', borderRadius: '5px' }} 
+      className="m-1"
+      onClick={exportImage}>Export as Image</button>
+      <button 
+      style={{ padding: '10px', backgroundColor: '#555', border: '1px solid #ccc', borderRadius: '5px' }} 
+      className="m-1"
+      onClick={exportImage}>Clear</button>
     </div>
   );
 };
