@@ -3,7 +3,21 @@
 import { PrettyChar } from '@/app/prettyChar';
 import React, { useRef, useEffect, useState } from 'react';
 
-const digitColors = {
+const urlParams = new URLSearchParams(window.location.search);
+const isMatrix = urlParams.get('matrix') === '1';
+
+const digitColors =  isMatrix ? {
+  0: '#0f0',
+  1: '#1f1',
+  2: '#2f2',
+  3: '#3f3',
+  4: '#4f4',
+  5: '#5f5',
+  6: '#6f6',
+  7: '#7f7',
+  8: '#8f8',
+  9: '#9f9',
+} : {
   0: '#9CA3AF', // Equivalent to text-gray-400
   1: '#EC4899', // Equivalent to text-pink-500
   2: '#F59E0B', // Equivalent to text-amber-500
@@ -61,7 +75,7 @@ const RainCanvas: React.FC = () => {
         let xOffset = 0;
         digits.forEach((digit, index) => {
           ctx.beginPath();
-          ctx.font = `${drop.fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
+          ctx.font = `bold ${drop.fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
           ctx.fillStyle = digitColors[parseInt(digit, 10) as keyof typeof digitColors] || 'white'; // Use the color corresponding to the digit, or white if the digit is not in the mapping
           ctx.fillText(digit, drop.x + xOffset, drop.y); // Draw the digit
           ctx.stroke();
@@ -78,13 +92,22 @@ const RainCanvas: React.FC = () => {
   }, [raindrops, excludeArea]);
 
   useEffect(() => {
+    function generateValue() {
+      const newValue = Math.floor(Math.random() * 99) + -10;
+
+      if(newValue < 0) {
+        return 0;
+      }
+      return newValue;
+    }
+
     const interval = setInterval(() => {
-      if (raindrops.length < 50) {
+      if (raindrops.length < 30) {
         const newRaindrops: Raindrop[] = Array.from({ length: 10 }, () => ({
           x: Math.random() * canvasRef.current!.width,
           y: 0,
-          speed: Math.random() * 5 + 2,
-          value: Math.floor(Math.random() * 99) + 1,
+          speed: Math.random() * 3 + 2,
+          value: generateValue(),
           fontSize: Math.floor(Math.random() * (72 - 20 + 1)) + 20,
         }));
         setRaindrops((prevRaindrops) => [...prevRaindrops, ...newRaindrops]);
