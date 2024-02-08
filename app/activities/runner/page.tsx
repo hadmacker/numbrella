@@ -1,11 +1,12 @@
 'use client'
 
-import { PrettyChar } from '@/app/prettyChar';
 import React, { useRef, useEffect, useState } from 'react';
 
 const urlParams = new URLSearchParams(window.location.search);
 const isMatrix = urlParams.get('matrix') === '1';
-const maxRaindrops = 20;// isMatrix ? 100 : 30;
+const maxNewRaindrops = isMatrix ? 30 : 5;
+const maxRaindrops = isMatrix ? 300 : 30;
+const bubbleBackground = isMatrix ? '#9F9' : '#FFF';
 const digitColors =  isMatrix ? {
   0: '#0f0',
   1: '#1f1',
@@ -18,7 +19,7 @@ const digitColors =  isMatrix ? {
   8: '#8f8',
   9: '#9f9',
 } : {
-  0: '#9CA3AF', // Equivalent to text-gray-400
+  0: '#FFF', //'#9CA3AF', // Equivalent to text-gray-400
   1: '#EC4899', // Equivalent to text-pink-500
   2: '#F59E0B', // Equivalent to text-amber-500
   3: '#84CC16', // Equivalent to text-lime-500
@@ -45,7 +46,21 @@ const RainCanvas: React.FC = () => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const dragCoords = useRef({ x: 0, y: 0});
   const [dragging, setDragging] = useState(false);
-  const [bubbleValue, setBubbleValue] = useState(5000);
+  const [bubbleValue, setBubbleValue] = useState(0);
+
+  useEffect(() => {
+    console.log("1");
+    if (canvasRef.current) {
+      console.log("2");
+      const canvas = canvasRef.current;
+      const rect = canvas.getBoundingClientRect();
+
+      const x = rect.width / 2;
+      const y = rect.height / 2;
+      dragCoords.current = { x, y };
+      console.log(dragCoords);
+    }
+  }, [dimensions]);
 
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -166,7 +181,7 @@ const RainCanvas: React.FC = () => {
 
         ctx.beginPath();
         ctx.arc(dragCoords.current.x, dragCoords.current.y, 50, 0, 2 * Math.PI);
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = bubbleBackground;
         ctx.fill();
         ctx.font = 'bold 20px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
         ctx.textAlign = 'center';
@@ -193,7 +208,7 @@ const RainCanvas: React.FC = () => {
 
     const interval = setInterval(() => {
       if (raindrops.length < maxRaindrops) {
-        const newRaindrops: Raindrop[] = Array.from({ length: 5 }, () => ({
+        const newRaindrops: Raindrop[] = Array.from({ length: maxNewRaindrops }, () => ({
           x: Math.random() * canvasRef.current!.width,
           y: 0,
           speed: Math.random() * 3 + 2,
