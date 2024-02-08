@@ -5,7 +5,7 @@ import React, { useRef, useEffect, useState } from 'react';
 
 const urlParams = new URLSearchParams(window.location.search);
 const isMatrix = urlParams.get('matrix') === '1';
-
+const maxRaindrops = 20;// isMatrix ? 100 : 30;
 const digitColors =  isMatrix ? {
   0: '#0f0',
   1: '#1f1',
@@ -102,8 +102,8 @@ const RainCanvas: React.FC = () => {
     }
 
     const interval = setInterval(() => {
-      if (raindrops.length < 30) {
-        const newRaindrops: Raindrop[] = Array.from({ length: 10 }, () => ({
+      if (raindrops.length < maxRaindrops) {
+        const newRaindrops: Raindrop[] = Array.from({ length: 5 }, () => ({
           x: Math.random() * canvasRef.current!.width,
           y: 0,
           speed: Math.random() * 3 + 2,
