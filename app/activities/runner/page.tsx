@@ -18,6 +18,7 @@ const badZeroColor = isMatrix ? '#DFD' : '#FFF';
 const bubbleCountColor = isMatrix ? '#030' : 'white';
 const zeroWeight = -10;
 const minFontSize = 30;
+const bubbleFontSize = 40;
 const digitColors =  isMatrix ? {
   0: '#0f0',
   1: '#1f1',
@@ -224,11 +225,11 @@ const RainCanvas: React.FC = () => {
         ctx.arc(dragCoords.current.x, dragCoords.current.y, bubbleRadius, 0, 2 * Math.PI);
         ctx.fillStyle = bubbleFlash ? bubbleBackgroundFlash : bubbleBackground;
         ctx.fill();
-        ctx.font = `bold ${minFontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
+        ctx.font = `bold ${bubbleFontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillStyle = bubbleCountColor;
-        ctx.fillText(bubbleValue.toString(), dragCoords.current.x, dragCoords.current.y);
+        ctx.fillText(bubbleValue.toString(), dragCoords.current.x, dragCoords.current.y - bubbleRadius);
       });
 
       requestAnimationFrame(animate);
