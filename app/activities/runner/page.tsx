@@ -43,6 +43,86 @@ const RainCanvas: React.FC = () => {
   const [raindrops, setRaindrops] = useState<Raindrop[]>([]);
   const [excludeArea, setExcludeArea] = useState<{ x: number; y: number } | null>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const dragCoords = useRef({ x: 0, y: 0});
+  const [dragging, setDragging] = useState(false);
+  const [bubbleValue, setBubbleValue] = useState(5000);
+
+  useEffect(() => {
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext('2d')!;
+  
+    function isInsideBubble(x: number, y: number) {
+      console.log(dragCoords.current);
+      console.log(x, y);
+      const dx = x - dragCoords.current.x;
+      const dy = y - dragCoords.current.y;
+      return Math.sqrt(dx * dx + dy * dy) < 50; // Assuming the bubble's radius is 50
+    }
+  
+    function handleMouseDown(e: MouseEvent) {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      if (isInsideBubble(x, y)) {
+        console.log('inside bubble');
+        setDragging(true);
+      }
+    }
+  
+    function handleMouseMove(e: MouseEvent) {
+      if (dragging) {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        dragCoords.current = { x, y };
+      }
+    }
+  
+    function handleMouseUp() {
+      setDragging(false);
+      console.log('exiting bubble');
+    }
+  
+    function handleTouchStart(e: TouchEvent) {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.touches[0].clientX - rect.left;
+      const y = e.touches[0].clientY - rect.top;
+      if (isInsideBubble(x, y)) {
+        console.log('inside bubble');
+        setDragging(true);
+      }
+    }
+  
+    function handleTouchMove(e: TouchEvent) {
+      if (dragging) {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.touches[0].clientX - rect.left;
+        const y = e.touches[0].clientY - rect.top;
+        dragCoords.current = { x, y };
+      }
+    }
+  
+    function handleTouchEnd() {
+      setDragging(false);
+      console.log('exiting bubble');
+    }
+  
+    canvas.addEventListener('mousedown', handleMouseDown);
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseup', handleMouseUp);
+    canvas.addEventListener('touchstart', handleTouchStart);
+    canvas.addEventListener('touchmove', handleTouchMove);
+    canvas.addEventListener('touchend', handleTouchEnd);
+  
+    return () => {
+      canvas.removeEventListener('mousedown', handleMouseDown);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('mouseup', handleMouseUp);
+      canvas.removeEventListener('touchstart', handleTouchStart);
+      canvas.removeEventListener('touchmove', handleTouchMove);
+      canvas.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [dragCoords, dragging]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -83,6 +163,16 @@ const RainCanvas: React.FC = () => {
         });
       
         drop.y += drop.speed;
+
+        ctx.beginPath();
+        ctx.arc(dragCoords.current.x, dragCoords.current.y, 50, 0, 2 * Math.PI);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.font = 'bold 20px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = 'black';
+        ctx.fillText(bubbleValue.toString(), dragCoords.current.x, dragCoords.current.y);
       });
 
       requestAnimationFrame(animate);
