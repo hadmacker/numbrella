@@ -2,11 +2,22 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 
-const urlParams = new URLSearchParams(window.location.search);
-const isMatrix = urlParams.get('matrix') === '1';
+let isMatrix = false;
+let urlParams;
+
+if (typeof window !== 'undefined') {
+  urlParams = new URLSearchParams(window.location.search);
+  isMatrix = urlParams.get('matrix') === '1';
+}
+
 const maxNewRaindrops = isMatrix ? 30 : 5;
 const maxRaindrops = isMatrix ? 300 : 30;
-const bubbleBackground = isMatrix ? '#9F9' : '#FFF';
+const bubbleBackground = isMatrix ? '#9F9' : '#333';
+const bubbleBackgroundFlash = isMatrix ? '#DFD' : '#FFF';
+const badZeroColor = isMatrix ? '#DFD' : '#FFF';
+const bubbleCountColor = isMatrix ? '#030' : 'white';
+const zeroWeight = -10;
+const minFontSize = 30;
 const digitColors =  isMatrix ? {
   0: '#0f0',
   1: '#1f1',
@@ -19,7 +30,7 @@ const digitColors =  isMatrix ? {
   8: '#8f8',
   9: '#9f9',
 } : {
-  0: '#FFF', //'#9CA3AF', // Equivalent to text-gray-400
+  0: '#9CA3AF', // Equivalent to text-gray-400
   1: '#EC4899', // Equivalent to text-pink-500
   2: '#F59E0B', // Equivalent to text-amber-500
   3: '#84CC16', // Equivalent to text-lime-500
@@ -37,6 +48,7 @@ type Raindrop = {
   speed: number;
   value: number;
   fontSize: number;
+  collided: boolean;
 };
 
 const RainCanvas: React.FC = () => {
@@ -47,31 +59,38 @@ const RainCanvas: React.FC = () => {
   const dragCoords = useRef({ x: 0, y: 0});
   const [dragging, setDragging] = useState(false);
   const [bubbleValue, setBubbleValue] = useState(0);
+  const [bubbleRadius, setBubbleRadius] = useState(50);
+  const [bubbleFlash, setBubbleFlash] = useState(false);
+  const [highScore, setHighScore] = useState(0);
 
   useEffect(() => {
-    console.log("1");
     if (canvasRef.current) {
-      console.log("2");
       const canvas = canvasRef.current;
       const rect = canvas.getBoundingClientRect();
 
       const x = rect.width / 2;
       const y = rect.height / 2;
       dragCoords.current = { x, y };
-      console.log(dragCoords);
     }
   }, [dimensions]);
+
+  useEffect(() => {
+    const preventDefault = (e: { preventDefault: () => any; }) => e.preventDefault();
+    document.addEventListener('touchmove', preventDefault, { passive: false });
+  
+    return () => {
+      document.removeEventListener('touchmove', preventDefault);
+    };
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext('2d')!;
   
     function isInsideBubble(x: number, y: number) {
-      console.log(dragCoords.current);
-      console.log(x, y);
       const dx = x - dragCoords.current.x;
       const dy = y - dragCoords.current.y;
-      return Math.sqrt(dx * dx + dy * dy) < 50; // Assuming the bubble's radius is 50
+      return Math.sqrt(dx * dx + dy * dy) < bubbleRadius; // Assuming the bubble's radius is 50
     }
   
     function handleMouseDown(e: MouseEvent) {
@@ -79,7 +98,6 @@ const RainCanvas: React.FC = () => {
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       if (isInsideBubble(x, y)) {
-        console.log('inside bubble');
         setDragging(true);
       }
     }
@@ -95,7 +113,6 @@ const RainCanvas: React.FC = () => {
   
     function handleMouseUp() {
       setDragging(false);
-      console.log('exiting bubble');
     }
   
     function handleTouchStart(e: TouchEvent) {
@@ -103,7 +120,6 @@ const RainCanvas: React.FC = () => {
       const x = e.touches[0].clientX - rect.left;
       const y = e.touches[0].clientY - rect.top;
       if (isInsideBubble(x, y)) {
-        console.log('inside bubble');
         setDragging(true);
       }
     }
@@ -119,7 +135,6 @@ const RainCanvas: React.FC = () => {
   
     function handleTouchEnd() {
       setDragging(false);
-      console.log('exiting bubble');
     }
   
     canvas.addEventListener('mousedown', handleMouseDown);
@@ -164,14 +179,17 @@ const RainCanvas: React.FC = () => {
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       raindrops
-        .filter(drop => drop.y < canvas.height)
-        .forEach((drop) => {
+        .filter(drop => drop.y < canvas.height && !drop.collided)
+        .forEach((drop, dropIndex) => {
         const digits = Array.from(drop.value.toString());
         let xOffset = 0;
         digits.forEach((digit, index) => {
           ctx.beginPath();
           ctx.font = `bold ${drop.fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
           ctx.fillStyle = digitColors[parseInt(digit, 10) as keyof typeof digitColors] || 'white'; // Use the color corresponding to the digit, or white if the digit is not in the mapping
+          if(drop.value == 0) {
+            ctx.fillStyle = badZeroColor;
+          }
           ctx.fillText(digit, drop.x + xOffset, drop.y); // Draw the digit
           ctx.stroke();
           xOffset += ctx.measureText(digit).width; // Update the xOffset for the next digit
@@ -179,14 +197,37 @@ const RainCanvas: React.FC = () => {
       
         drop.y += drop.speed;
 
+        const dx = drop.x - dragCoords.current.x;
+        const dy = drop.y - dragCoords.current.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < bubbleRadius && !drop.collided) { // Check if the drop has not collided before
+          // The drop is inside the bubble and has not collided before, mark it as collided
+          drop.collided = true;
+      
+          // Increment bubbleValue or reset if hits a zero
+          if(drop.value == 0) {
+            setBubbleValue(0);
+            setBubbleFlash(true);
+            setTimeout(() => setBubbleFlash(false), 100);
+          } else {
+            setBubbleValue(prevBubbleValue => {
+              const newBubbleValue = prevBubbleValue + drop.value;
+              if(newBubbleValue > highScore) {
+                setHighScore(newBubbleValue);
+              }
+              return newBubbleValue;
+            });
+          }
+        }
+
         ctx.beginPath();
-        ctx.arc(dragCoords.current.x, dragCoords.current.y, 50, 0, 2 * Math.PI);
-        ctx.fillStyle = bubbleBackground;
+        ctx.arc(dragCoords.current.x, dragCoords.current.y, bubbleRadius, 0, 2 * Math.PI);
+        ctx.fillStyle = bubbleFlash ? bubbleBackgroundFlash : bubbleBackground;
         ctx.fill();
-        ctx.font = 'bold 20px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
+        ctx.font = `bold ${minFontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillStyle = 'black';
+        ctx.fillStyle = bubbleCountColor;
         ctx.fillText(bubbleValue.toString(), dragCoords.current.x, dragCoords.current.y);
       });
 
@@ -194,11 +235,11 @@ const RainCanvas: React.FC = () => {
     };
 
     animate();
-  }, [raindrops, excludeArea]);
+  }, [raindrops, excludeArea, bubbleRadius, bubbleFlash, bubbleValue, highScore, dimensions]);
 
   useEffect(() => {
     function generateValue() {
-      const newValue = Math.floor(Math.random() * 99) + -10;
+      const newValue = Math.floor(Math.random() * 99) + zeroWeight;
 
       if(newValue < 0) {
         return 0;
@@ -213,7 +254,8 @@ const RainCanvas: React.FC = () => {
           y: 0,
           speed: Math.random() * 3 + 2,
           value: generateValue(),
-          fontSize: Math.floor(Math.random() * (72 - 20 + 1)) + 20,
+          fontSize: Math.floor(Math.random() * (72 - minFontSize + 1)) + minFontSize,
+          collided: false,
         }));
         setRaindrops((prevRaindrops) => [...prevRaindrops, ...newRaindrops]);
       }
@@ -224,6 +266,7 @@ const RainCanvas: React.FC = () => {
 
   return (
     <div style={{ overflow: 'hidden', height: '100vh', width: '100vw' }}>
+      <span style={{ marginRight: '80px' }}>High Score: {highScore}</span><span>Current Score: {bubbleValue}</span>
     <canvas
       ref={canvasRef}
       width={dimensions.width}
