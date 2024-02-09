@@ -263,8 +263,8 @@ const RainCanvas: React.FC = () => {
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillStyle = bubbleCountColor;
-          const currentMeasure = ctx.measureText(bubbleValue.toString());
-          ctx.fillText(bubbleValue.toString(), currentMeasure.width, 20);
+          const currentMeasure = ctx.measureText("0");
+          ctx.fillText(bubbleValue.toString(), currentMeasure.width * 10, 20);
           ctx.stroke();
         }
       });
