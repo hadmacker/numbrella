@@ -12,11 +12,10 @@ if (typeof window !== 'undefined') {
 
 const maxNewRaindrops = isMatrix ? 30 : 5;
 const maxRaindrops = isMatrix ? 300 : 30;
-const bubbleBackground = isMatrix ? '#9F9' : '#333';
+const bubbleBackground = isMatrix ? '#242' : '#333';
 const bubbleBackgroundFlash = isMatrix ? '#DFD' : '#FFF';
 const badZeroColor = isMatrix ? '#DFD' : '#FFF';
-const bubbleCountColor = isMatrix ? '#030' : 'white';
-const zeroWeight = -10;
+const bubbleCountColor = isMatrix ? '#6F6' : 'white';
 const minFontSize = 30;
 const bubbleFontSize = 40;
 const digitColors =  isMatrix ? {
@@ -63,6 +62,20 @@ const RainCanvas: React.FC = () => {
   const [bubbleRadius, setBubbleRadius] = useState(50);
   const [bubbleFlash, setBubbleFlash] = useState(false);
   const [highScore, setHighScore] = useState(0);
+  const [isCalm, setIsCalm] = useState(false);
+  const [zeroWeight, setZeroWeight] = useState(-10);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      if(urlParams.get('calm') === '1') {
+        setIsCalm(p=> {
+          setZeroWeight(1);
+          return true;
+        });
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -206,10 +219,18 @@ const RainCanvas: React.FC = () => {
           drop.collided = true;
       
           // Increment bubbleValue or reset if hits a zero
-          if(drop.value == 0) {
+          if(!isCalm && drop.value == 0) {
             setBubbleValue(0);
             setBubbleFlash(true);
             setTimeout(() => setBubbleFlash(false), 100);
+          } else if(!isCalm && drop.value == 11) {
+            setBubbleValue(prevBubbleValue => {
+              const newBubbleValue = prevBubbleValue - drop.value;
+              if(newBubbleValue > highScore) {
+                setHighScore(newBubbleValue);
+              }
+              return newBubbleValue;
+            });
           } else {
             setBubbleValue(prevBubbleValue => {
               const newBubbleValue = prevBubbleValue + drop.value;
@@ -230,6 +251,17 @@ const RainCanvas: React.FC = () => {
         ctx.textBaseline = 'middle';
         ctx.fillStyle = bubbleCountColor;
         ctx.fillText(bubbleValue.toString(), dragCoords.current.x, dragCoords.current.y - bubbleRadius);
+
+        if (isCalm) {
+          ctx.beginPath();
+          ctx.font = `bold ${bubbleFontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = bubbleCountColor;
+          const currentMeasure = ctx.measureText(bubbleValue.toString());
+          ctx.fillText(bubbleValue.toString(), currentMeasure.width, 20);
+          ctx.stroke();
+        }
       });
 
       requestAnimationFrame(animate);
@@ -263,17 +295,21 @@ const RainCanvas: React.FC = () => {
     }, 500);
     
     return () => clearInterval(interval);
-  }, []);
+  }, [zeroWeight, isCalm]);
 
   return (
     <div style={{ overflow: 'hidden', height: '100vh', width: '100vw' }}>
-      <span style={{ marginRight: '80px' }}>High Score: {highScore}</span><span>Current Score: {bubbleValue}</span>
-    <canvas
-      ref={canvasRef}
-      width={dimensions.width}
-      height={dimensions.height}
-      style={{ border: '1px solid #000' }}
-    />
+      {!isCalm &&
+      <>
+      <span style={{ marginRight: '80px' }}>High Score: {highScore}</span><span style={{ marginRight: '80px' }}>Current Score: {bubbleValue}</span><span>0's reset the count. 11's are subtracted from count.</span>
+      </> 
+      }
+      <canvas
+        ref={canvasRef}
+        width={dimensions.width}
+        height={dimensions.height}
+        style={{ border: '1px solid #000' }}
+      />
     </div>
   );
 };
