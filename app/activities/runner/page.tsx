@@ -235,10 +235,10 @@ const RainCanvas: React.FC = () => {
             });
           } else {
             setBubbleValue(prevBubbleValue => {
-              const newBubbleValue = prevBubbleValue + drop.value;
+              let newBubbleValue = prevBubbleValue + drop.value;
 
               if(newBubbleValue >= maxValue) {
-                setBubbleValue(0);
+                setHighScore(maxValue);
                 setBubbleFlash(true);
                 setTimeout(() => setBubbleFlash(false), 100);
                 return 0;
