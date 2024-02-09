@@ -38,7 +38,13 @@ export default function Home() {
             <li key="a1.1.2.1" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="activities/shapes"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Polygons</span></a></li>
             <li key="a1.1.2.2" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="activities/maze"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Maze Maker</span></a></li>
             <li key="a1.1.2.3" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="activities/draw"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Draw</span></a></li>
-            <li key="a1.1.2.4" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="activities/runner"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Number Rain</span></a></li>
+            <li key="a1.1.2.4" className='mx-3 my-3 md:mx-:3 md:my-6'><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Number Rain</span>
+              <ul>
+                <li key="a1.1.2.4.1" className='mx-6 my-2 md:mx-:6 md:my-2 text-1xl md:text-2xl font-black text-gray-400'><a href="activities/runner"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Game</span></a></li>
+                <li key="a1.1.2.4.2" className='mx-6 my-2 md:mx-:6 md:my-2 text-1xl md:text-2xl font-black text-gray-400'><a href="activities/runner?calm=1"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Relaxed</span></a></li>
+                <li key="a1.1.2.4.3" className='mx-6 my-2 md:mx-:6 md:my-2 text-1xl md:text-2xl font-black text-gray-400'><a href="activities/runner?matrix=1"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Matrix</span></a></li>
+              </ul>
+            </li>
           </ul>
         </div>
         </div>
