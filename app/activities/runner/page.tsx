@@ -223,7 +223,7 @@ const RainCanvas: React.FC = () => {
             setBubbleValue(0);
             setBubbleFlash(true);
             setTimeout(() => setBubbleFlash(false), 100);
-          } else if(!isCalm && drop.value == 11) {
+          } else if(drop.value == 11) {
             setBubbleValue(prevBubbleValue => {
               const newBubbleValue = prevBubbleValue - drop.value;
               if(newBubbleValue > highScore) {
