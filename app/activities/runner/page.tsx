@@ -1,5 +1,6 @@
 'use client'
 
+import { NumberFormatter } from '@/app/numberFormatter';
 import React, { useRef, useEffect, useState } from 'react';
 
 let isMatrix = false;
@@ -18,6 +19,7 @@ const badZeroColor = isMatrix ? '#DFD' : '#FFF';
 const bubbleCountColor = isMatrix ? '#6F6' : 'white';
 const minFontSize = 30;
 const bubbleFontSize = 40;
+const maxValue = 1000001; //Number.MAX_SAFE_INTEGER;
 const digitColors =  isMatrix ? {
   0: '#0f0',
   1: '#1f1',
@@ -235,7 +237,10 @@ const RainCanvas: React.FC = () => {
             setBubbleValue(prevBubbleValue => {
               const newBubbleValue = prevBubbleValue + drop.value;
 
-              if(newBubbleValue >= Number.MAX_SAFE_INTEGER) {
+              if(newBubbleValue >= maxValue) {
+                setBubbleValue(0);
+                setBubbleFlash(true);
+                setTimeout(() => setBubbleFlash(false), 100);
                 return 0;
               }
 
@@ -255,7 +260,8 @@ const RainCanvas: React.FC = () => {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillStyle = bubbleCountColor;
-        ctx.fillText(bubbleValue.toString(), dragCoords.current.x, dragCoords.current.y - bubbleRadius);
+        var currentScoreString = NumberFormatter.formatNumberWithBreaks(bubbleValue.toString());
+        ctx.fillText(currentScoreString, dragCoords.current.x, dragCoords.current.y - bubbleRadius);
 
         if (isCalm) {
           ctx.beginPath();
@@ -264,7 +270,7 @@ const RainCanvas: React.FC = () => {
           ctx.textBaseline = 'middle';
           ctx.fillStyle = bubbleCountColor;
           const currentMeasure = ctx.measureText("0");
-          ctx.fillText(bubbleValue.toString(), currentMeasure.width * 10, 20);
+          ctx.fillText(currentScoreString, currentMeasure.width * 10, 20);
           ctx.stroke();
         }
       });
