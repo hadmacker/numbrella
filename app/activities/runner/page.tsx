@@ -223,7 +223,7 @@ const RainCanvas: React.FC = () => {
             setBubbleValue(0);
             setBubbleFlash(true);
             setTimeout(() => setBubbleFlash(false), 100);
-          } else if(!isCalm && drop.value == 11) {
+          } else if(drop.value == 11) {
             setBubbleValue(prevBubbleValue => {
               const newBubbleValue = prevBubbleValue - drop.value;
               if(newBubbleValue > highScore) {
@@ -234,6 +234,11 @@ const RainCanvas: React.FC = () => {
           } else {
             setBubbleValue(prevBubbleValue => {
               const newBubbleValue = prevBubbleValue + drop.value;
+
+              if(newBubbleValue >= Number.MAX_SAFE_INTEGER) {
+                return 0;
+              }
+
               if(newBubbleValue > highScore) {
                 setHighScore(newBubbleValue);
               }
@@ -258,8 +263,8 @@ const RainCanvas: React.FC = () => {
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillStyle = bubbleCountColor;
-          const currentMeasure = ctx.measureText(bubbleValue.toString());
-          ctx.fillText(bubbleValue.toString(), currentMeasure.width, 20);
+          const currentMeasure = ctx.measureText("0");
+          ctx.fillText(bubbleValue.toString(), currentMeasure.width * 10, 20);
           ctx.stroke();
         }
       });
