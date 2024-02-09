@@ -301,7 +301,7 @@ const RainCanvas: React.FC = () => {
     <div style={{ overflow: 'hidden', height: '100vh', width: '100vw' }}>
       {!isCalm &&
       <>
-      <span style={{ marginRight: '80px' }}>High Score: {highScore}</span><span style={{ marginRight: '80px' }}>Current Score: {bubbleValue}</span><span>0's reset the count. 11's are subtracted from count.</span>
+      <span style={{ marginRight: '80px' }}>High Score: {highScore}</span><span style={{ marginRight: '80px' }}>Current Score: {bubbleValue}</span><span>0&apos;s reset the count. 11&apos;s are subtracted from count.</span>
       </> 
       }
       <canvas
