@@ -234,6 +234,11 @@ const RainCanvas: React.FC = () => {
           } else {
             setBubbleValue(prevBubbleValue => {
               const newBubbleValue = prevBubbleValue + drop.value;
+
+              if(newBubbleValue >= Number.MAX_SAFE_INTEGER) {
+                return 0;
+              }
+
               if(newBubbleValue > highScore) {
                 setHighScore(newBubbleValue);
               }
