@@ -46,6 +46,7 @@ export default function Home() {
             </li>
             <li key="a1.1.2.5" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="activities/tictactoe"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Tic Tac Toe</span></a></li>
             <li key="a1.1.2.6" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="activities/reversi"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Reversi</span></a></li>
+            <li key="a1.1.2.7" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="activities/checkers"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Checkers</span></a></li>
           </ul>
         </div>
         </div>
