@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 const xColor = '#60A5FA';
 const oColor = '#EC4899';
+const validColor = '#555';
 
 type Board = (0 | 1 | 2)[][]; // 0 for empty, 1 for player 1, 2 for player 2
 
@@ -20,6 +21,8 @@ export default function ReversiPage() {
   const [validMoves, setValidMoves] = useState<number[][]>([]);
   const [winner, setWinner] = useState<'X' | 'O' | null>(null);
   const [gameOver, setGameOver] = useState(false);
+  const [xCount, setXCount] = useState(2);
+  const [oCount, setOCount] = useState(2);
 
   const directions = [
     [-1, 0], // up
@@ -71,10 +74,13 @@ export default function ReversiPage() {
     const nextValidMoves = calculateValidMoves(nextPlayer);
     setValidMoves(nextValidMoves);
   
+    const player1Pieces = countPieces(1);
+    const player2Pieces = countPieces(2);
+    setXCount(player1Pieces);
+    setOCount(player2Pieces);
+
     if (nextValidMoves.length === 0) {
       setGameOver(true);
-      const player1Pieces = countPieces(1);
-      const player2Pieces = countPieces(2);
       const winner = player1Pieces > player2Pieces ? 'X' : 'O';
       setWinner(winner);
     } else {
@@ -137,6 +143,7 @@ export default function ReversiPage() {
   };
 
   return (
+    <>
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} className="tracking-wide font-mono text-2xl md:text-l lg:text-4xl font-black">
       <h2>Reversi Game</h2>
       {!gameOver && <p style={{ color: currentPlayer === 1 ? xColor : oColor }} className="tracking-wide font-mono text-2xl md:text-l lg:text-2xl font-black">
@@ -147,6 +154,14 @@ export default function ReversiPage() {
         Winner: {winner}
         </p>
       }
+      <div style={{ display: 'flex', justifyContent: 'space-between', margin: '8px' }}>
+        <span style={{ color: xColor, width: '300px', textAlign: 'center' }} className="font-mono text-2xl md:text-l lg:text-2xl font-black">
+          X Count: {xCount}
+        </span>
+        <span style={{ color: oColor, width: '300px', textAlign: 'center' }} className="font-mono text-2xl md:text-l lg:text-2xl font-black">
+          O Count: {oCount}
+        </span>
+      </div>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {board.map((row, i) => (
           <div key={i} style={{ display: 'flex' }}>
@@ -156,14 +171,12 @@ export default function ReversiPage() {
                 className="w-8 h-8 md:w-8 md:h-8 lg:w-16 lg:h-16 tracking-wide font-mono text-l md:text-l lg:text-7xl font-black" 
                 onClick={() => handleCellClick(i, j)}
                 style={{ 
-                  // width: '70px', 
-                  // height: '70px', 
                   border: '1px solid white',
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
                   color: cell === 1 ? xColor : cell === 2 ? oColor : oColor,
-                  backgroundColor: validMoves.some(([x, y]) => x === i && y === j) ? '#444' : 'black'
+                  backgroundColor: validMoves.some(([x, y]) => x === i && y === j) ? validColor : 'black'
                 }}
               >
                 {cell === 0 ? ' ' : cell === 1 ? 'X' : 'O'}
@@ -182,5 +195,6 @@ export default function ReversiPage() {
       Start New Game
     </button>
     </div>
+    </>
   );
 }
