@@ -163,7 +163,7 @@ export default function ReversiPage() {
                   justifyContent: 'center',
                   alignItems: 'center',
                   color: cell === 1 ? xColor : cell === 2 ? oColor : oColor,
-                  backgroundColor: validMoves.some(([x, y]) => x === i && y === j) ? '#333' : 'black'
+                  backgroundColor: validMoves.some(([x, y]) => x === i && y === j) ? '#444' : 'black'
                 }}
               >
                 {cell === 0 ? ' ' : cell === 1 ? 'X' : 'O'}
