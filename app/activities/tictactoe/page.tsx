@@ -26,7 +26,7 @@ export default function Page() {
 const renderSquare = (i: number) => {
   return (
     <button 
-      className="w-24 h-24 md:w-16 md:h-16 lg:w-48 lg:h-48 tracking-wide font-mono text-7xl md:text-5xl lg:text-9xl font-black" 
+      className="w-24 h-24 md:w-16 md:h-16 lg:w-44 lg:h-44 tracking-wide font-mono text-7xl md:text-5xl lg:text-9xl font-black" 
       style={{ 
         border: '1px solid #fff', 
         backgroundColor: '#000', 
