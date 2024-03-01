@@ -1,42 +1,68 @@
 'use client'
 
 import React, { useState } from "react";
-import ReactCardFlip from 'react-card-flip';
+import Card from "./Card";
 import './styles.css';
 
-type CardProps = {
-  emoji: string;
-};
+const emojis = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🐷", "🐸", "🐵", "🐔", "🐧", "🐦", "🐤", "🐣", "🐺", "🐗", "🐴", "🦄", "🐝", "🐛", "🦋", "🐌", "🐞", "🐜", "🦗", "🕷", "🐢", "🐍", "🦎", "🦖", "🦕", "🐙", "🦑", "🦐"];
 
-const Card: React.FC<CardProps> = ({ emoji }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
+function shuffleArray(array: any[]) {
+  let currentIndex = array.length;
+  let temporaryValue, randomIndex;
 
-  const handleClick = () => {
-    setIsFlipped(!isFlipped);
-  };
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+const Game: React.FC = () => {
+  let level = 'easy';
+
+  let pairsCount;
+  switch (level) {
+    case 'medium':
+      pairsCount = 9;
+      break;
+    case 'hard':
+      pairsCount = 12;
+      break;
+    case 'easy':
+    default:
+      pairsCount = 6;
+      break;
+  }
+
+  // Shuffle the emojis array
+  const shuffledEmojis = emojis.sort(() => Math.random() - 0.5);
+
+  // Slice the array to get the required number of pairs
+  const selectedEmojis = shuffledEmojis.slice(0, pairsCount);
+
+  // Duplicate each emoji to create pairs
+  const deck = shuffleArray([...selectedEmojis, ...selectedEmojis]);
 
   return (
-    <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
-    <div 
-      className="card-back border-4 border-gray-200 rounded-lg p-4 m-2 w-24 h-24 flex items-center justify-center"
-      onClick={handleClick}
-    >
-      <h1 className="text-center tracking-wide font-mono text-4xl lg:text-3xl font-black">&nbsp;</h1>
+    <div className="flex flex-wrap justify-center">
+      {deck.map((emoji, index) => (
+        <Card key={index} emoji={emoji} />
+      ))}
     </div>
-
-    <div 
-      className="card-face bg-blue-200 border-4 border-gray-200 rounded-lg p-4 m-2 w-24 h-24 flex items-center justify-center"
-      onClick={handleClick}
-    >
-      <h1 className="text-center tracking-wide font-mono text-4xl lg:text-3xl font-black">{emoji}</h1>
-    </div>
-    </ReactCardFlip>
   );
 };
 
-export default function Page() {
+export default Game;
 
-  const emojis = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🐷", "🐸", "🐵", "🐔", "🐧", "🐦", "🐤", "🐣", "🐺", "🐗", "🐴", "🦄", "🐝", "🐛", "🦋", "🐌", "🐞", "🐜", "🦗", "🕷", "🐢", "🐍", "🦎", "🦖", "🦕", "🐙", "🦑", "🦐"];
+
 
   // THIS PAGE IS THE CLASSIC CHILD'S GAME OF MEMORY
   // The game board is a grid of cards. 
@@ -53,18 +79,6 @@ export default function Page() {
   // When easy: the game board has 12 cards. This is the default state if no difficulty is provided.
   // When medium: the game board has 18 cards.
   // When hard: the game board has 24 cards. Remaining cards are reset (symbol hidden) if the user does not a second card within 3 seconds.
-
-  return (
-    <>
-      <div className="flex flex-wrap justify-center">
-        {emojis.map((emoji, index) => (
-          <Card key={index} emoji={emoji} />
-        ))}
-      </div>
-    </>
-  );
-};
-
 
 /*
 
