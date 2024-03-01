@@ -1,14 +1,12 @@
 .card-back {
   background: linear-gradient(to right, #e8eeac, #ebd1a7);
 }
+
+.modal-win-back {
+  background: linear-gradient(to right, #e8eeac, #ebd1a7);
+}
+
 .card-hidden {
   background: #000;
   border: #000;
-}
-
-@media (min-width: 1024px) {
-  .card-large {
-    /* width: 64px;
-    height: 64px; */
-  }
 }

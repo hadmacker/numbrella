@@ -107,7 +107,7 @@ const Game: React.FC = () => {
               backgroundColor: 'rgba(0, 0, 0, 0.75)',
             },
             content: {
-              backgroundColor: 'white',
+              background: 'linear-gradient(to right, #e8eeac, #ebd1a7)',
               border: '4px solid gray',
               borderRadius: '10px',
               width: '500px',
