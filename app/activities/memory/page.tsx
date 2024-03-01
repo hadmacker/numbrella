@@ -31,6 +31,7 @@ const Game: React.FC = () => {
   const [pairsCount, setPairsCount] = useState(6);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [matchedCards, setMatchedCards] = useState<number[]>([]);
+  const [winCondition, setWinCondition] = useState<number>(12);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   useEffect(() => {
@@ -46,13 +47,16 @@ const Game: React.FC = () => {
     switch (level) {
       case 'medium':
         setPairsCount(12);
+        setWinCondition(24);
         break;
       case 'hard':
         setPairsCount(18);
+        setWinCondition(36);
         break;
       case 'easy':
       default:
         setPairsCount(6);
+        setWinCondition(12);
         break;
     }
   }, []);
@@ -69,18 +73,28 @@ const Game: React.FC = () => {
     resetGame();
   }, [pairsCount]);
 
-  useEffect(() => {
-    if (matchedCards.length === pairsCount * 2 && pairsCount > 0) {
-      setIsModalOpen(true);
-    }
-  }, [matchedCards, pairsCount])
+  // useEffect(() => {
+  //   if (matchedCards.length === pairsCount * 2 && pairsCount > 0) {
+  //     setIsModalOpen(true);
+  //   }
+  // }, [matchedCards, pairsCount])
   
   const handleCardClick = (index: number) => {
     setFlippedCards((prev) => {
       if (flippedCards.length === 2) {
         const [firstCardIndex, secondCardIndex] = flippedCards;
+        if(firstCardIndex == secondCardIndex) {
+          return [firstCardIndex];
+        }
         if (deck[firstCardIndex] === deck[secondCardIndex]) {
-          setMatchedCards((prev) => [...prev, firstCardIndex, secondCardIndex]);
+          setMatchedCards((prev) => {
+            const newMatchedCards = Array.from(new Set([...prev, firstCardIndex, secondCardIndex]));
+            if (newMatchedCards.length === winCondition) {
+              console.log(newMatchedCards);
+              setIsModalOpen(true);
+            }
+            return newMatchedCards;
+          });
         }
         return [];
       }
