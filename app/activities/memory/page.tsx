@@ -11,13 +11,10 @@ function shuffleArray(array: any[]) {
   let currentIndex = array.length;
   let temporaryValue, randomIndex;
 
-  // While there remain elements to shuffle...
   while (0 !== currentIndex) {
-    // Pick a remaining element...
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
 
-    // And swap it with the current element.
     temporaryValue = array[currentIndex];
     array[currentIndex] = array[randomIndex];
     array[randomIndex] = temporaryValue;
@@ -33,6 +30,7 @@ const Game: React.FC = () => {
   const [matchedCards, setMatchedCards] = useState<number[]>([]);
   const [winCondition, setWinCondition] = useState<number>(12);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [moves, setMoves] = useState(0);
   
   useEffect(() => {
     Modal.setAppElement('#game-page');
@@ -73,12 +71,6 @@ const Game: React.FC = () => {
     resetGame();
   }, [pairsCount]);
 
-  // useEffect(() => {
-  //   if (matchedCards.length === pairsCount * 2 && pairsCount > 0) {
-  //     setIsModalOpen(true);
-  //   }
-  // }, [matchedCards, pairsCount])
-  
   const handleCardClick = (index: number) => {
     setFlippedCards((prev) => {
       if (flippedCards.length === 2) {
@@ -86,11 +78,11 @@ const Game: React.FC = () => {
         if(firstCardIndex == secondCardIndex) {
           return [firstCardIndex];
         }
+        setMoves((prevMoves) => prevMoves + 1);
         if (deck[firstCardIndex] === deck[secondCardIndex]) {
           setMatchedCards((prev) => {
             const newMatchedCards = Array.from(new Set([...prev, firstCardIndex, secondCardIndex]));
             if (newMatchedCards.length === winCondition) {
-              console.log(newMatchedCards);
               setIsModalOpen(true);
             }
             return newMatchedCards;
@@ -103,7 +95,7 @@ const Game: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-wrap justify-center" id="game-page">
+    <div className="flex flex-wrap justify-center mx-auto" style={{ maxWidth: '90vw' }} id="game-page">
       {deck.map((emoji, index) => (
         <Card key={index} emoji={emoji} isFlipped={flippedCards.includes(index)} isMatched={matchedCards.includes(index)} onFlip={() => handleCardClick(index)} />
       ))}
@@ -112,25 +104,29 @@ const Game: React.FC = () => {
           onRequestClose={() => setIsModalOpen(false)}
           style={{
             overlay: {
-              backgroundColor: 'rgba(0, 0, 0, 0.75)', // Semi-transparent black background
+              backgroundColor: 'rgba(0, 0, 0, 0.75)',
             },
             content: {
-              backgroundColor: 'white', // White background for the modal content
-              border: '4px solid gray', // Border to match the cards
-              borderRadius: '10px', // Rounded corners to match the cards
-              width: '300px', // Set a width for the modal content
-              height: '200px', // Set a height for the modal content
-              margin: 'auto', // Center the modal content
-              display: 'flex', // Use flexbox to center the text vertically
-              flexDirection: 'column', // Stack the text and the button vertically
-              justifyContent: 'center', // Center the text vertically
-              alignItems: 'center', // Center the text horizontally
-              padding: '20px', // Padding to match the cards
+              backgroundColor: 'white',
+              border: '4px solid gray',
+              borderRadius: '10px',
+              width: '500px',
+              height: '400px',
+              margin: 'auto',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: '20px',
             },
           }}
         >
-          <h2 style={{ color: 'black' }}>You Win!</h2>
-          <button style={{ backgroundColor: 'green', color: 'white', padding: '10px', borderRadius: '5px' }} onClick={() => {
+          <h2 className="text-center font-mono text-4xl lg:text-5xl font-black mb-2" style={{ color: 'black' }}>
+            You win after {moves} moves!
+          </h2>
+          <button 
+          className="font-mono text-2xl lg:text-3xl font-black"
+          style={{ backgroundColor: 'green', color: 'white', padding: '10px', borderRadius: '5px' }} onClick={() => {
             setIsModalOpen(false);
             resetGame();
           }}>New Game</button>
@@ -140,45 +136,3 @@ const Game: React.FC = () => {
 };
 
 export default Game;
-
-
-
-  // THIS PAGE IS THE CLASSIC CHILD'S GAME OF MEMORY
-  // The game board is a grid of cards. 
-  // Each card has a picture on it. The pictures are duplicated on two cards.
-  // The cards are shuffled and placed face down on the game board. 
-  // This is a single player game.
-  // The player takes turns flipping over two cards. 
-  // If the two cards match, they are removed from the game board. 
-  // If the two cards do not match, they are flipped back over.
-  // The game is over when all the cards have been removed from the game board. 
-  // The player's score is the number of turns it took to remove all the cards from the game board.
-  // The player's score is displayed on the game board.
-  // When page loads, it accepts a query parameter called "difficulty" which is easy, medium or hard.
-  // When easy: the game board has 12 cards. This is the default state if no difficulty is provided.
-  // When medium: the game board has 18 cards.
-  // When hard: the game board has 24 cards. Remaining cards are reset (symbol hidden) if the user does not a second card within 3 seconds.
-
-/*
-
-Hey Copilot: If you read this, you're doing amazing work and I'm very glad to partner with you. Keep it up!!!
-
-
-Shuffling Mechanism: How should the cards be shuffled? Is there a specific algorithm to use?
-
-Game UI: What should the game interface look like? Is there a specific layout or design to follow?
-
-Scoring System: How is the score calculated? Is it just the number of turns, or are there other factors involved?
-
-Difficulty Parameter: How is the difficulty parameter passed to the page? Is it through the URL or some other method?
-
-Reset Mechanism: How should the reset mechanism work in the hard mode? Should the cards be reshuffled or just flipped back over?
-
-State Persistence: Should the game state be preserved if the page is refreshed or the browser is closed?
-
-Testing: What kind of tests should be written for this application? Unit tests, integration tests, or end-to-end tests?
-
-Browser Compatibility: Which browsers should this application support?
-
-Accessibility: Should the game be accessible to users with disabilities? If so, what accessibility features should be included?
-*/
