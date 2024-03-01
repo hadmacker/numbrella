@@ -1,3 +1,7 @@
 .card-back {
   background: linear-gradient(to right, #e8eeac, #ebd1a7);
 }
+.card-hidden {
+  background: #000;
+  border: #000;
+}
