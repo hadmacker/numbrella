@@ -46,6 +46,13 @@ export default function Home() {
             </li>
             <li key="a1.1.2.5" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="activities/tictactoe"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Tic Tac Toe</span></a></li>
             <li key="a1.1.2.6" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="activities/reversi"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Reversi</span></a></li>
+            <li key="a1.1.2.7" className='mx-3 my-3 md:mx-:3 md:my-6'><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Memory</span>
+              <ul>
+                <li key="a1.1.2.7.1" className='mx-6 my-2 md:mx-:6 md:my-2 text-1xl md:text-2xl font-black text-gray-400'><a href="activities/memory"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Easy</span></a></li>
+                <li key="a1.1.2.7.2" className='mx-6 my-2 md:mx-:6 md:my-2 text-1xl md:text-2xl font-black text-gray-400'><a href="activities/memory?level=medium"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Medium</span></a></li>
+                <li key="a1.1.2.7.3" className='mx-6 my-2 md:mx-:6 md:my-2 text-1xl md:text-2xl font-black text-gray-400'><a href="activities/memory?level=hard"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Hard</span></a></li>
+              </ul>
+            </li>
           </ul>
         </div>
         </div>
