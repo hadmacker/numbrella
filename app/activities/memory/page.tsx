@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import './styles.css';
 
@@ -26,30 +26,34 @@ function shuffleArray(array: any[]) {
 }
 
 const Game: React.FC = () => {
-  let level = 'easy';
+  const [deck, setDeck] = useState<string[]>([]);
+  const [pairsCount, setPairsCount] = useState(6);
+  
+  useEffect(() => {
+    let level;
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      level = params.get('level');
+    }
+    switch (level) {
+      case 'medium':
+        setPairsCount(12);
+        break;
+      case 'hard':
+        setPairsCount(18);
+        break;
+      case 'easy':
+      default:
+        setPairsCount(6);
+        break;
+    }
+  }, []);
 
-  let pairsCount;
-  switch (level) {
-    case 'medium':
-      pairsCount = 9;
-      break;
-    case 'hard':
-      pairsCount = 12;
-      break;
-    case 'easy':
-    default:
-      pairsCount = 6;
-      break;
-  }
-
-  // Shuffle the emojis array
-  const shuffledEmojis = emojis.sort(() => Math.random() - 0.5);
-
-  // Slice the array to get the required number of pairs
-  const selectedEmojis = shuffledEmojis.slice(0, pairsCount);
-
-  // Duplicate each emoji to create pairs
-  const deck = shuffleArray([...selectedEmojis, ...selectedEmojis]);
+  useEffect(() => {
+    const shuffledEmojis = shuffleArray(emojis);
+    const selectedEmojis = shuffledEmojis.slice(0, pairsCount);
+    setDeck(shuffleArray([...selectedEmojis, ...selectedEmojis]));
+  }, [pairsCount]);
 
   return (
     <div className="flex flex-wrap justify-center">
