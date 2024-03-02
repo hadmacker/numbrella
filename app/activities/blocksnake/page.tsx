@@ -24,7 +24,9 @@ import { Play } from "next/font/google";
 
 const blocksWide = 5;
 const blocksHigh = 10;
-const defaultSpeed = 3;
+const defaultSpeed = 4;
+let generateSpeedModifier = 0.05;
+const difficultyIncrementor = 10000;
 
 type Block = {
   x: number;
@@ -66,6 +68,7 @@ const Game: React.FC = () => {
   const [player, setPlayer] = useState<Player>({ x: 0, y: 0, radius: 10 });
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [rectSize, setRectSize] = useState({ width: 0, height: 0 });
+  const [boundingBox, setBoundingBox] = useState({ left: 0, top: 0, width: 0, height: 0 });
   
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -139,7 +142,19 @@ const Game: React.FC = () => {
     const height = rectSize.height; // 100;
     //const x = Math.random() * (window.innerWidth - width); // Random x position
     const columnWidth = size.width / blocksWide;
-    const x = Math.floor(Math.random() * blocksWide) * columnWidth; // Random x position
+    let x = 0; // x position
+    let attempts = 0; // Number of attempts to find a non-overlapping position
+
+    do {
+      x = Math.floor(Math.random() * blocksWide) * columnWidth; // Random x position
+      attempts++;
+    } while (blocks.some(block => Math.abs(block.x - x) < width) && attempts < 10);
+
+    if (attempts >= 5) {
+      // Couldn't find a non-overlapping position, skip generating a new block
+      return;
+    }
+  
     const y = 0; // Start at the top of the screen
   
     const speed = generateSpeed();
@@ -147,21 +162,39 @@ const Game: React.FC = () => {
   }
 
   useEffect(() => {
+    const difficultyInterval = setInterval(() => {
+      generateSpeedModifier += 0.025;
+    }, difficultyIncrementor); // 60 FPS
+  }, []);
+
+  useEffect(() => {
     const gameLoop = setInterval(() => {
       // Generate a new block every second
-      if (Math.random() < 1 / 60) {
+      if (Math.random() < 1 / 60 + generateSpeedModifier) {
         generateBlock();
       }
   
       setBlocks(blocks => blocks
-        .map(block => ({ ...block, y: block.y + block.speed }))
-        .filter(block => block.y - block.height <= size.height)
+        .map(block => {
+          // Check for collision with player
+          const dx = block.x + block.width / 2 - (player.x - boundingBox.left);
+          const dy = block.y + block.height / 2 - (player.y - boundingBox.top);
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < block.width / 2 + player.radius) {
+            setScore(score => Math.max(score - block.value, 0)); // Don't let the score go below 0
+            return null; // Remove block from blocks array
+          } else {
+            return { ...block, y: block.y + block.speed } as Block;
+          }
+        })
+        .filter((block): block is Block => block !== null)
       );
       // TODO: Check collisions, update score, end game
     }, 1000 / 60); // 60 FPS
   
     return () => clearInterval(gameLoop);
-  }, [score, blocks, gameStatus]);
+  }, [score, blocks, gameStatus, boundingBox, player]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -169,6 +202,7 @@ const Game: React.FC = () => {
     if (canvas) {
       const context = canvas.getContext('2d')!;
       const rect = canvas.getBoundingClientRect();
+      setBoundingBox(rect);
       setRectSize({ width: rect.width / blocksWide, height: rect.height / blocksHigh });
 
       // Clear the canvas
@@ -199,7 +233,7 @@ const Game: React.FC = () => {
 
         // Draw the block's border
         context.strokeStyle = '#000000'; // Set the color to black
-        context.lineWidth = 2; // Set the line width
+        context.lineWidth = 5; // Set the line width
         context.stroke();
 
         // Draw the block's value
