@@ -22,7 +22,8 @@ import './styles.css';
 import {throttle} from "lodash";
 
 
-const blocksWide = 5;
+const blocksWidePortrait = 5;
+const blocksWideLandscape = 8;
 const blocksHigh = 10;
 const defaultSpeed = 4;
 const startingGenerateSpeedModifier = 0.025;
@@ -45,17 +46,17 @@ type Player = {
 };
 
 const blockColors: Record<number, string> = {
-  1: '#FF0000',
-  2: '#00FF00',
-  3: '#0000FF',
-  4: '#FFFF00',
-  5: '#00FFFF',
-  6: '#FF00FF',
-  7: '#C0C0C0',
-  8: '#808080',
-  9: '#800000',
-  10: '#808000',
-  // Add more colors if needed
+  0: '#9CA3AF', // Equivalent to text-gray-400
+  1: '#EC4899', // Equivalent to text-pink-500
+  2: '#F59E0B', // Equivalent to text-amber-500
+  3: '#84CC16', // Equivalent to text-lime-500
+  4: '#10B981', // Equivalent to text-emerald-500
+  5: '#3B82F6', // Equivalent to text-blue-400
+  6: '#6366F1', // Equivalent to text-indigo-600
+  7: '#D946EF', // Equivalent to text-fuchsia-500
+  8: '#F43F5E', // Equivalent to text-rose-500
+  9: '#06B6D4', // Equivalent to text-cyan-400
+  10: '#9CA3AF', // Equivalent to text-cyan-400
 };
 
 const Game: React.FC = () => {
@@ -73,6 +74,9 @@ const Game: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [startTime, setStartTime] = useState(Date.now());
   const [generateSpeedModifier, setGenerateSpeedModifier] = useState(startingGenerateSpeedModifier);
+  const [blocksWide, setBlocksWide] = useState(blocksWidePortrait);
+  const [gameTime, setGameTime] = useState(0);
+  const [fontSize, setFontSize] = useState(36);
 
   useEffect(() => {
     Modal.setAppElement('#game-page');
@@ -107,6 +111,11 @@ const Game: React.FC = () => {
       context.fillStyle = 'white'; // Set canvas background color to white
       context.fillRect(0, 0, canvas.width, canvas.height);
       setPlayer({ x: canvas.width / 2, y: canvas.height - canvas.height / 4, radius: playerSize })
+
+       // Detect orientation and set blocksWide
+      const isPortrait = window.innerHeight > window.innerWidth;
+      setBlocksWide(isPortrait ? blocksWidePortrait : blocksWideLandscape);
+      setFontSize(isPortrait ? 36 : 48);
     };
   
     setCanvasSize(); // Set initial size
@@ -151,7 +160,7 @@ const Game: React.FC = () => {
         context.fillRect(block.x, block.y, block.width, block.height);
       });
     }
-  }, [blocks]);
+  }, [blocks, blocksWide]);
 
   function generateBlock() {
     const value = Math.floor(Math.random() * 10) + 1; // Random number between 1 and 10
@@ -181,6 +190,7 @@ const Game: React.FC = () => {
 
   useEffect(() => {
     const gameLoop = setInterval(() => {
+      setGameTime(Math.floor((Date.now() - startTime) / 1000));
       if (gameStatus === 'stopped') {
         // Stop the game loop
         clearInterval(gameLoop);
@@ -256,7 +266,7 @@ const Game: React.FC = () => {
         // Draw the block's value
         context.fillStyle = '#000000'; // Set the color to black
         context.textAlign = 'center'; // Center the text
-        context.font = 'bold 20px Arial'; // Set the font size, weight, and family
+        context.font = `bold {fontSize}px Arial`; // Set the font size, weight, and family
         context.fillText(block.value.toString(), block.x + block.width / 2, block.y + block.height / 2 + 10);
       });
     }
@@ -302,7 +312,7 @@ const Game: React.FC = () => {
             You win!
           </h2>
           <h3 className="text-center font-mono text-4xl lg:text-5xl font-black mb-2 text-black">
-          Game over after {Math.floor((Date.now() - startTime) / 1000)} seconds.
+          Game over after {gameTime} seconds.
           </h3>
           <button 
             className="bg-blue-500 hover:bg-blue-700 text-white text-6xl font-bold py-2 px-4 rounded mx-auto block"
