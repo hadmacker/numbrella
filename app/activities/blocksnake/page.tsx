@@ -19,14 +19,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import Modal from 'react-modal';
 import './styles.css';
-import { Play } from "next/font/google";
+import {throttle} from "lodash";
 
 
 const blocksWide = 5;
 const blocksHigh = 10;
 const defaultSpeed = 4;
-let generateSpeedModifier = 0.05;
-const difficultyIncrementor = 10000;
+const startingGenerateSpeedModifier = 0.025;
+const difficultyIncrementor = 20000;
+const playerSize = 10;
 
 type Block = {
   x: number;
@@ -65,11 +66,34 @@ const Game: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [player, setPlayer] = useState<Player>({ x: 0, y: 0, radius: 10 });
+  const [player, setPlayer] = useState<Player>({ x: 0, y: 0, radius: playerSize });
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [rectSize, setRectSize] = useState({ width: 0, height: 0 });
   const [boundingBox, setBoundingBox] = useState({ left: 0, top: 0, width: 0, height: 0 });
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [startTime, setStartTime] = useState(Date.now());
+  const [generateSpeedModifier, setGenerateSpeedModifier] = useState(startingGenerateSpeedModifier);
+
+  useEffect(() => {
+    Modal.setAppElement('#game-page');
+  }, []);
+
+  useEffect(() => {
+    if (score <= 0) {
+      setIsModalOpen(true);
+      setGameStatus('stopped');
+    }
+  }, [score]);
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setScore(100);
+    setBlocks([]);
+    setGenerateSpeedModifier(startingGenerateSpeedModifier)
+    setGameStatus('running');
+    setStartTime(Date.now());
+  };
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -82,6 +106,7 @@ const Game: React.FC = () => {
       if (!context) return;
       context.fillStyle = 'white'; // Set canvas background color to white
       context.fillRect(0, 0, canvas.width, canvas.height);
+      setPlayer({ x: canvas.width / 2, y: canvas.height - canvas.height / 4, radius: playerSize })
     };
   
     setCanvasSize(); // Set initial size
@@ -102,14 +127,6 @@ const Game: React.FC = () => {
       window.removeEventListener('resize', setCanvasSize);
     };
   }, []);
-
-  useEffect(() => {
-    const gameLoop = setInterval(() => {
-      // TODO: Move blocks, check collisions, update score, end game
-    }, 1000 / 60); // 60 FPS
-
-    return () => clearInterval(gameLoop);
-  }, [score, blocks, gameStatus]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -149,11 +166,6 @@ const Game: React.FC = () => {
       x = Math.floor(Math.random() * blocksWide) * columnWidth; // Random x position
       attempts++;
     } while (blocks.some(block => Math.abs(block.x - x) < width) && attempts < 10);
-
-    if (attempts >= 5) {
-      // Couldn't find a non-overlapping position, skip generating a new block
-      return;
-    }
   
     const y = 0; // Start at the top of the screen
   
@@ -163,12 +175,18 @@ const Game: React.FC = () => {
 
   useEffect(() => {
     const difficultyInterval = setInterval(() => {
-      generateSpeedModifier += 0.025;
+      setGenerateSpeedModifier(value => value += 0.025);
     }, difficultyIncrementor); // 60 FPS
   }, []);
 
   useEffect(() => {
     const gameLoop = setInterval(() => {
+      if (gameStatus === 'stopped') {
+        // Stop the game loop
+        clearInterval(gameLoop);
+        return;
+      }
+
       // Generate a new block every second
       if (Math.random() < 1 / 60 + generateSpeedModifier) {
         generateBlock();
@@ -190,11 +208,10 @@ const Game: React.FC = () => {
         })
         .filter((block): block is Block => block !== null)
       );
-      // TODO: Check collisions, update score, end game
     }, 1000 / 60); // 60 FPS
   
     return () => clearInterval(gameLoop);
-  }, [score, blocks, gameStatus, boundingBox, player]);
+  }, [score, blocks, gameStatus]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -245,44 +262,60 @@ const Game: React.FC = () => {
     }
   }, [blocks, player]);
 
-  CanvasRenderingContext2D.prototype.roundRect = function (x: number, y: number, w: number, h: number, r: number) {
-    if (w < 2 * r) {
-      r = w / 2;
+  if (typeof CanvasRenderingContext2D !== 'undefined') {
+    CanvasRenderingContext2D.prototype.roundRect = function (x: number, y: number, w: number, h: number, r: number) {
+      if (w < 2 * r) {
+        r = w / 2;
+      }
+      if (h < 2 * r) {
+        r = h / 2;
+      }
+      this.beginPath();
+      this.moveTo(x + r, y);
+      this.arcTo(x + w, y, x + w, y + h, r);
+      this.arcTo(x + w, y + h, x, y + h, r);
+      this.arcTo(x, y + h, x, y, r);
+      this.arcTo(x, y, x + w, y, r);
+      this.closePath();
+      return this;
     }
-    if (h < 2 * r) {
-      r = h / 2;
-    }
-    this.beginPath();
-    this.moveTo(x + r, y);
-    this.arcTo(x + w, y, x + w, y + h, r);
-    this.arcTo(x + w, y + h, x, y + h, r);
-    this.arcTo(x, y + h, x, y, r);
-    this.arcTo(x, y, x + w, y, r);
-    this.closePath();
-    return this;
   }
 
-  const handleMouseMove = (event: React.MouseEvent) => {
+  const handleMouseMove = throttle((event: React.MouseEvent) => {
     setPlayer(player => ({ ...player, x: event.clientX, y: event.clientY }));
-  };
+  }, 100); // Throttle to 100ms
   
-  const handleTouchMove = (event: React.TouchEvent) => {
+  const handleTouchMove = throttle((event: React.TouchEvent) => {
     setPlayer(player => ({ ...player, x: event.touches[0].clientX, y: event.touches[0].clientY }));
-  };
+  }, 100); // Throttle to 100ms
 
   return (
-    <div>
-      <h1>Number Snake</h1>
-      <p>Score: {score}</p>
-      {gameStatus === 'ended' && (
-        <Modal isOpen={true}>
-          <h1>Game Over</h1>
-          <p>Your score: {score}</p>
-          <p>High score: {highScore}</p>
-          <button onClick={() => setGameStatus('running')}>Restart</button>
-        </Modal>
-      )}
-       <div ref={containerRef} className="canvas-container" onMouseMove={handleMouseMove} onTouchMove={handleTouchMove}>
+    <div id="game-page" className="m-0">
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={handleCloseModal}
+        contentLabel="You Win!"
+        className="flex items-center justify-center fixed left-0 bottom-0 w-full h-full bg-gray-800 bg-opacity-75"
+      >
+        <div className="bg-white rounded-lg w-full md:w-1/2 lg:w-1/3 mx-auto p-8">
+          <h2 className="text-center font-mono text-6xl lg:text-5xl font-black mb-2 text-black">
+            You win!
+          </h2>
+          <h3 className="text-center font-mono text-4xl lg:text-5xl font-black mb-2 text-black">
+          Game over after {Math.floor((Date.now() - startTime) / 1000)} seconds.
+          </h3>
+          <button 
+            className="bg-blue-500 hover:bg-blue-700 text-white text-6xl font-bold py-2 px-4 rounded mx-auto block"
+            onClick={() => {
+              handleCloseModal();
+            }}
+          >
+            New Game
+          </button>
+        </div>
+
+      </Modal>
+       <div ref={containerRef} id="gamecanvas" className="canvas-container" onMouseMove={handleMouseMove} onTouchMove={handleTouchMove}>
         <canvas ref={canvasRef} width={size.width} height={size.height} />
       </div>
     </div>
