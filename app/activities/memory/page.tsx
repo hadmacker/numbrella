@@ -65,6 +65,7 @@ const Game: React.FC = () => {
     const shuffledEmojis = shuffleArray(emojis);
     const selectedEmojis = shuffledEmojis.slice(0, pairsCount);
     setDeck(shuffleArray([...selectedEmojis, ...selectedEmojis]));
+    setMoves(0);
   }
 
   useEffect(() => {
@@ -102,34 +103,22 @@ const Game: React.FC = () => {
       <Modal 
           isOpen={isModalOpen} 
           onRequestClose={() => setIsModalOpen(false)}
-          style={{
-            overlay: {
-              backgroundColor: 'rgba(0, 0, 0, 0.75)',
-            },
-            content: {
-              background: 'linear-gradient(to right, #e8eeac, #ebd1a7)',
-              border: '4px solid gray',
-              borderRadius: '10px',
-              width: '500px',
-              height: '400px',
-              margin: 'auto',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: '20px',
-            },
-          }}
+          className="flex items-center justify-center fixed left-0 bottom-0 w-full h-full bg-gray-800 bg-opacity-75"
         >
-          <h2 className="text-center font-mono text-4xl lg:text-5xl font-black mb-2" style={{ color: 'black' }}>
+         <div className="bg-white rounded-lg w-full md:w-1/2 lg:w-1/3 mx-auto p-8">
+          <h2 className="text-center font-mono text-4xl lg:text-5xl font-black mb-2 text-black">
             You win after {moves} moves!
           </h2>
           <button 
-          className="font-mono text-2xl lg:text-3xl font-black"
-          style={{ backgroundColor: 'green', color: 'white', padding: '10px', borderRadius: '5px' }} onClick={() => {
-            setIsModalOpen(false);
-            resetGame();
-          }}>New Game</button>
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-auto block"
+            onClick={() => {
+              setIsModalOpen(false);
+              resetGame();
+            }}
+          >
+            New Game
+          </button>
+        </div>
         </Modal>
     </div>
   );
