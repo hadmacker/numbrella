@@ -1,0 +1,10 @@
+.canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 95vh; /* Adjust this value as needed */
+  }
+
+body {
+    overflow: hidden;
+  }

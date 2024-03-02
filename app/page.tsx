@@ -53,6 +53,7 @@ export default function Home() {
                 <li key="a1.1.2.7.3" className='mx-6 my-2 md:mx-:6 md:my-2 text-1xl md:text-2xl font-black text-gray-400'><a href="activities/memory?level=hard"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Hard</span></a></li>
               </ul>
             </li>
+            <li key="a1.1.2.8" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="activities/blocksnake"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Falling Blocks</span></a></li>
           </ul>
         </div>
         </div>
