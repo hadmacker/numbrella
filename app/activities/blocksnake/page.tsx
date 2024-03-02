@@ -21,6 +21,11 @@ import Modal from 'react-modal';
 import './styles.css';
 import { Play } from "next/font/google";
 
+
+const blocksWide = 5;
+const blocksHigh = 10;
+const defaultSpeed = 3;
+
 type Block = {
   x: number;
   y: number;
@@ -36,6 +41,20 @@ type Player = {
   radius: number;
 };
 
+const blockColors: Record<number, string> = {
+  1: '#FF0000',
+  2: '#00FF00',
+  3: '#0000FF',
+  4: '#FFFF00',
+  5: '#00FFFF',
+  6: '#FF00FF',
+  7: '#C0C0C0',
+  8: '#808080',
+  9: '#800000',
+  10: '#808000',
+  // Add more colors if needed
+};
+
 const Game: React.FC = () => {
   const [score, setScore] = useState(100);
   const [highScore, setHighScore] = useState(0);
@@ -46,6 +65,7 @@ const Game: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [player, setPlayer] = useState<Player>({ x: 0, y: 0, radius: 10 });
   const [size, setSize] = useState({ width: 0, height: 0 });
+  const [rectSize, setRectSize] = useState({ width: 0, height: 0 });
   
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -115,12 +135,14 @@ const Game: React.FC = () => {
 
   function generateBlock() {
     const value = Math.floor(Math.random() * 10) + 1; // Random number between 1 and 10
-    const width = 50;
-    const height = 50;
-    const x = Math.random() * (window.innerWidth - width); // Random x position
+    const width = rectSize.width; // 200;
+    const height = rectSize.height; // 100;
+    //const x = Math.random() * (window.innerWidth - width); // Random x position
+    const columnWidth = size.width / blocksWide;
+    const x = Math.floor(Math.random() * blocksWide) * columnWidth; // Random x position
     const y = 0; // Start at the top of the screen
   
-    const speed = Math.random() * 2 + 1; // Random speed between 1 and 3
+    const speed = generateSpeed();
     setBlocks(blocks => [...blocks, { x, y, width, height, value, speed } as Block]);
   }
 
@@ -131,7 +153,10 @@ const Game: React.FC = () => {
         generateBlock();
       }
   
-      setBlocks(blocks => blocks.map(block => ({ ...block, y: block.y + block.speed })));
+      setBlocks(blocks => blocks
+        .map(block => ({ ...block, y: block.y + block.speed }))
+        .filter(block => block.y - block.height <= size.height)
+      );
       // TODO: Check collisions, update score, end game
     }, 1000 / 60); // 60 FPS
   
@@ -144,7 +169,8 @@ const Game: React.FC = () => {
     if (canvas) {
       const context = canvas.getContext('2d')!;
       const rect = canvas.getBoundingClientRect();
-  
+      setRectSize({ width: rect.width / blocksWide, height: rect.height / blocksHigh });
+
       // Clear the canvas
       context.fillStyle = '#F5F5DC';
       context.fillRect(0, 0, canvas.width, canvas.height);
@@ -154,14 +180,53 @@ const Game: React.FC = () => {
       context.arc(player.x - rect.left, player.y - rect.top, player.radius, 0, 2 * Math.PI);
       context.fillStyle = '#000000'; // Set the color to black
       context.fill();
+
+      // Draw the player's score
+      context.fillStyle = '#000000'; // Set the color to black
+      context.textAlign = 'center'; // Center the text
+      context.font = 'bold 36px Arial'; // Set the font size and family
+      context.fillText(score.toString(), player.x - rect.left, player.y - rect.top - player.radius - 10);
   
       // Draw the blocks
       blocks.forEach(block => {
-        context.fillStyle = block.value <= 5 ? '#EF0000' : '#667788';
-        context.fillRect(block.x, block.y, block.width, block.height);
+        const color = blockColors[block.value] || '#000000'; // Use a default color if the block's value is not in the dictionary
+
+        // Draw the block
+        context.fillStyle = color;
+        context.beginPath();
+        context.roundRect(block.x, block.y, block.width, block.height, 10); // 10 is the border radius
+        context.fill();
+
+        // Draw the block's border
+        context.strokeStyle = '#000000'; // Set the color to black
+        context.lineWidth = 2; // Set the line width
+        context.stroke();
+
+        // Draw the block's value
+        context.fillStyle = '#000000'; // Set the color to black
+        context.textAlign = 'center'; // Center the text
+        context.font = 'bold 20px Arial'; // Set the font size, weight, and family
+        context.fillText(block.value.toString(), block.x + block.width / 2, block.y + block.height / 2 + 10);
       });
     }
   }, [blocks, player]);
+
+  CanvasRenderingContext2D.prototype.roundRect = function (x: number, y: number, w: number, h: number, r: number) {
+    if (w < 2 * r) {
+      r = w / 2;
+    }
+    if (h < 2 * r) {
+      r = h / 2;
+    }
+    this.beginPath();
+    this.moveTo(x + r, y);
+    this.arcTo(x + w, y, x + w, y + h, r);
+    this.arcTo(x + w, y + h, x, y + h, r);
+    this.arcTo(x, y + h, x, y, r);
+    this.arcTo(x, y, x + w, y, r);
+    this.closePath();
+    return this;
+  }
 
   const handleMouseMove = (event: React.MouseEvent) => {
     setPlayer(player => ({ ...player, x: event.clientX, y: event.clientY }));
@@ -191,3 +256,8 @@ const Game: React.FC = () => {
 };
 
 export default Game;
+
+function generateSpeed() {
+  //Math.random() * 2 + 1; // Random speed between 1 and 3
+  return defaultSpeed;
+}
