@@ -79,7 +79,16 @@ const Game: React.FC = () => {
   const [fontSize, setFontSize] = useState(36);
 
   useEffect(() => {
-    Modal.setAppElement('#game-page');
+    const preventDefault = (e: { preventDefault: () => any; }) => e.preventDefault();
+    document.addEventListener('touchmove', preventDefault, { passive: false });
+  
+    return () => {
+      document.removeEventListener('touchmove', preventDefault);
+    };
+  }, []);
+
+  useEffect(() => {
+    Modal.setAppElement('#gamecanvas');
   }, []);
 
   useEffect(() => {
@@ -103,9 +112,18 @@ const Game: React.FC = () => {
     if (!canvas) return;
 
     const setCanvasSize = () => {
-      canvas.width = window.innerWidth * 0.95;
-      canvas.height = window.innerHeight * 0.7;
-      setSize({ width: canvas.width, height: canvas.height });
+
+      const container = containerRef.current;
+      if (!container) {
+        canvas.width = window.innerWidth * 0.95;
+        canvas.height = window.innerHeight * 0.7;
+        setSize({ width: canvas.width, height: canvas.height });
+      } else {
+        canvas.width = container.clientWidth;
+        canvas.height = container.clientHeight;
+        setSize({ width: canvas.width, height: canvas.height });      
+      }
+
       const context = canvas.getContext('2d');
       if (!context) return;
       context.fillStyle = 'white'; // Set canvas background color to white
