@@ -1,7 +1,6 @@
 'use client'
 
 import React from "react";
-import {useSearchParams, useRouter} from 'next/navigation'
 import { PrettyChar } from '../../prettyChar'
 import { NumberFormatter } from '../../numberFormatter'
 
@@ -26,29 +25,17 @@ function formatted(number: number, bw: boolean): React.ReactElement[] {
   return divElements;
 }
 
-function useQueryString(key: string, defaultValue: string) {
-  const searchParams = useSearchParams()
-  const value = searchParams.get(key);
-
-  if (value === undefined || value === null) {
-    return defaultValue;
-  }
-
-  return Array.isArray(value) ? value[0] : value;
-}
-
 export default function Page() {
   let a = 0;
   let b = 1;
-  let n = parseInt(useQueryString("first", "75"), 10);
+  let n = 75;
   const divElements: React.ReactElement[] = [];
-  let bw = useQueryString("bw", "unset");
 
   for (let i = 0; i < n; i++) {
     const c = a + b;
     divElements.push(
       <div key={i}>
-        {Formula(a, b, c, bw)}
+        {Formula(a, b, c, false)}
       </div>
     );
     a = b;
@@ -56,11 +43,11 @@ export default function Page() {
   }
 
   return (
-  <>
-    <div className="columns-1 text-left">
-      {divElements}
-    </div>
-  </>
+    <>
+      <div className="columns-1 text-left">
+        {divElements}
+      </div>
+    </>
   )
 }
 
