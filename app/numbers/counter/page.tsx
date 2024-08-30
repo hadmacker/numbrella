@@ -111,7 +111,7 @@ export default function Page() {
       </button>
       </div>
       <div className="flex space-x-4">
-        {incrementValue !== 1 && <button
+        <button
           className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black"
           style={{ 
             padding: '10px', 
@@ -126,20 +126,19 @@ export default function Page() {
           >
             + {formatted(incrementValue)}
           </button>
-}
         <button
-        className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black"
-        style={{ 
-          padding: '10px', 
-          backgroundColor: '#222', 
-          border: '1px solid #ccc', 
-          borderRadius: '50px', 
-          minWidth: '100px', 
-          margin: '10px',
-          textShadow: '2px 2px 4px #000000'
-      }}
-        onClick={() => handleIncrement()}
-        >
+          className="text-center tracking-wide font-mono text-5xl lg:text-5xl font-black"
+          style={{ 
+            padding: '10px', 
+            backgroundColor: '#222', 
+            border: '1px solid #ccc', 
+            borderRadius: '50px', 
+            minWidth: '100px', 
+            margin: '10px',
+            textShadow: '2px 2px 4px #000000'
+        }}
+          onClick={() => handleIncrement()}
+          >
           + 1
         </button>
         <button
