@@ -11,7 +11,9 @@ export default function Home() {
             <li key="n1.1.2.2" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/fib-all?first=75"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Fibonacci List</span></a></li>
             <li key="n1.1.2.3" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/pi"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Pi to 100 decimals</span></a></li>
             <li key="n1.1.2.4" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/powersoftwo"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Powers of Two</span></a></li>
+            <li key="n1.1.2.4.all" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/allsquares"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Square number list</span></a></li>
             <li key="n1.1.2.5" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/cubes"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Cube numbers</span></a></li>
+            <li key="n1.1.2.5.all" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/allcubes"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Cube number list</span></a></li>
             <li key="n1.1.2.6" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/googol"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Googol</span></a></li>
             <li key="n1.1.2.7" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/shortscale"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Names of Large Numbers</span></a></li>
             <li key="n1.1.2.8" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="numbers/even-odd"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Evens and Odds</span></a></li>
