@@ -1,0 +1,8 @@
+.jumbotron {
+    font-size: 5rem; /* Adjust the size as needed */
+    padding: 1rem; /* Adjust the padding as needed */
+    margin: 0.5rem; /* Adjust the margin as needed */
+    border-radius: 0.3rem; /* Rounded corners */
+    text-align: center; /* Center the text */
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); /* Subtle shadow */
+  }

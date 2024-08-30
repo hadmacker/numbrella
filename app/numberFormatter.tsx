@@ -12,6 +12,9 @@ export class NumberFormatter {
         const chunk = cleanedInput.slice(startIndex, numberLength - i);
         formattedNumber = chunk + (formattedNumber ? ',' + formattedNumber : '');
         }
+
+        if (formattedNumber.startsWith('-,'))
+            formattedNumber = formattedNumber.replace('-,', '-');
     
         return formattedNumber;
     }
