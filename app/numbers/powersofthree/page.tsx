@@ -31,7 +31,7 @@ export default function Page() {
   const [power, setPower] = useState<number>(0);
   const [value, setValue] = useState<number>(1);
   const [iteration, setIteration] = useState<number>(0);
-  const maxIteration = 54;
+  const maxIteration = 30;
 
   return (
     <>
@@ -39,7 +39,7 @@ export default function Page() {
         <button className=""
             onClick={() => {
               const newPower = power + 1;
-              const newValue = Math.pow(2, newPower);
+              const newValue = Math.pow(3, newPower);
               const newIteration = iteration + 1;
 
               if(newIteration > maxIteration) {
@@ -88,14 +88,14 @@ function Formula(value1: number, power: number, bw: boolean) {
   return (
     <>
       <div className="text-center m-1">
-        <span className="normal-nums ">{formatted(2, bw)}</span>
-        <span className="ordinal text-xl align-top">{formatted(power, bw)}</span>
+        <span className="normal-nums ">{formatted(3, bw)}</span>
+        <sup className="ordinal text-xl align-top">{formatted(power, bw)}</sup>
       </div>
       <div className="text-center m-1">
         <span className=" text-black-600/100">=</span>
       </div>
       <div className="text-center m-1 break-all">
-        <span className="">{expansion(2, power, bw)}</span>
+        <span className="">{expansion(3, power, bw)}</span>
       </div>
       <div className="text-center m-1">
         <span className=" text-black-600/100">=</span>
