@@ -17,6 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
+      <link rel="manifest" href="/manifest.json"></link>
       <body className={inter.className}>
         <div className='mx-5 my-5' key="layout_nav_hdiv">
           <a key="layout_nav_homelink" 
