@@ -1,13 +1,13 @@
-const CACHE_NAME = 'numbrillig-cache-v1';
+const CACHE_NAME = 'numbrillig-cache-v2';
 const urlsToCache = [
   '/',
   '/index.html',
   '/styles.css',
   '/script.js',
   '/manifest.json',
-  '/icons/favicon.ico',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png'
+  '/favicon.ico',
+  '/icons/icon-192.png',
+  '/icons/icon-512.png',
 ];
 
 self.addEventListener('install', (event: ExtendableEvent) => {

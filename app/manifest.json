@@ -6,11 +6,49 @@
     "background_color": "#000000",
     "theme_color": "#000000",
     "description": "Finding an escape in numbers and words.",
+    "id": "/",
+    "orientation": "landscape",
     "icons": [
       {
         "src": "favicon.ico",
-        "sizes": "32x32",
+        "sizes": "256x256",
         "type": "image/vnd"
+      },
+      {
+        "src": "icons/icon-192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any"
+      },
+      {
+        "src": "icons/icon-512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "screenshots": [
+      {
+        "src": "screenshots/1-landing.png",
+        "type": "image/png",
+        "sizes": "1278x922",
+        "form_factor": "wide"
+      },
+      {
+        "src": "screenshots/2-powersoftwo.png",
+        "type": "image/png",
+        "sizes": "1278x922",
+        "form_factor": "wide"
+      },
+      {
+        "src": "screenshots/3-namesofnumbers.png",
+        "type": "image/png",
+        "sizes": "1278x922",
+        "form_factor": "wide"
+      },
+      {
+        "src": "screenshots/5-landingiphone.png",
+        "type": "image/png",
+        "sizes": "482x1047"
       }
     ]
   }

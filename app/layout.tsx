@@ -1,23 +1,37 @@
+"use client";
+
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Script from 'next/script'
+import { useEffect } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
-
-export const metadata: Metadata = {
-  title: 'Numbrillig',
-  description: 'Finding an escape in numbers and words.',
-}
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(registration => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, err => {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+      });
+    }
+  }, []);
+
   return (
     <html lang="en" className="dark">
-      <link rel="manifest" href="/manifest.json"></link>
+      <head>
+        <title>Numbrillig</title>
+        <meta name="description" content="Finding an escape in numbers and words." />
+        <link rel="manifest" href="/manifest.json"></link>
+      </head>
       <body className={inter.className}>
         <div className='mx-5 my-5' key="layout_nav_hdiv">
           <a key="layout_nav_homelink" 
