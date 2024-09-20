@@ -10,7 +10,7 @@ const urlsToCache = [
   '/icons/icon-512.png',
 ];
 
-self.addEventListener('install', (event: ExtendableEvent) => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -19,7 +19,7 @@ self.addEventListener('install', (event: ExtendableEvent) => {
   );
 });
 
-self.addEventListener('fetch', (event: FetchEvent) => {
+self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
@@ -36,7 +36,7 @@ self.addEventListener('fetch', (event: FetchEvent) => {
   );
 });
 
-self.addEventListener('activate', (event: ExtendableEvent) => {
+self.addEventListener('activate', (event) => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then(cacheNames => {
@@ -50,5 +50,3 @@ self.addEventListener('activate', (event: ExtendableEvent) => {
     })
   );
 });
-
-export {};
