@@ -105,13 +105,16 @@ export default function Page() {
 
 function Formula(key: string, value: string, bw: boolean) {
   const zeroes = parseInt(value.replace("10^",""));
-
+  const valueBase = value.split("^")[0];
   const valueExpanded = `1${'0'.repeat(zeroes)}`;
   return (
       <>
-        <td className="text-left m-5 tracking-wide font-mono text-3xl font-black text-gray-500">{value}</td>
-        <td className="text-left m-5 tracking-wide font-mono text-3xl font-black">{key}</td>
-        <td className="text-left tracking-wide font-mono text-3xl font-black">{formatted(valueExpanded, bw)}</td>
+        <td style={{ margin: '20px' }} className="text-left pr-8 tracking-wide font-mono text-3xl font-black text-gray-500">
+          {valueBase}
+          <span className="ordinal text-xl align-top">{formatted(zeroes.toString(), bw)}</span>
+        </td>
+        <td style={{ margin: '20px' }} className="text-left pr-8 tracking-wide font-mono text-3xl font-black">{key}</td>
+        <td style={{ margin: '20px' }} className="text-left pr-8 tracking-wide font-mono text-3xl font-black">{formatted(valueExpanded, bw)}</td>
       </>
     )
 }
