@@ -43,11 +43,18 @@ export default function Points() {
     }
   }, []);
 
+  const sanitizeInput = (input: string): string => {
+    const element = document.createElement('div');
+    element.innerText = input;
+    return element.innerHTML;
+  };
+
   const addPoint = (value: number) => {
-    const newPoint: Point = { value, message: pointMessage };
+    const sanitizedMessage = sanitizeInput(pointMessage);
+    const newPoint: Point = { value, message: sanitizedMessage };
     const updatedDayData = {
       ...currentDayData,
-      points: [...currentDayData.points, newPoint],
+      points: [newPoint, ...currentDayData.points],
     };
     const updatedPointsData = pointsData.map((day) =>
       day.date === currentDayData.date ? updatedDayData : day
@@ -71,11 +78,12 @@ export default function Points() {
 
   return (
     <div className="flex flex-col items-center min-h-screen tracking-wide font-mono text-2xl lg:text-3xl font-black">
-      <h1 className="text-4xl mb-4">Points Tracker</h1>
+      <h1 className="text-4xl mb-4">My Points Tracker</h1>
       <input
         type="text"
         value={pointMessage}
         onChange={(e) => setPointMessage(e.target.value)}
+        maxLength={20}
         placeholder="Point Message"
         className="mb-4 p-2 border rounded"
       />
@@ -113,7 +121,7 @@ export default function Points() {
                     className={`mb-1 ${point.value > 0 ? 'text-green-500' : 'text-red-500'}`}
                   >
                     {point.value > 0 ? '+' : ''}
-                    {point.value} {point.message && `- ${point.message}`}
+                    {point.value} {point.message && `: ${point.message}`}
                   </li>
                 ))}
               </ul>
@@ -122,7 +130,6 @@ export default function Points() {
         })}
       </div>
       <p>All data is stored on your computer.</p>
-      <p>No data is transmitted to the Internet.</p>
     </div>
   );
 }
