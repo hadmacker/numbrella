@@ -45,12 +45,6 @@ export default function Points() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (inputRef.current) {
-  //     inputRef.current.focus();
-  //   }
-  // }, [inputRef]);
-
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
