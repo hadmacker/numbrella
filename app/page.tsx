@@ -60,6 +60,7 @@ export default function Home() {
               </ul>
             </li>
             <li key="a1.1.2.8" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="activities/blocksnake"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Falling Blocks</span></a></li>
+            <li key="a1.1.2.9" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="activities/points"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">My Points</span></a></li>
           </ul>
         </div>
         </div>
