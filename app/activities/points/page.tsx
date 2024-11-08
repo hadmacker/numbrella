@@ -45,12 +45,6 @@ export default function Points() {
     }
   }, []);
 
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
-
   const sanitizeInput = (input: string): string => {
     const element = document.createElement('div');
     element.innerText = input;
@@ -64,19 +58,21 @@ export default function Points() {
       ...currentDayData,
       points: [newPoint, ...currentDayData.points],
     };
-    const updatedPointsData = pointsData.map((day) =>
-      day.date === currentDayData.date ? updatedDayData : day
-    );
-    if (!pointsData.some((day) => day.date === currentDayData.date)) {
-      updatedPointsData.push(updatedDayData);
+  
+    let updatedPointsData;
+    const existingDayIndex = pointsData.findIndex((day) => day.date === currentDayData.date);
+    if (existingDayIndex !== -1) {
+      updatedPointsData = pointsData.map((day, index) =>
+        index === existingDayIndex ? updatedDayData : day
+      );
+    } else {
+      updatedPointsData = [...pointsData, updatedDayData];
     }
+  
     setCurrentDayData(updatedDayData);
     setPointsData(updatedPointsData);
     savePointsData(updatedPointsData);
     setPointMessage('');
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
   };
 
   const clearAllData = () => {
@@ -84,9 +80,6 @@ export default function Points() {
       localStorage.removeItem('pointsData');
       setPointsData([]);
       setCurrentDayData({ date: getCurrentDate(), points: [] });
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
     }
   };
 
@@ -144,7 +137,7 @@ export default function Points() {
           );
         })}
       </div>
-      <p>All data is stored on your computer.</p>
+      <p>All data is stored on your computer only.</p>
     </div>
   );
 }
