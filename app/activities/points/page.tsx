@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface Point {
   value: number;
@@ -33,6 +33,8 @@ export default function Points() {
     date: getCurrentDate(),
     points: [],
   });
+  
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const data = loadPointsData();
@@ -40,6 +42,18 @@ export default function Points() {
     const todayData = data.find((day) => day.date === getCurrentDate());
     if (todayData) {
       setCurrentDayData(todayData);
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   if (inputRef.current) {
+  //     inputRef.current.focus();
+  //   }
+  // }, [inputRef]);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
     }
   }, []);
 
@@ -66,6 +80,9 @@ export default function Points() {
     setPointsData(updatedPointsData);
     savePointsData(updatedPointsData);
     setPointMessage('');
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
   };
 
   const clearAllData = () => {
@@ -73,6 +90,9 @@ export default function Points() {
       localStorage.removeItem('pointsData');
       setPointsData([]);
       setCurrentDayData({ date: getCurrentDate(), points: [] });
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
     }
   };
 
@@ -83,9 +103,10 @@ export default function Points() {
         type="text"
         value={pointMessage}
         onChange={(e) => setPointMessage(e.target.value)}
-        maxLength={20}
+        maxLength={30}
         placeholder="Point Message"
         className="mb-4 p-2 border rounded"
+        ref={inputRef}
       />
       <div className="flex space-x-4 mb-4">
         <button
@@ -113,7 +134,7 @@ export default function Points() {
           return (
             <div key={day.date} className="mb-4 p-4 border rounded">
               <h2 className="text-3xl mb-2">{day.date}</h2>
-              <p className="text-xl mb-2">Total: {total}</p>
+              <p className="text-2xl mb-2">Total: {total}</p>
               <ul>
                 {day.points.map((point, index) => (
                   <li
