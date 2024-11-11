@@ -60,7 +60,7 @@ To run prod:
 * `npm run build`
 * `npm run start`
 
-Above commands have also been created as PowreShell scripts:
+Above commands have also been created as PowerShell scripts:
 
 * `.\run-dev.ps1`
 * `.\run-prod.ps1`
