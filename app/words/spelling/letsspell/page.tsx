@@ -55,9 +55,14 @@ const LetsSpell = () => {
     return (selectedWord ?? "").split("").map((char, index) => {
       const isCorrect = userInputNsc[index] === char.toLowerCase();
       return (
-        <span key={index} style={{ color: isCorrect ? correctColor : 'white' }}>
-          {char[index] || char }
+        <span key={index} style={{ display: 'inline-block', textAlign: 'center' }}>
+        <span style={{ color: isCorrect ? correctColor : 'white' }}>
+          {userInput[index] || char }
         </span>
+        <br />
+        {isCorrect ? <span style={{ color: correctColor }}>&nbsp;</span> : 
+        <span style={{ color: 'white' }}>&nbsp;</span> }
+      </span>
       );
     });
   };
@@ -233,6 +238,10 @@ const LetsSpell = () => {
             />
           </div>
           {activeTab === 'type' && (
+            <>
+            <div>
+              <h3 className="text-2xl font-bold mb-4">Great job! Now try drawing or spelling the word in the box below:</h3>
+            </div>
             <div>
               <canvas
                 ref={canvasRef}
@@ -246,23 +255,24 @@ const LetsSpell = () => {
                 style={{ touchAction: 'none' }}
               ></canvas>
               <button
-                className="mt-2 p-4 bg-blue-500 text-white rounded"
+                className="mt-2 p-4 w-1/4 bg-blue-500 text-white rounded"
                 onClick={handleClearCanvas}
               >
                 Clear
               </button>
               <button
-                className="mt-2 ml-4 p-4 bg-blue-500 text-white rounded"
+                className="mt-2 ml-10 p-4 w-1/4 bg-blue-500 text-white rounded"
                 onClick={handleSaveCanvas}
               >
                 Save
               </button>
             </div>
+            </>
           )}
         </div>
       </div>
       <button
-          className="mt-2 ml-4 p-4 bg-blue-500 text-white rounded"
+          className="mt-5 ml-4 p-4 w-1/4 bg-blue-500 text-white rounded"
           onClick={handleNextWord}
         >
           {"Next Word: " + peekNextWord}
