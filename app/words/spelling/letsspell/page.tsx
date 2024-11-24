@@ -7,7 +7,9 @@ const pretty = PrettyChar.allCharacters();
 
 const words = [
   "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+  "July", "August", "September", "October", "November", "December",
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
 ];
 
 const lineWidth = 2;
@@ -27,6 +29,14 @@ const LetsSpell = () => {
     const levelParam = params.get('level');
     setSelectedWord(words[0]);
     setLevel(levelParam);
+
+    // Prevent the entire page from scrolling
+    document.body.style.overflow = 'hidden';
+
+    // Cleanup on component unmount
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
   }, []);
 
   const initializeContext = (ctx: CanvasRenderingContext2D) => {
@@ -193,8 +203,8 @@ const LetsSpell = () => {
       <h2 className="p-5 text-center tracking-wide font-mono text-3xl md:text-4xl font-black text-white">
         {selectedWord}
       </h2>
-      <div className="flex w-full max-w-6xl">
-      <div className="w-1/4 p-4 h-screen overflow-y-auto">
+      <div className="flex w-full max-w-6xl h-full">
+      <div className="w-1/4 p-4 h-full overflow-y-auto">
           <h3 className="text-2xl font-bold mb-4">{level}</h3>
           <a href="/words/spelling" 
             className={`p-4 ml-2 bg-gray-600`}
