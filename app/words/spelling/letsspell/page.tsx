@@ -8,10 +8,8 @@ const pretty = PrettyChar.allCharacters();
 const words = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December",
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
 ];
-
+const correctColor = '#32CD32';
 const lineWidth = 2;
 
 const LetsSpell = () => {
@@ -23,12 +21,21 @@ const LetsSpell = () => {
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   const [color] = useState<string>('black');
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
+  const [userInput, setUserInput] = useState<string>('');
+  const [nextWordMessage, setNextWordMessage] = useState<string>('Next Word');
+  const [peekNextWord, setPeekNextWord] = useState<string>('');
+  
+  const handleNextWord = () => {
+    const currentIndex = words.indexOf(selectedWord ?? "");
+    const nextIndex = (currentIndex + 1) % words.length;
+    activateWord(words[nextIndex]);
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const levelParam = params.get('level');
-    setSelectedWord(words[0]);
     setLevel(levelParam);
+    activateWord(words[0]);
 
     // Prevent the entire page from scrolling
     document.body.style.overflow = 'hidden';
@@ -38,6 +45,22 @@ const LetsSpell = () => {
       document.body.style.overflow = 'auto';
     };
   }, []);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUserInput(event.target.value);
+  };
+
+  const renderColoredText = () => {
+    const userInputNsc = userInput.toLowerCase();
+    return (selectedWord ?? "").split("").map((char, index) => {
+      const isCorrect = userInputNsc[index] === char.toLowerCase();
+      return (
+        <span key={index} style={{ color: isCorrect ? correctColor : 'white' }}>
+          {char[index] || char }
+        </span>
+      );
+    });
+  };
 
   const initializeContext = (ctx: CanvasRenderingContext2D) => {
     ctx.fillStyle = 'white'; // Set canvas background color to white
@@ -69,33 +92,6 @@ const LetsSpell = () => {
       if (ctx) {
         setContext(ctx);
 
-      //   const initializeContext = () => {
-      //     ctx.fillStyle = 'white'; // Set canvas background color to white
-      //     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-      //     const y = (ctx.canvas.height / 4) * 2;
-      //     ctx.strokeStyle = 'lightgray';
-      //     ctx.lineWidth = 1;
-      //     ctx.setLineDash([5, 5]); // Set dashed line pattern
-      //     ctx.beginPath();
-      //     ctx.moveTo(0, y);
-      //     ctx.lineTo(ctx.canvas.width, y);
-      //     ctx.stroke();
-      //     ctx.setLineDash([]); // Reset line dash
-
-      //     // Draw the selected word at the top left
-      //     ctx.fillStyle = 'black';
-      //     ctx.font = '20px Arial';
-      //     ctx.fillText(selectedWord ?? "", 10, 30);
-
-      //     ctx.lineCap = 'round';
-      //     ctx.strokeStyle = color;
-      //     ctx.lineWidth = lineWidth;
-      //   };
-      
-      //   initializeContext(); // Set initial size of canvas
-      // }
-
         initializeContext(ctx);
       }
       // Prevent default behavior for touch and mouse events at the document level
@@ -123,19 +119,11 @@ const LetsSpell = () => {
   const handleClearCanvas = () => {
     if (context) {
       initializeContext(context);
-      // context.fillStyle = 'white';
-      // context.fillRect(0, 0, context.canvas.width, context.canvas.height);
-
-      // const y = (context.canvas.height / 4) * 2;
-      // context.strokeStyle = 'lightgray';
-      // context.lineWidth = 1;
-      // context.setLineDash([5, 5]); // Set dashed line pattern
-      // context.beginPath();
-      // context.moveTo(0, y);
-      // context.lineTo(context.canvas.width, y);
-      // context.stroke();
-      // context.setLineDash([]); // Reset line dash
-
+      setUserInput('');
+      const input = document.querySelector('input');
+      if (input) {
+        input.focus();
+      }
     }
   }
 
@@ -192,6 +180,20 @@ const LetsSpell = () => {
     }
   }, [selectedWord, context]);
 
+  const activateWord = (word: string) => {
+    setSelectedWord(word);
+    const currentIndex = words.indexOf(word ?? "");
+    const nextIndex = (currentIndex + 1) % words.length;
+    const nextWord = words[nextIndex];
+    setPeekNextWord(nextWord);
+
+    setUserInput('');
+    const input = document.querySelector('input');
+    if (input) {
+      input.focus();
+    }
+  };
+
   return (
     <div className="flex flex-col items-center min-h-screen">
       <h1 className="p-5 text-center tracking-wide font-mono text-4xl md:text-5xl font-black text-white">
@@ -200,24 +202,15 @@ const LetsSpell = () => {
       <a href="/words/spelling" 
         className={`p-4 ml-2 bg-gray-600`}
       >Back to list</a>
-      <h2 className="p-5 text-center tracking-wide font-mono text-3xl md:text-4xl font-black text-white">
-        {selectedWord}
-      </h2>
-      <div className="flex w-full max-w-6xl h-full">
-      <div className="w-1/4 p-4 h-full overflow-y-auto">
+      <div className="flex w-full max-w-6xl overflow-hidden">
+        <div className="w-1/4 p-4 h-full overflow-y-auto h-full">
           <h3 className="text-2xl font-bold mb-4">{level}</h3>
-          <a href="/words/spelling" 
-            className={`p-4 ml-2 bg-gray-600`}
-          >Edit list</a>
-          <a href="/words/spelling" 
-            className={`p-4 ml-2 bg-gray-600`}
-          >Reset</a>
           <ul>
             {words.map((month) => (
               <li key={month} className="mb-2">
                 <button
                   className={`p-2 w-full text-left ${selectedWord === month ? 'bg-blue-500 text-white' : 'bg-gray-600'}`}
-                  onClick={() => setSelectedWord(month)}
+                  onClick={() => activateWord(month)}
                 >
                   {month}
                 </button>
@@ -226,11 +219,15 @@ const LetsSpell = () => {
           </ul>
         </div>
         <div className="w-3/4 p-4">
-          <h3 className="text-2xl font-bold mb-4">{selectedWord}</h3>
+        <h3 className="text-2xl font-bold mb-4">Spell: </h3>
+          <h3 className="text-6xl font-bold mb-4">{renderColoredText()}</h3>
           <div>
             <input
               type="text"
-              className="p-2 border border-gray-300 rounded w-full"
+              value={userInput}
+              maxLength={(selectedWord?.length ?? 10) * 3}
+              onChange={handleInputChange}
+              className="p-4 text-2xl border border-gray-300 rounded w-full h-16" // Increased padding, font size, and height
               placeholder="Type the word"
               autoComplete="off"
             />
@@ -264,6 +261,12 @@ const LetsSpell = () => {
           )}
         </div>
       </div>
+      <button
+          className="mt-2 ml-4 p-4 bg-blue-500 text-white rounded"
+          onClick={handleNextWord}
+        >
+          {"Next Word: " + peekNextWord}
+        </button>
     </div>
   );
 };
