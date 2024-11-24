@@ -15,12 +15,34 @@ const LetsSpell = () => {
   const [activeTab, setActiveTab] = useState<string>("type");
   const [level, setLevel] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const contextRef = useRef<CanvasRenderingContext2D | null>();
+  const [color, setColor] = useState<string>('red');
+  const [isDrawing, setIsDrawing] = useState<boolean>(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const levelParam = params.get('level');
     setSelectedWord(words[0]);
     setLevel(levelParam);
+
+    const canvas = canvasRef.current;
+    console.log(canvas);
+    if (!canvas) return;
+
+    const initializeCanvas = () => {
+      canvas.width = window.innerWidth * 0.95;
+      canvas.height = window.innerHeight * 0.7;
+      const context = canvas.getContext('2d');
+      if (!context) return;
+      context.fillStyle = 'white'; // Set canvas background color to white
+      context.fillRect(0, 0, canvas.width, canvas.height);
+
+      context.lineCap = 'round';
+      context.strokeStyle = color;
+      context.lineWidth = 3;
+    };
+  
+    initializeCanvas(); // Set initial size
   }, []);
 
   const handleSaveCanvas = () => {
@@ -30,6 +52,41 @@ const LetsSpell = () => {
       link.href = canvasRef.current.toDataURL();
       link.click();
     }
+  };
+
+  type Event = React.MouseEvent<HTMLCanvasElement, MouseEvent> | React.TouchEvent<HTMLCanvasElement>;
+
+  const startDrawing = (event: Event ) => {
+    const isTouchEvent = 'touches' in event;
+    const { clientX, clientY } = isTouchEvent ? event.touches[0] : event;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    if(contextRef.current) {
+      contextRef.current.beginPath();
+      contextRef.current.moveTo(clientX - rect.left, clientY - rect.top);
+    }
+    setIsDrawing(true);
+  };
+
+  const draw = (event: Event ) => {
+    if (!isDrawing) return;
+    const isTouchEvent = 'touches' in event;
+    const { clientX, clientY } = isTouchEvent ? event.touches[0] : event;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    if(contextRef.current){
+      contextRef.current.lineTo(clientX - rect.left, clientY - rect.top);
+      contextRef.current.stroke();
+    }
+  };
+
+  const endDrawing = () => {
+    if (contextRef.current) {
+      contextRef.current.closePath();
+    }
+    setIsDrawing(false);
   };
 
   return (
@@ -95,6 +152,12 @@ const LetsSpell = () => {
             <div>
               <canvas
                 ref={canvasRef}
+                onMouseDown={startDrawing}
+                onMouseMove={draw}
+                onMouseUp={endDrawing}
+                onTouchStart={startDrawing}
+                onTouchMove={draw}
+                onTouchEnd={endDrawing}
                 className="border border-gray-300 rounded w-full h-64"
               ></canvas>
               <button
