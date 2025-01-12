@@ -1,8 +1,11 @@
 'use client'
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from 'next/navigation';
 import { PrettyChar } from '../../prettyChar';
+import { DndContext, closestCenter } from '@dnd-kit/core';
+import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 const MAX_WORD_LENGTH = 30;
 const MAX_LISTS = 8;
@@ -17,6 +20,42 @@ const Page = () => {
   const [listToDelete, setListToDelete] = useState<string | null>(null);
   const [listToEdit, setListToEdit] = useState<string | null>(null);
   const router = useRouter();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const focusedInputIndex = useRef<number | null>(null);
+
+  const SortableItem = ({ id, index, word, setNewListWords }) => {
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
+  
+    const style = {
+      transform: CSS.Transform.toString(transform),
+      transition,
+    };
+  
+    return (
+      <div ref={setNodeRef} style={style} className="flex items-center mb-2">
+        <span {...attributes} {...listeners} className="cursor-grab mr-2 text-gray-500">☰</span>
+        <input
+          ref={(el) => (inputRefs.current[index] = el)}
+          type="text"
+          value={word}
+          onFocus={() => { focusedInputIndex.current = index; }}
+          onChange={(e) => {
+            const newWords = [...newListWords];
+            newWords[index] = e.target.value;
+            setNewListWords(newWords);
+          }}
+          className="p-2 border border-gray-300 rounded w-full"
+        />
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    if (focusedInputIndex.current !== null && inputRefs.current[focusedInputIndex.current]) {
+      inputRefs.current[focusedInputIndex.current]?.focus();
+    }
+  }, [newListWords]);
 
   useEffect(() => {
     const storedLists = JSON.parse(localStorage.getItem('wordLists') || '[]');
@@ -89,6 +128,18 @@ const Page = () => {
     router.push(`/words/spelling/letsspell?level=${name}`);
   };
 
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+  
+    if (active.id !== over.id) {
+      setNewListWords((items) => {
+        const oldIndex = items.indexOf(active.id);
+        const newIndex = items.indexOf(over.id);
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col items-center min-h-screen">
@@ -141,32 +192,18 @@ const Page = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">List Words</label>
-                <div className="max-h-96 overflow-y-auto">
-                  {newListWords.map((word, index) => (
-                    <input
-                      key={index}
-                      type="text"
-                      value={word}
-                      onChange={(e) => {
-                        const updatedWords = [...newListWords];
-                        updatedWords[index] = e.target.value;
-                        setNewListWords(updatedWords);
-                      }}
-                      className="mt-1 p-2 border border-gray-300 rounded w-full mb-2"
-                      maxLength={MAX_WORD_LENGTH}
-                    />
-                  ))}
-                  {newListWords.length < 20 && (
-                    <button
-                      onClick={() => setNewListWords([...newListWords, ''])}
-                      className="mt-2 p-2 bg-blue-500 rounded shadow text-white"
-                    >
-                      Add Word
-                    </button>
-                  )}
-                </div>
+              <label className="block text-sm font-medium text-gray-700">List Words</label>
+              <div className="max-h-96 overflow-y-auto" ref={scrollRef}>
+                {/* Wrap with DndContext */}
+                <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                  <SortableContext items={newListWords} strategy={verticalListSortingStrategy}>
+                    {newListWords.map((word, index) => (
+                      <SortableItem key={index} id={word} index={index} word={word} setNewListWords={setNewListWords} />
+                    ))}
+                  </SortableContext>
+                </DndContext>
               </div>
+            </div>
               <div className="flex justify-end">
                 <button
                   onClick={closeModal}
