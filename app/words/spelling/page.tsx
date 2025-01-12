@@ -24,7 +24,7 @@ const Page = () => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const focusedInputIndex = useRef<number | null>(null);
 
-  const SortableItem = ({ id, index, word, setNewListWords }) => {
+  const SortableItem = ({ id, index, word, setNewListWords }: { id: string, index: number, word: string, setNewListWords: React.Dispatch<React.SetStateAction<string[]>> }) => {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
   
     const style = {
@@ -128,7 +128,7 @@ const Page = () => {
     router.push(`/words/spelling/letsspell?level=${name}`);
   };
 
-  const handleDragEnd = (event) => {
+  const handleDragEnd = (event: { active: any; over: any; }) => {
     const { active, over } = event;
   
     if (active.id !== over.id) {
