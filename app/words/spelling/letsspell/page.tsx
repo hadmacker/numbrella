@@ -4,11 +4,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { PrettyChar } from '../../../prettyChar'
 
 const pretty = PrettyChar.allCharacters();
-
-const words = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
-];
 const correctColor = '#32CD32';
 const lineWidth = 2;
 
@@ -16,6 +11,7 @@ const LetsSpell = () => {
   const [selectedWord, setSelectedWord] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<string>("type");
   const [level, setLevel] = useState<string | null>(null);
+  const [words, setWords] = useState<string[]>([]);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>();
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
@@ -35,17 +31,17 @@ const LetsSpell = () => {
     const params = new URLSearchParams(window.location.search);
     const levelParam = params.get('level');
     setLevel(levelParam);
-    activateWord(words[0]);
 
-    // Prevent the entire page from scrolling
-    document.body.style.overflow = 'hidden';
-
-    // Cleanup on component unmount
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
+    if (levelParam) {
+      const storedLists = JSON.parse(localStorage.getItem('wordLists') || '[]');
+      const selectedList = storedLists.find((list: { name: string, words: string[] }) => list.name === levelParam);
+      if (selectedList) {
+        setWords(selectedList.words);
+        setSelectedWord(selectedList.words[0]);
+      }
+    }
   }, []);
-
+  
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(event.target.value);
   };
