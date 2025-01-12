@@ -41,6 +41,7 @@ const LetsSpell = () => {
         setPeekNextWord(selectedList.words[1] || '');
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

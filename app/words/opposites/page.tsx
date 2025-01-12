@@ -70,6 +70,7 @@ export default function Page() {
   // Generate a new pair when the component mounts
   useEffect(() => {
     generateNewPair();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const classes = [
