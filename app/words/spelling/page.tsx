@@ -13,7 +13,7 @@ const Page = () => {
   const [wordLists, setWordLists] = useState<{ name: string, words: string[] }[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [newListName, setNewListName] = useState('');
-  const [newListWords, setNewListWords] = useState<string[]>(['']);
+  const [newListWords, setNewListWords] = useState<string[]>(Array(10).fill(''));
   const [listToDelete, setListToDelete] = useState<string | null>(null);
   const [listToEdit, setListToEdit] = useState<string | null>(null);
   const router = useRouter();
@@ -35,7 +35,7 @@ const Page = () => {
   const handleCreateList = () => {
     setShowModal(true);
     setNewListName(`List${wordLists.length + 1}`);
-    setNewListWords(['']);
+    setNewListWords(Array(10).fill(''));
     setListToEdit(null);
   };
 
@@ -43,7 +43,8 @@ const Page = () => {
     const list = wordLists.find(list => list.name === name);
     if (list) {
       setNewListName(list.name);
-      setNewListWords(list.words);
+      const wordsToAdd = Math.max(10 - list.words.length, 0); // Ensure the length is not negative
+      setNewListWords([...list.words, ...Array(wordsToAdd).fill('')]);
       setListToEdit(name);
       setShowModal(true);
     }
@@ -127,7 +128,7 @@ const Page = () => {
         </div>
         {showModal && (
           <div className="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 overflow-auto" onClick={closeModal}>
-            <div className="bg-white p-6 rounded shadow-lg max-w-lg w-full" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-white p-6 rounded shadow-lg max-w-2xl w-full" onClick={(e) => e.stopPropagation()}>
               <h3 className="text-xl font-bold mb-4 text-black">{listToEdit ? 'Edit Word List' : 'Create Word List'}</h3>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">List Name</label>
@@ -141,7 +142,7 @@ const Page = () => {
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">List Words</label>
-                <div className="max-h-60 overflow-y-auto">
+                <div className="max-h-96 overflow-y-auto">
                   {newListWords.map((word, index) => (
                     <input
                       key={index}
