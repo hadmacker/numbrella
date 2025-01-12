@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Home() {
   return (
-      <main>
+    <main className="overflow-y-auto">
         <div  className="md:flex">
         <div key="n1">
           <span className="mx-3 md:mx-2 md:p-1 text-2xl md:text-3xl font-black text-gray-500">Numbers</span>

@@ -207,7 +207,7 @@ const LetsSpell = () => {
         className={`p-4 ml-2 bg-gray-600`}
       >Back to list</a>
       <div className="flex w-full max-w-6xl">
-        <div className="w-1/4 p-4 h-full overflow-y-auto h-full">
+        <div className="w-1/4 p-4 h-full overflow-y-auto">
           <h3 className="text-2xl font-bold mb-4">{level}</h3>
           <ul>
             {words.map((month) => (
