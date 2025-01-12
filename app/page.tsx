@@ -36,6 +36,7 @@ export default function Home() {
             <li key="w1.1.2.2" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="words/days"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Days of the Week</span></a></li>
             <li key="w1.1.2.3" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="words/sight"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Sight Words</span></a></li>
             <li key="w1.1.2.4" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="words/opposites"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Opposites</span></a></li>
+            <li key="w1.1.2.5" className='mx-3 my-3 md:mx-:3 md:my-6'><a href="words/spelling"><span className="mx-2 p-4 text-2xl md:text-3xl font-black">Spelling Explorer</span></a></li>
           </ul>
         </div>
         <div key="a1">

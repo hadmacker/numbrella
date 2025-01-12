@@ -32,10 +32,16 @@ Screenshots can be found at the [end of this file](#screenshots).
 
 ## One-Time actions (already performed)
 
-* $> `npm init`
-* $> `npm install next@latest react@latest react-dom@latest`
-* $> `npm install create-next-app@latest --save`
-* $> `npx create-next-app@latest`
+```
+nvm install 18
+nvm use 18
+npm init
+npm install next@latest react@latest react-dom@latest
+npm install create-next-app@latest --save
+npx create-next-app@latest
+nvm use 18
+npm install @dnd-kit/core @dnd-kit/sortable
+```
 
 ## To Run Locally
 
