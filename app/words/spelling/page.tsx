@@ -129,6 +129,14 @@ const Page = () => {
     router.push(`/words/spelling/letsspell?level=${name}`);
   };
 
+  const handleAddWord = () => {
+    setNewListWords((prevWords) => {
+      const newWords = [...prevWords, ''];
+      focusedInputIndex.current = newWords.length - 1; // Set focus to the newly added input
+      return newWords;
+    });
+  };
+
   const handleDragEnd = (event: { active: any; over: any; }) => {
     const { active, over } = event;
   
@@ -204,6 +212,13 @@ const Page = () => {
                   </SortableContext>
                 </DndContext>
               </div>
+              <button
+                type="button"
+                onClick={handleAddWord}
+                className="mt-2 p-2 bg-blue-500 text-white rounded"
+              >
+                Add Word
+              </button>
             </div>
               <div className="flex justify-end">
                 <button
