@@ -69,6 +69,7 @@ const Page = () => {
       localStorage.setItem('wordLists', JSON.stringify(validLists));
     }
     setWordLists(validLists);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCreateList = () => {

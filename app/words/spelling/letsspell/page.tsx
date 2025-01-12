@@ -108,6 +108,7 @@ const LetsSpell = () => {
         document.removeEventListener('mousemove', preventDefault);
       };
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
   const handleSaveCanvas = () => {
