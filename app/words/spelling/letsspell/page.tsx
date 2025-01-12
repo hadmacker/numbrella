@@ -38,6 +38,7 @@ const LetsSpell = () => {
       if (selectedList) {
         setWords(selectedList.words);
         setSelectedWord(selectedList.words[0]);
+        setPeekNextWord(selectedList.words[1] || '');
       }
     }
   }, []);
@@ -55,33 +56,33 @@ const LetsSpell = () => {
         <span style={{ color: isCorrect ? correctColor : 'white' }}>
           {userInput[index] || char }
         </span>
-        <br />
-        {isCorrect ? <span style={{ color: correctColor }}>&nbsp;</span> : 
-        <span style={{ color: 'white' }}>&nbsp;</span> }
       </span>
       );
     });
   };
 
   const initializeContext = (ctx: CanvasRenderingContext2D) => {
+    const width = ctx.canvas.width;
+    const height = ctx.canvas.height;
+  
     ctx.fillStyle = 'white'; // Set canvas background color to white
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-    const y = (ctx.canvas.height / 4) * 2;
+    ctx.fillRect(0, 0, width, height);
+  
+    const y = (height / 4) * 2;
     ctx.strokeStyle = 'lightgray';
     ctx.lineWidth = 1;
     ctx.setLineDash([5, 5]); // Set dashed line pattern
     ctx.beginPath();
     ctx.moveTo(0, y);
-    ctx.lineTo(ctx.canvas.width, y);
+    ctx.lineTo(width, y);
     ctx.stroke();
     ctx.setLineDash([]); // Reset line dash
-
+  
     // Draw the selected word at the top left
     ctx.fillStyle = 'black';
-    ctx.font = '14px Arial';
+    ctx.font = '12px Arial';
     ctx.fillText(selectedWord ?? "", 5, 20);
-
+  
     ctx.lineCap = 'round';
     ctx.strokeStyle = color;
     ctx.lineWidth = lineWidth;
@@ -203,7 +204,7 @@ const LetsSpell = () => {
       <a href="/words/spelling" 
         className={`p-4 ml-2 bg-gray-600`}
       >Back to list</a>
-      <div className="flex w-full max-w-6xl overflow-hidden">
+      <div className="flex w-full max-w-6xl">
         <div className="w-1/4 p-4 h-full overflow-y-auto h-full">
           <h3 className="text-2xl font-bold mb-4">{level}</h3>
           <ul>
@@ -235,7 +236,7 @@ const LetsSpell = () => {
           </div>
           {activeTab === 'type' && (
             <>
-            <div>
+            <div className="mt-8">
               <h3 className="text-2xl font-bold mb-4">Great job! Now try drawing or spelling the word in the box below:</h3>
             </div>
             <div>
@@ -250,6 +251,7 @@ const LetsSpell = () => {
                 className="border border-gray-300 rounded w-full h-64"
                 style={{ touchAction: 'none' }}
               ></canvas>
+              <div className="flex justify-between mt-2">
               <button
                 className="mt-2 p-4 w-1/4 bg-blue-500 text-white rounded"
                 onClick={handleClearCanvas}
@@ -262,17 +264,18 @@ const LetsSpell = () => {
               >
                 Save
               </button>
+              <button
+                className="mt-2 ml-10 p-4 w-1/4 bg-blue-500 text-white rounded"
+                onClick={handleNextWord}
+              >
+                {"Go to next word: " + peekNextWord}
+            </button>
+            </div>
             </div>
             </>
           )}
         </div>
       </div>
-      <button
-          className="mt-5 ml-4 p-4 w-1/4 bg-blue-500 text-white rounded"
-          onClick={handleNextWord}
-        >
-          {"Next Word: " + peekNextWord}
-        </button>
     </div>
   );
 };

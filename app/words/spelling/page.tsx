@@ -21,8 +21,15 @@ const Page = () => {
   useEffect(() => {
     const storedLists = JSON.parse(localStorage.getItem('wordLists') || '[]');
     const validLists = storedLists.filter((list: { name: string, words: string[] }) => list.name && list.words && list.words.length > 0);
+    if (validLists.length === 0) {
+      const planetsList = {
+        name: "Planets of the Solar System",
+        words: ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]
+      };
+      validLists.push(planetsList);
+      localStorage.setItem('wordLists', JSON.stringify(validLists));
+    }
     setWordLists(validLists);
-    localStorage.setItem('wordLists', JSON.stringify(validLists));
   }, []);
 
   const handleCreateList = () => {
@@ -119,7 +126,7 @@ const Page = () => {
           ))}
         </div>
         {showModal && (
-          <div className="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" onClick={closeModal}>
+          <div className="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 overflow-auto" onClick={closeModal}>
             <div className="bg-white p-6 rounded shadow-lg max-w-lg w-full" onClick={(e) => e.stopPropagation()}>
               <h3 className="text-xl font-bold mb-4 text-black">{listToEdit ? 'Edit Word List' : 'Create Word List'}</h3>
               <div className="mb-4">
@@ -177,7 +184,7 @@ const Page = () => {
           </div>
         )}
         {listToDelete && (
-          <div className="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" onClick={closeModal}>
+          <div className="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 overflow-auto" onClick={closeModal}>
             <div className="bg-white p-6 rounded shadow-lg max-w-lg w-full" onClick={(e) => e.stopPropagation()}>
               <h3 className="text-xl font-bold mb-4 text-black">
                 Do you want to delete <span className="text-blue-500">{listToDelete}</span>?
